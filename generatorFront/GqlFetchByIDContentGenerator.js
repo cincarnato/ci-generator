@@ -5,7 +5,6 @@ let content =
         ${model.properties.map(f => f.name).join('\n        ')}
     }
 }
-
 `
 
 return content

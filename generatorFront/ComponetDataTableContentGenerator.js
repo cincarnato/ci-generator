@@ -35,7 +35,7 @@ module.exports = function (model) {
         </v-dialog>
         
          <v-dialog :value="updating" width="800" persistent>
-            <${model.name.toLowerCase()}-update v-if="updating" :user="itemToEdit" v-on:closeDialog="updating=false"></user-update>
+            <${model.name.toLowerCase()}-update v-if="updating" :user="itemToEdit" v-on:closeDialog="updating=false" />
         </v-dialog>
 
 
@@ -50,10 +50,11 @@ module.exports = function (model) {
     import ${model.name}Provider from '../providers/${model.name}Provider'
     
     import ${model.name}Create from "./${model.name}Create";
+    import ${model.name}Update from "./${model.name}Update";
 
     export default {
         name: "CovenantList",
-        components: {${model.name}Create},
+        components: {${model.name}Create, ${model.name}Update},
         created() {
             this.loading = true
             ${model.name}Provider.${model.name.toLowerCase()}s().then(r => {

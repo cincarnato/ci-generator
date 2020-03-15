@@ -4,9 +4,12 @@ const GqlFetchByIDContentGenerator = require("./generatorFront/GqlFetchByIDConte
 const GqlCreateContentGenerator = require("./generatorFront/GqlCreateContentGenerator");
 const GqlUpdateContentGenerator = require("./generatorFront/GqlUpdateContentGenerator");
 
+const GqlFetchBySomethingContentGenerator = require("./generatorFront/GqlFetchBySomethingContentGenerator");
+
 const ComponentCreateContentGenerator = require("./generatorFront/ComponentCreateContentGenerator");
 const ComponentUpdateContentGenerator = require("./generatorFront/ComponentUpdateContentGenerator");
 const ComponetDataTableContentGenerator = require("./generatorFront/ComponetDataTableContentGenerator");
+
 
 const PageCRUDContentGenerator = require("./generatorFront/PageCRUDContentGenerator");
 
@@ -75,7 +78,7 @@ source.models.forEach(model => {
 //CREATE  GQL CREATE FILES
 
 source.models.forEach(model => {
-    let path = gqlPath  + model.name.toLowerCase() + 'Create.graphql'
+    let path = gqlPath + model.name.toLowerCase() + 'Create.graphql'
     fs.writeFile(path, GqlCreateContentGenerator(model),
         (err) => {
             if (err) return console.log(err);
@@ -86,7 +89,7 @@ source.models.forEach(model => {
 //CREATE  GQL UPDATE FILES
 
 source.models.forEach(model => {
-    let path = gqlPath  + model.name.toLowerCase() + 'Update.graphql'
+    let path = gqlPath + model.name.toLowerCase() + 'Update.graphql'
     fs.writeFile(path, GqlUpdateContentGenerator(model),
         (err) => {
             if (err) return console.log(err);
@@ -119,7 +122,6 @@ source.models.forEach(model => {
 })
 
 
-
 //CREATE  Component DataTable FILES
 
 source.models.forEach(model => {
@@ -142,3 +144,26 @@ source.models.forEach(model => {
             console.log('Page File OK: ' + model.name);
         })
 })
+
+
+//CREATE  GQL ID FILES
+
+source.models.forEach(model => {
+
+    model.properties.forEach(field => {
+        if (field.findby) {
+            let path = gqlPath + model.name.toLowerCase() + 'sBy' + capitalize(field.name) + '.graphql'
+            fs.writeFile(path, GqlFetchBySomethingContentGenerator(model, field),
+                (err) => {
+                    if (err) return console.log(err);
+                    console.log('GQL By Something File OK: ' + model.name + ' field: ' +field.name);
+                })
+        }
+    })
+
+
+})
+
+function capitalize(name) {
+    return name.charAt(0).toUpperCase() + name.slice(1)
+}

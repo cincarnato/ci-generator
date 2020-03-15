@@ -52,14 +52,14 @@ module.exports = function (model) {
     ${importMomentIfDateExist(model.properties)}
 
     export default {
-        name: "${model.name}Create",
+        name: "${model.name}Update",
         props: {
             item: Object
         },
         data() {
             return {
                 modal: false,
-                title: "Creando ${model.name}",
+                title: "Modificando ${model.name}",
                 errorMessage: '',
                 inputError: [],
                 loading: false,

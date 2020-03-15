@@ -15,6 +15,8 @@ class ${model.name}Provider {
             variables: {id:id}
         })
     }
+    
+    ${findBy(model)}
 
     create${model.name}(form) {
         return graphqlClient.mutate({
@@ -38,4 +40,30 @@ export default new ${model.name}Provider()
 `
 
     return content
+}
+
+
+function findBy(model){
+    let properties = model.properties.filter(field => field.findby == true)
+
+    return properties.map(field => {
+        return findByMethod(model,field)
+    }).join('\n')
+}
+
+function findByMethod(model, field){
+    let content =
+        `
+  ${model.name.toLowerCase()}sBy${capitalize(field.name)}(${field.name}) {
+        return graphqlClient.query({
+            query: require('./gql/${model.name.toLowerCase()}sBy${capitalize(field.name)}.graphql'),
+            variables: {${field.name}}
+        })
+    }
+`
+    return content
+}
+
+function capitalize(name){
+    return name.charAt(0).toUpperCase() + name.slice(1)
 }
