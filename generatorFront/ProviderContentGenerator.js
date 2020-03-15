@@ -53,8 +53,7 @@ function findBy(model){
 
 function findByMethod(model, field){
     let content =
-        `
-  ${model.name.toLowerCase()}sBy${capitalize(field.name)}(${field.name}) {
+`${model.name.toLowerCase()}sBy${capitalize(field.name)}(${field.name}) {
         return graphqlClient.query({
             query: require('./gql/${model.name.toLowerCase()}sBy${capitalize(field.name)}.graphql'),
             variables: {${field.name}}
