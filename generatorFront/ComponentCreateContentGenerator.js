@@ -65,7 +65,8 @@ module.exports = function (model) {
                 },
                 rules: {
                     required: value => !!value || 'Requerido'
-                }
+                },
+                ${generateDataCombos(model.properties)}
             }
         },
         mounted() {
@@ -153,6 +154,16 @@ function importMomentIfDateExist(properties){
     }
     return ''
 }
+
+function generateDataCombos(properties) {
+
+    let propFiltered = filterObjectIdProperties(properties);
+
+    return propFiltered.map(field => {
+        return `${field.name}s: []`
+    }).join(',\n')
+}
+
 
 function generateImportCombos(properties) {
 
@@ -271,7 +282,7 @@ function generateComboField(field) {
                                 :item-value="'id'"
                                 v-model="form.${field.name}"
                                 label="${field.name}"
-                                :loading="loading${field.name}"
+                                :loading="loading"
                                 :rules="[rules.required]"
                                 :error="hasErrors('${field.name}')"
                                 :error-messages="getMessageErrors('${field.name}')"

@@ -2,7 +2,8 @@ module.exports = function (model) {
 let content =
 `mutation ${model.name.toLowerCase()}Update($id: ID!, ${variables(model.properties)}){
     ${model.name.toLowerCase()}Update(id: $id, input: {${input(model.properties)} }){
-        ${model.properties.map(f => f.name).join('\n        ')}
+        id
+        ${retorno(model.properties)}
     }
 }
 
@@ -21,7 +22,15 @@ function variables(properties){
     })
 
     return propFiltered.map(field => {
-        return `$${field.name}:${field.type}${field.required?'!':''}`
+        switch(field.type){
+            case 'ObjectId':
+                return `$${field.name}:ID${field.required?'!':''}`
+            case 'Date':
+                return `$${field.name}:String${field.required?'!':''}`
+            default:
+                return `$${field.name}:${field.type}${field.required?'!':''}`
+        }
+
     }).join(', ')
 }
 
@@ -38,4 +47,27 @@ function input(properties){
     return propFiltered.map(field => {
         return `${field.name}: $${field.name}`
     }).join(', ')
+}
+
+function retorno(properties){
+
+
+    return properties.map(field => {
+
+        if(field.name == 'createdBy' || field.name == 'updatedBy'){
+            return `${field.name}{
+                id
+                name
+                username
+            }`
+        }
+
+        if(field.type == 'ObjectId'){
+            return `${field.name}{
+                id
+            }`
+        }
+
+        return `${field.name}`
+    }).join('\n        ')
 }

@@ -88,7 +88,7 @@ module.exports = function (model) {
                 },
                 items: [],
                 headers: [
-                    ${headers(model.properties)}
+                    ${headers(model.properties)},
                     {text: 'Aciones', value: 'action', sortable: false},
                 ],
             }

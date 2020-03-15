@@ -71,7 +71,7 @@ function fields(properties, input = false) {
                 if (!field.ref) throw new Error("Field " + field.name + "  has ObjectId type so needs ref atributte")
 
                 if (input) {
-                    return ` ${field.name}: String${field.required ? "!" : ""}`
+                    return ` ${field.name}: ID${field.required ? "!" : ""}`
                 }
 
                 return ` ${field.name}: ${field.ref}${field.required ? "!" : ""}`

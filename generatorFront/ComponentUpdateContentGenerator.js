@@ -48,7 +48,7 @@ module.exports = function (model) {
     //Relations
     ${generateImportCombos(model.properties)}
     
-    //Handle Dates
+    //Handle Dates 
     ${importMomentIfDateExist(model.properties)}
 
     export default {
@@ -69,7 +69,8 @@ module.exports = function (model) {
                 },
                 rules: {
                     required: value => !!value || 'Requerido'
-                }
+                },
+                ${generateDataCombos(model.properties)}
             }
         },
         mounted() {
@@ -157,6 +158,16 @@ function importMomentIfDateExist(properties){
     }
     return ''
 }
+
+function generateDataCombos(properties) {
+
+    let propFiltered = filterObjectIdProperties(properties);
+
+    return propFiltered.map(field => {
+        return `${field.name}s: []`
+    }).join(',\n')
+}
+
 
 function generateImportCombos(properties) {
 
