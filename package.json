@@ -1,0 +1,23 @@
+{
+  "name": "apollo-vue-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "vue-cli-plugin-vuetify": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skeleton-metal/apollo-vue-generator.git"
+  },
+  "author": "Cristian Incarnato",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skeleton-metal/apollo-vue-generator/issues"
+  },
+  "homepage": "https://github.com/skeleton-metal/apollo-vue-generator#readme"
+}

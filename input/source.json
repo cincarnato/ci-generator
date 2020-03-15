@@ -1,0 +1,90 @@
+{
+  "module": "Collections",
+  "models": [
+    {
+      "name": "Covenant",
+      "properties": [
+        {
+          "name": "date",
+          "type": "Date",
+          "required": true,
+          "findby": true
+        },
+        {
+          "name": "since",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "until",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "month",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "fullname",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "dni",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "locality",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "address",
+          "type": "String",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "type": "Float",
+          "required": true
+        },
+        {
+          "name": "comment",
+          "type": "String",
+          "required": false
+        },
+        {
+          "name": "group",
+          "type": "ObjectId",
+          "ref": "Group",
+          "required": true
+        },
+        {
+          "name": "createdBy",
+          "type": "ObjectId",
+          "ref": "User",
+          "required": true
+        },
+        {
+          "name": "updatedBy",
+          "type": "ObjectId",
+          "ref": "User",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Group",
+      "properties": [
+        {
+          "name": "name",
+          "type": "String",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
+
