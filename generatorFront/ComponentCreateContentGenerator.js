@@ -86,19 +86,21 @@ module.exports = function (model) {
             },
         },
         methods: {
-            ${generateMethodsCombos(model.properties)},
             save() {
                 if (this.$refs.form.validate()) {
                     this.form.amount = parseFloat(this.form.amount)
-                    ${capitalize(model.name)}Provider.create${capitalize(model.name)}(this.form).then(r => {
+                    ${model.name}Provider.create${model.name}(this.form).then(r => {
                             if (r) {
+                                this.$emit('itemCreate',r.data.${model.name.toLowerCase()}Create)
                                 this.$emit('closeDialog')
                             }
                         }
                     )
                 }
 
-            }
+            },
+            ${generateMethodsCombos(model.properties)}
+
         },
     }
 </script>

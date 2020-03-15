@@ -90,19 +90,20 @@ module.exports = function (model) {
             },
         },
         methods: {
-            ${generateMethodsCombos(model.properties)},
             save() {
                 if (this.$refs.form.validate()) {
                     this.form.amount = parseFloat(this.form.amount)
-                    ${capitalize(model.name)}Provider.update${capitalize(model.name)}(this.form).then(r => {
+                    ${model.name}Provider.update${model.name}(this.form).then(r => {
                             if (r) {
+                                this.$emit('itemUpdate',r.data.${model.name.toLowerCase()}Update)
                                 this.$emit('closeDialog')
                             }
                         }
                     )
                 }
 
-            }
+            },
+            ${generateMethodsCombos(model.properties)}
         },
     }
 </script>
@@ -218,7 +219,14 @@ function generateFormObjectFields(properties) {
     let propFiltered = filterBackendProperties(properties);
 
     return propFiltered.map(field => {
-          return `${field.name}: this.item.${field.name}`
+        switch(field.type){
+            case 'Date':
+                return `${field.name}: moment(parseInt(this.item.${field.name})).format('YYYY-MM-DD')`
+            case 'ObjectId':
+                return `${field.name}: this.item.${field.name}.id`
+            default:
+                return `${field.name}: this.item.${field.name}`
+        }
     }).join(',\n                    ')
 }
 
@@ -276,7 +284,7 @@ function generateComboField(field) {
                                 :item-value="'id'"
                                 v-model="form.${field.name}"
                                 label="${field.name}"
-                                :loading="loading${field.name}"
+                                :loading="loading"
                                 :rules="[rules.required]"
                                 :error="hasErrors('${field.name}')"
                                 :error-messages="getMessageErrors('${field.name}')"

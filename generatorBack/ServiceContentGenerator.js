@@ -39,6 +39,7 @@ export const update${model.name} = async function (user, id, {${fields(model.pro
     return new Promise((resolve, rejects) => {
         ${model.name}.findOneAndUpdate({_id: id},
         {${docFields(model.properties, true)}}, 
+        {new: true},
         (error,doc) => {
             error ? rejects(error) : ${resolvePopulate(model.properties)}
         })

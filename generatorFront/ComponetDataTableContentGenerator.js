@@ -31,11 +31,11 @@ module.exports = function (model) {
 
 
         <v-dialog :value="creating" width="800" fullscreen persistent>
-            <${model.name.toLowerCase()}-create v-if="creating" v-on:closeDialog="creating=false" />
+            <${model.name.toLowerCase()}-create v-if="creating" v-on:itemCreate="itemCreate" v-on:closeDialog="creating=false" />
         </v-dialog>
         
          <v-dialog :value="updating" width="800" persistent>
-            <${model.name.toLowerCase()}-update v-if="updating" :user="itemToEdit" v-on:closeDialog="updating=false" />
+            <${model.name.toLowerCase()}-update v-if="updating" :item="itemToEdit" v-on:itemUpdate="itemUpdate" v-on:closeDialog="updating=false" />
         </v-dialog>
 
 
@@ -63,6 +63,13 @@ module.exports = function (model) {
             })
         },
         methods: {
+            itemCreate(item) {
+                this.items.push(item)
+            },
+            itemUpdate(item) {
+                let index = this.items.findIndex(i => i.id == item.id)
+                this.$set(this.items, index, item)
+            },
             openEdit(item) {
                 this.updating = true
                 this.itemToEdit = item
