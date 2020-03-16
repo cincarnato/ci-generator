@@ -12,7 +12,7 @@ module.exports = function (model) {
         </v-card-text>
 
         <v-card-text>
-            <v-form ref="form" autocomplete="off">
+            <v-form ref="form" autocomplete="off" v-on:keyup.native.enter="save">
 
                 <v-row>
     
@@ -34,7 +34,7 @@ module.exports = function (model) {
             <v-spacer></v-spacer>
 
             <v-btn rounded color="primary" @click="save" :loading="loading">
-                Crear
+                Modificar
             </v-btn>
 
         </v-card-actions>

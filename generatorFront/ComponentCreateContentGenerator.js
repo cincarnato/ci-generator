@@ -12,7 +12,7 @@ module.exports = function (model) {
         </v-card-text>
 
         <v-card-text>
-            <v-form ref="form" autocomplete="off">
+            <v-form ref="form" autocomplete="off" v-on:keyup.native.enter="save">
 
                 <v-row>
     
@@ -255,12 +255,12 @@ function generateTextField(field) {
     let content = `
                     <v-col cols="12" sm="6">
                         <v-text-field
-                                prepend-icon="account_box"
+                                prepend-icon="${field.icon?field.icon:'label'}"
                                 name="${field.name}"
-                                label="${field.name}"
+                                label="${field.label?field.label:field.name}"
                                 type="text"
                                 v-model="form.${field.name}"
-                                placeholder="${field.name}"
+                                placeholder="${field.label?field.label:field.name}"
                                 class="pa-3"
                                 :rules="[rules.required]"
                                 :error="hasErrors('${field.name}')"
@@ -277,13 +277,13 @@ function generateComboField(field) {
     let content = `
                      <v-col cols="12" sm="6">
                         <v-select
-                                prepend-icon="account_box"
+                                prepend-icon="${field.icon?field.icon:'label'}"
                                 class="pa-3"
                                 :items="${field.name}s"
                                 :item-text="'name'"
                                 :item-value="'id'"
                                 v-model="form.${field.name}"
-                                label="${field.name}"
+                                label="${field.label?field.label:field.name}"
                                 :loading="loading"
                                 :rules="[rules.required]"
                                 :error="hasErrors('${field.name}')"
@@ -311,8 +311,8 @@ function generateDateField(field) {
                                 <v-text-field
                                         class="pa-3"
                                         v-model="form.${field.name}"
-                                        label="${field.name}"
-                                        prepend-icon="event"
+                                        label="${field.label?field.label:field.name}"
+                                        prepend-icon="${field.icon?field.icon:'event'}"
                                         readonly
                                         hide-details
                                         v-on="on"
