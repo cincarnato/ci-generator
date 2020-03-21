@@ -2,6 +2,7 @@ const capitalize = require('../generatorUtils/capitalize')
 const filterBackendProperties = require('../generatorUtils/filterBackendProperties')
 const componentField = require('../generatorUtils/componentField')
 const {generateDataCombos, generateImportCombos, generateMethodsCombos, generateMountedCombos} = require('../generatorUtils/componentFieldCombos')
+const importMomentIfDateExist = require('../generatorUtils/importMomentIfDateExist')
 
 module.exports = function (model) {
     let content =
@@ -126,20 +127,6 @@ module.exports = function (model) {
 }
 
 
-
-
-function importMomentIfDateExist(properties) {
-    let propFilter = properties.filter(field => {
-        if (field.type == 'Date') {
-            return true
-        }
-        return false
-    })
-    if (propFilter.length > 0) {
-        return `import moment from "moment";`
-    }
-    return ''
-}
 
 
 function generateFormObjectFields(properties) {
