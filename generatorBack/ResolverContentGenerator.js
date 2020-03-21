@@ -1,3 +1,5 @@
+const capitalize = require('../generatorUtils/capitalize')
+
 module.exports = function (model) {
 //TYPE DEFINITION
     let content =
@@ -37,9 +39,6 @@ export default {
 }
 
 
-function capitalize(name){
-    return name.charAt(0).toUpperCase() + name.slice(1)
-}
 
 function findByImport(model){
     let properties = model.properties.filter(field => field.findby == true)
@@ -79,23 +78,3 @@ function findByMethod(model, field){
     return content
 }
 
-
-
-
-function fields(properties) {
-
-    return properties.map(field => {
-        if (!field.name) throw new Error("Field needs name atributte")
-        if (!field.type) throw new Error("Field " + field.name + " needs type atributte")
-        switch (field.type) {
-            case "ObjectId":
-                if (!field.ref) throw new Error("Field " + field.name + "  has ObjectId type so needs ref atributte")
-                return ` ${field.name}: ${field.ref}${field.required ? "!" : ""}`
-            case "Date":
-                return ` ${field.name}: String${field.required ? "!" : ""}`
-            default:
-                return ` ${field.name}: ${field.type}${field.required ? "!" : ""}`
-
-        }
-    }).join('\n')
-}

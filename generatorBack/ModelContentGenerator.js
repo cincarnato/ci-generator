@@ -5,11 +5,10 @@ module.exports = function (model) {
 const Schema = mongoose.Schema;
 
 const ${model.name}Schema = new Schema({ 
-`
 
-content += fields(model.properties)
+${fields(model.properties)}
 
-content += `
+${timestamp(model.timestamp)}
 });
 
 const ${model.name} = mongoose.model('${model.name}', ${model.name}Schema);
@@ -35,4 +34,11 @@ function fields(properties) {
 
         }
     }).join(',\n')
+}
+
+function timestamp(timestamp){
+    if(timestamp){
+        return `, { timestamps: true }`
+    }
+    return ""
 }

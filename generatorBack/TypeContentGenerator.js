@@ -1,3 +1,5 @@
+const capitalize = require('../generatorUtils/capitalize')
+
 module.exports = function (model) {
 //TYPE DEFINITION
     let content =
@@ -27,9 +29,7 @@ type Mutation {
     return content
 }
 
-function capitalize(name){
-    return name.charAt(0).toUpperCase() + name.slice(1)
-}
+
 
 
 function findBy(model){

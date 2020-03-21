@@ -1,8 +1,9 @@
+const capitalize = require('../generatorUtils/capitalize')
+
 module.exports = function (model) {
 
     let content =
 `import ${model.name} from './../models/${model.name}Model'
-${generateImportCombos(model.properties)}
 
 export const find${model.name}s = async function () {
     return new Promise((resolve, reject) => {
@@ -22,7 +23,7 @@ export const find${model.name} = async function (id) {
 
 ${findBy(model)}
 
-export const create${model.name} = async function (user, {${fields(model.properties)}}) {
+export const create${model.name} = async function (user, {${paramsFields(model.properties)}}) {
     
     const doc = new ${model.name}({
         ${docFields(model.properties)}
@@ -35,7 +36,7 @@ export const create${model.name} = async function (user, {${fields(model.propert
     })
 }
 
-export const update${model.name} = async function (user, id, {${fields(model.properties)}}) {
+export const update${model.name} = async function (user, id, {${paramsFields(model.properties)}}) {
     return new Promise((resolve, rejects) => {
         ${model.name}.findOneAndUpdate({_id: id},
         {${docFields(model.properties, true)}}, 
@@ -52,6 +53,8 @@ export const update${model.name} = async function (user, id, {${fields(model.pro
     return content;
 }
 
+
+// ---------------- FINDS BY ----------------------
 
 function findBy(model){
     let properties = model.properties.filter(field => field.findby == true)
@@ -74,11 +77,10 @@ export const find${model.name}sBy${capitalize(field.name)} = async function (${f
 `
     return content
 }
+// ---------------- END FINDS BY ----------------------
 
-function capitalize(name){
-    return name.charAt(0).toUpperCase() + name.slice(1)
-}
 
+// ---------------- POPULATE ----------------------
 function resolvePopulate(properties){
     properties = getObjectIdProperties(properties)
 
@@ -111,89 +113,36 @@ function getObjectIdProperties(properties) {
     return propFiltered;
 }
 
+// ---------------- END POPULATE ----------------------
 
 
 
-function filterObjectIdProperties(properties) {
-    let propFiltered = properties.filter(field => {
 
-        if (field.name == 'createdBy' || field.name == 'updatedBy' || field.name == 'createdAt' || field.name == 'updatedAt') {
-            return false
-        }
-
-        if (field.type == 'ObjectId') {
-            return true
-        }
-        return false
-    })
-    return propFiltered;
-}
-
-function generateFindCombos(properties) {
-    let propFiltered = filterObjectIdProperties(properties);
-
-    return propFiltered.map(field => {
-        return `const f${field.name}  = await find${capitalize(field.name)}(${field.name})`
-    }).join(',\n')
-}
-
-function generateAssingCombos(properties) {
-    let propFiltered = filterObjectIdProperties(properties);
-
-    return propFiltered.map(field => {
-        return `newDoc.${field.name} = f${field.name}`
-    }).join(',\n')
-}
-
-function generateImportCombos(properties) {
-    let propFiltered = filterObjectIdProperties(properties);
-
-    return propFiltered.map(field => {
-        return `import {find${capitalize(field.name)}} from './${capitalize(field.name)}Service'`
-    }).join(',\n')
-}
-
-function filterBackendProperties(properties) {
-    let propFiltered = properties.filter(field => {
-        if (field.name == 'createdBy' || field.name == 'updatedBy' || field.name == 'createdAt' || field.name == 'updatedAt') {
-            return false
-        }
-        return true
-    })
-    return propFiltered;
-}
-
-function fields(properties){
-
+function paramsFields(properties){
     properties =  filterBackendProperties(properties)
-
     return properties.map(field => field.name).join(', ')
 }
 
 
 function docFields(properties, update = false){
-
-    if(update){
-        properties = properties.filter(field => {
-            if(field.name == 'createdAt' || field.name == 'createdBy'){
-                return false
-            }
-            return true
-        })
-    }
-
     return properties.map(field => {
         switch(field.name) {
             case 'createdBy':
                 return `createdBy: user.id`
             case 'updatedBy':
                 return `updatedBy: user.id`
-            case 'createdAt':
-                return `createdAt: new Date()`
-            case 'updatedAt':
-                return `updatedAt: new Date()`
             default:
                 return field.name
         }
     }).join(', ')
+}
+
+function filterBackendProperties(properties) {
+    let propFiltered = properties.filter(field => {
+        if (field.name == 'createdBy' || field.name == 'updatedBy') {
+            return false
+        }
+        return true
+    })
+    return propFiltered;
 }
