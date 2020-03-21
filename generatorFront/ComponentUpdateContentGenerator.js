@@ -1,12 +1,18 @@
 module.exports = function (model) {
     let content =
         `<template>
-    <v-card>
+    <v-card tile>
 
-        <v-card-title class="title" primary-title>
-            <span>{{title}}</span>
-        </v-card-title>
-
+        <v-toolbar flat dark color="primary">
+            <v-toolbar-title>{{title}}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+                <v-btn icon dark @click="$emit('closeDialog')">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
+        
         <v-card-text>
             <v-alert v-if="errorMessage" type="error" dense text>{{errorMessage}}</v-alert>
         </v-card-text>
@@ -27,13 +33,13 @@ module.exports = function (model) {
 
         <v-card-actions>
 
-            <v-btn rounded color="grey" text @click="$emit('closeDialog')">
+            <v-btn tile outlined color="grey"  @click="$emit('closeDialog')">
                 Cerrar
             </v-btn>
 
             <v-spacer></v-spacer>
 
-            <v-btn rounded color="primary" @click="save" :loading="loading">
+            <v-btn  color="primary" @click="save" :loading="loading">
                 Modificar
             </v-btn>
 
