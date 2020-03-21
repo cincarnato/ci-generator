@@ -1,3 +1,8 @@
+const capitalize = require('../generatorUtils/capitalize')
+const filterBackendProperties = require('../generatorUtils/filterBackendProperties')
+const componentField = require('../generatorUtils/componentField')
+
+
 module.exports = function (model) {
     let content =
         `<template>
@@ -124,19 +129,6 @@ module.exports = function (model) {
 }
 
 
-function capitalize(name){
-    return name.charAt(0).toUpperCase() + name.slice(1)
-}
-
-function filterBackendProperties(properties) {
-    let propFiltered = properties.filter(field => {
-        if (field.name == 'createdBy' || field.name == 'updatedBy' || field.name == 'createdAt' || field.name == 'updatedAt') {
-            return false
-        }
-        return true
-    })
-    return propFiltered;
-}
 
 function filterObjectIdProperties(properties) {
     let propFiltered = properties.filter(field => {
@@ -242,96 +234,7 @@ function generateFields(properties) {
     let propFiltered = filterBackendProperties(properties);
 
     return propFiltered.map(field => {
-        switch (field.type) {
-            case 'Date':
-                return generateDateField(field)
-            case 'String':
-                return generateTextField(field)
-            case 'ObjectId':
-                return generateComboField(field)
-            default:
-                return generateTextField(field)
-
-        }
+        return componentField(field)
     }).join('\n ')
 
-}
-
-function generateTextField(field) {
-    let content = `
-                    <v-col cols="12" sm="6">
-                        <v-text-field
-                                prepend-icon="account_box"
-                                name="${field.name}"
-                                label="${field.name}"
-                                type="text"
-                                v-model="form.${field.name}"
-                                placeholder="${field.name}"
-                                class="pa-3"
-                                :rules="[rules.required]"
-                                :error="hasErrors('${field.name}')"
-                                :error-messages="getMessageErrors('${field.name}')"
-                                required
-                        ></v-text-field>
-                    </v-col>
-    `
-    return content
-}
-
-
-function generateComboField(field) {
-    let content = `
-                     <v-col cols="12" sm="6">
-                        <v-select
-                                prepend-icon="account_box"
-                                class="pa-3"
-                                :items="${field.name}s"
-                                :item-text="'name'"
-                                :item-value="'id'"
-                                v-model="form.${field.name}"
-                                label="${field.name}"
-                                :loading="loading"
-                                :rules="[rules.required]"
-                                :error="hasErrors('${field.name}')"
-                                :error-messages="getMessageErrors('${field.name}')"
-                                required
-                        ></v-select>
-                    </v-col>
-    `
-    return content
-}
-
-
-function generateDateField(field) {
-    let content = `
-                   <v-col cols="12" sm="6">
-                        <v-menu
-                                v-model="modal"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="290px"
-                        >
-                            <template v-slot:activator="{ on }">
-                                <v-text-field
-                                        class="pa-3"
-                                        v-model="form.${field.name}"
-                                        label="${field.name}"
-                                        prepend-icon="event"
-                                        readonly
-                                        hide-details
-                                        v-on="on"
-                                        :rules="[rules.required]"
-                                        :error="hasErrors('${field.name}')"
-                                        :error-messages="getMessageErrors('${field.name}')"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker v-model="form.${field.name}" scrollable @input="modal =false">
-                            </v-date-picker>
-                        </v-menu>
-
-                    </v-col>
-    `
-    return content
 }

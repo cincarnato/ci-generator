@@ -1,3 +1,5 @@
+const capitalize = require('../generatorUtils/capitalize')
+
 module.exports = function (model, field) {
 let content =
 `query ${model.name.toLowerCase()}sBy${capitalize(field.name)}($${field.name}:String!){
@@ -9,10 +11,6 @@ let content =
 `
 
 return content
-}
-
-function capitalize(name){
-    return name.charAt(0).toUpperCase() + name.slice(1)
 }
 
 function retorno(properties){

@@ -1,4 +1,5 @@
 const capitalize = require('../generatorUtils/capitalize')
+const filterBackendProperties = require('../generatorUtils/filterBackendProperties')
 
 module.exports = function (model) {
 
@@ -116,8 +117,6 @@ function getObjectIdProperties(properties) {
 // ---------------- END POPULATE ----------------------
 
 
-
-
 function paramsFields(properties){
     properties =  filterBackendProperties(properties)
     return properties.map(field => field.name).join(', ')
@@ -137,12 +136,3 @@ function docFields(properties, update = false){
     }).join(', ')
 }
 
-function filterBackendProperties(properties) {
-    let propFiltered = properties.filter(field => {
-        if (field.name == 'createdBy' || field.name == 'updatedBy') {
-            return false
-        }
-        return true
-    })
-    return propFiltered;
-}

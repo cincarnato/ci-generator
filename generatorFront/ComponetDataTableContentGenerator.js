@@ -1,3 +1,5 @@
+const capitalize = require('../generatorUtils/capitalize')
+
 module.exports = function (model) {
     let content =
 `<template>
@@ -109,9 +111,6 @@ module.exports = function (model) {
     return content
 }
 
-function capitalize(name){
-    return name.charAt(0).toUpperCase() + name.slice(1)
-}
 
 function headers(properties){
 

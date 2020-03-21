@@ -1,4 +1,5 @@
 const capitalize = require('../generatorUtils/capitalize')
+const filterBackendProperties = require('../generatorUtils/filterBackendProperties')
 
 module.exports = function (model) {
 //TYPE DEFINITION
@@ -29,9 +30,6 @@ type Mutation {
     return content
 }
 
-
-
-
 function findBy(model){
     let properties = model.properties.filter(field => field.findby == true)
 
@@ -43,17 +41,6 @@ function findBy(model){
 function findByMethod(model, field){
     let content = `${model.name.toLowerCase()}sBy${capitalize(field.name)}(${field.name}:String!):[${model.name}]`
     return content
-}
-
-
-function filterBackendProperties(properties) {
-    let propFiltered = properties.filter(field => {
-        if (field.name == 'createdBy' || field.name == 'updatedBy' || field.name == 'createdAt' || field.name == 'updatedAt') {
-            return false
-        }
-        return true
-    })
-    return propFiltered;
 }
 
 
