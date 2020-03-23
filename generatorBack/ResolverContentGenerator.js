@@ -4,13 +4,13 @@ module.exports = function (model) {
 //TYPE DEFINITION
     let content =
         `
-import {${findByImport(model)} create${model.name}, update${model.name}, find${model.name}, find${model.name}s} from '../../services/${model.name}Service'
+import {${findByImport(model)} create${model.name}, update${model.name}, delete${model.name},  find${model.name}, fetch${model.name}s} from '../../services/${model.name}Service'
 
 export default {
     Query: {
         ${model.name.toLowerCase()}s: (_, {}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
-            return find${model.name}s()
+            return fetch${model.name}s()
         },
         ${model.name.toLowerCase()}: (_, {id}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
@@ -28,6 +28,11 @@ export default {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, "SECURITY-ADMIN-UPDATE")) throw new ForbiddenError("Not Authorized")
             return update${model.name}(user, id, input)
+        },
+         ${model.name.toLowerCase()}Delete: (_, {id}, {user,rbac}) => {
+            if (!user) throw new AuthenticationError("Unauthenticated")
+            if(!rbac.isAllowed(user.id, "SECURITY-ADMIN-DELETE")) throw new ForbiddenError("Not Authorized")
+            return delete${model.name}(id)
         },
     }
 

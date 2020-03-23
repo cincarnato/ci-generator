@@ -1,6 +1,7 @@
 module.exports = function (model) {
     let content =
 `const mongoose = require('mongoose'); 
+const softDelete = require('mongoose-softdelete')
 
 const Schema = mongoose.Schema;
 
@@ -10,6 +11,8 @@ ${fields(model.properties)}
 
 ${timestamp(model.timestamp)}
 });
+
+${model.name}Schema.plugin(softDelete);
 
 const ${model.name} = mongoose.model('${model.name}', ${model.name}Schema);
 

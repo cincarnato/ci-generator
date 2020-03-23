@@ -21,9 +21,15 @@ input ${model.name}Input{
    ${fields(model.properties, true)}
 }
 
+type ${model.name}Delete{
+    id: ID!
+    deleteSuccess: Boolean!
+}
+
 type Mutation {
     ${model.name.toLowerCase()}Create(input: ${model.name}Input): ${model.name}
     ${model.name.toLowerCase()}Update(id: ID!, input: ${model.name}Input): ${model.name}
+    ${model.name.toLowerCase()}Delete(id: ID!): ${model.name}Delete!
 }
 `
 

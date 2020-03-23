@@ -6,9 +6,9 @@ module.exports = function (model) {
     let content =
 `import ${model.name} from './../models/${model.name}Model'
 
-export const find${model.name}s = async function () {
+export const fetch${model.name}s = async function () {
     return new Promise((resolve, reject) => {
-        ${model.name}.find({}).${populate(model.properties)}exec((err, res) => (
+        ${model.name}.find({}).isDeleted(false).${populate(model.properties)}exec((err, res) => (
             err ? reject(err) : resolve(res)
         ));
     })
@@ -48,7 +48,15 @@ export const update${model.name} = async function (user, id, {${paramsFields(mod
     })
 }
 
-
+export const delete${model.name} = function (id) {
+    return new Promise((resolve, rejects) => {
+        find${model.name}(id).then((doc) => {
+            doc.softdelete(function (err) {
+                err ? rejects(err) : resolve({id: id, deleteSuccess: true})
+            });
+        })
+    })
+}
 
 `
     return content;

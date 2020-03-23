@@ -3,12 +3,19 @@ const GqlFetchAllContentGenerator = require("./generatorFront/GqlFetchAllContent
 const GqlFetchByIDContentGenerator = require("./generatorFront/GqlFetchByIDContentGenerator");
 const GqlCreateContentGenerator = require("./generatorFront/GqlCreateContentGenerator");
 const GqlUpdateContentGenerator = require("./generatorFront/GqlUpdateContentGenerator");
+const GqlDeleteContentGenerator = require("./generatorFront/GqlDeleteContentGenerator");
 
 const GqlFetchBySomethingContentGenerator = require("./generatorFront/GqlFetchBySomethingContentGenerator");
 
 const ComponentCreateContentGenerator = require("./generatorFront/ComponentCreateContentGenerator");
 const ComponentUpdateContentGenerator = require("./generatorFront/ComponentUpdateContentGenerator");
+const ComponentDeleteContentGenerator = require("./generatorFront/ComponentDeleteContentGenerator");
 const ComponetDataTableContentGenerator = require("./generatorFront/ComponetDataTableContentGenerator");
+
+//ShowData
+const ComponetShowDataItemContentGenerator = require("./generatorFront/ComponetShowDataItemContentGenerator");
+const ComponetShowDataContentGenerator = require("./generatorFront/ComponetShowDataContentGenerator");
+const ComponetShowContentGenerator = require("./generatorFront/ComponetShowContentGenerator");
 
 
 const PageCRUDContentGenerator = require("./generatorFront/PageCRUDContentGenerator");
@@ -97,6 +104,17 @@ source.models.forEach(model => {
         })
 })
 
+//CREATE  GQL DELETE FILES
+
+source.models.forEach(model => {
+    let path = gqlPath + model.name.toLowerCase() + 'Delete.graphql'
+    fs.writeFile(path, GqlDeleteContentGenerator(model),
+        (err) => {
+            if (err) return console.log(err);
+            console.log('GQL Delete File OK: ' + model.name);
+        })
+})
+
 
 //CREATE  Component Create FILES
 
@@ -121,6 +139,16 @@ source.models.forEach(model => {
         })
 })
 
+//CREATE  Component DELETE FILES
+
+source.models.forEach(model => {
+    let path = componentPath + model.name + 'Delete.vue'
+    fs.writeFile(path, ComponentDeleteContentGenerator(model),
+        (err) => {
+            if (err) return console.log(err);
+            console.log('Component Delete File OK: ' + model.name);
+        })
+})
 
 //CREATE  Component DataTable FILES
 
@@ -133,6 +161,39 @@ source.models.forEach(model => {
         })
 })
 
+
+//CREATE  Component ShowDataItems FILES
+
+source.models.forEach(model => {
+    let path = componentPath + model.name + 'ShowDataItem.vue'
+    fs.writeFile(path, ComponetShowDataItemContentGenerator(model),
+        (err) => {
+            if (err) return console.log(err);
+            console.log('Component ShowDataItem File OK: ' + model.name);
+        })
+})
+
+//CREATE  Component ShowData FILES
+
+source.models.forEach(model => {
+    let path = componentPath + model.name + 'ShowData.vue'
+    fs.writeFile(path, ComponetShowDataContentGenerator(model),
+        (err) => {
+            if (err) return console.log(err);
+            console.log('Component ShowData File OK: ' + model.name);
+        })
+})
+
+//CREATE  Component Show FILES
+
+source.models.forEach(model => {
+    let path = componentPath + model.name + 'Show.vue'
+    fs.writeFile(path, ComponetShowContentGenerator(model),
+        (err) => {
+            if (err) return console.log(err);
+            console.log('Component Show File OK: ' + model.name);
+        })
+})
 
 //CREATE  PAGE FILES
 

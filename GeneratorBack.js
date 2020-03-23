@@ -10,7 +10,7 @@ const fs = require('fs');
 const source = require('./input/source.json')
 
 
-const outputpath = './output/'
+const outputpath = './output-back/'
 const basepath = outputpath + source.module.toLowerCase()
 
 const modelpath = basepath + '/models/' //FINAL

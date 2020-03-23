@@ -33,6 +33,13 @@ class ${model.name}Provider {
             variables: form
         })
     }
+    
+     delete${model.name}(id) {
+        return graphqlClient.mutate({
+            mutation: require('./gql/${model.name.toLowerCase()}Delete.graphql'),
+            variables: {id}
+        })
+    }
 
 }
 

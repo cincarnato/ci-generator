@@ -1,0 +1,121 @@
+{
+  "module": "Collections",
+  "models": [
+    {
+      "name": "Covenant",
+      "timestamp": true,
+      "properties": [
+        {
+          "name": "date",
+          "type": "Date",
+          "required": true,
+          "label": "Fecha",
+          "icon": "calendar_today",
+          "findby": true
+        },
+        {
+          "name": "since",
+          "type": "String",
+          "label": "Desde",
+          "icon": "watch_later",
+          "required": true
+        },
+        {
+          "name": "until",
+          "type": "String",
+          "label": "Hasta",
+          "icon": "watch_later",
+          "required": true
+        },
+        {
+          "name": "month",
+          "type": "String",
+          "label": "Mes",
+          "icon": "calendar_today",
+          "required": true
+        },
+        {
+          "name": "fullname",
+          "type": "String",
+          "label": "Nombre y Apellido",
+          "icon": "account_box",
+          "required": true
+        },
+        {
+          "name": "dni",
+          "type": "String",
+          "label": "DNI",
+          "icon": "credit_card",
+          "required": true
+        },
+        {
+          "name": "locality",
+          "type": "String",
+          "label": "Localidad",
+          "icon": "location_on",
+          "required": true
+        },
+        {
+          "name": "address",
+          "type": "String",
+          "label": "Dirección",
+          "icon": "location_on",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "type": "Float",
+          "label": "Monto",
+          "icon": "attach_money",
+          "required": true
+        },
+        {
+          "name": "comment",
+          "type": "String",
+          "label": "Comentario",
+          "icon": "note",
+          "required": false
+        },
+        {
+          "name": "group",
+          "type": "ObjectId",
+          "ref": "Group",
+          "label": "",
+          "icon": "",
+          "required": true
+        },
+        {
+          "name": "createdBy",
+          "type": "ObjectId",
+          "ref": "User",
+          "label": "",
+          "icon": "",
+          "required": true
+        },
+        {
+          "name": "updatedBy",
+          "type": "ObjectId",
+          "ref": "User",
+          "label": "",
+          "icon": "",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Group",
+      "timestamp": false,
+      "properties": [
+        {
+          "name": "name",
+          "type": "String",
+          "label": "Nombre",
+          "icon": "account_box",
+          "required": true,
+          "search": true
+        }
+      ]
+    }
+  ]
+}
+
