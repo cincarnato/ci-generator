@@ -29,7 +29,7 @@ const fs = require('fs');
 const source = require('./input/source.json')
 
 
-const outputpath = './output-front/'
+const outputpath = './output/front/'
 const basepath = outputpath + source.module.toLowerCase()
 
 const componentPath = basepath + '/components/' //FINAL
