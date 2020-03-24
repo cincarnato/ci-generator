@@ -4,7 +4,7 @@ module.exports = function (model) {
 //TYPE DEFINITION
     let content =
         `
-import {${findByImport(model)} create${model.name}, update${model.name}, delete${model.name},  find${model.name}, fetch${model.name}s} from '../../services/${model.name}Service'
+import {${findByImport(model)} create${model.name}, update${model.name}, delete${model.name},  find${model.name}, fetch${model.name}s, paginate${model.name}} from '../../services/${model.name}Service'
 
 export default {
     Query: {
@@ -15,6 +15,9 @@ export default {
         ${model.name.toLowerCase()}: (_, {id}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             return find${model.name}(id)
+        },
+        ${model.name.toLowerCase()}sPaginate: (_, {limit, pageNumber, search}) => {
+            return paginate${model.name}(limit, pageNumber, search)
         },
         ${findBy(model)}
     },

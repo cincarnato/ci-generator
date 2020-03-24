@@ -2,6 +2,7 @@ module.exports = function (model) {
     let content =
 `const mongoose = require('mongoose'); 
 const softDelete = require('mongoose-softdelete')
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const Schema = mongoose.Schema;
 
@@ -13,6 +14,7 @@ ${timestamp(model.timestamp)}
 });
 
 ${model.name}Schema.plugin(softDelete);
+${model.name}Schema.plugin(mongoosePaginate);
 
 const ${model.name} = mongoose.model('${model.name}', ${model.name}Schema);
 

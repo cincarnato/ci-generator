@@ -10,6 +10,14 @@ class ${model.name}Provider {
     ${model.name.toLowerCase()}s() {
         return graphqlClient.query({query: require('./gql/${model.name.toLowerCase()}s.graphql')})
     }
+    
+    paginate${model.name}s(limit, pageNumber, search = null) {
+        return graphqlClient.query({
+            query: require('./gql/${model.name.toLowerCase()}sPaginate.graphql'),
+            variables: {limit, pageNumber, search},
+            fetchPolicy: "network-only"
+        })
+    }
 
     ${model.name.toLowerCase()}(id) {
         return graphqlClient.query({

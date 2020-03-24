@@ -14,6 +14,32 @@ export const fetch${model.name}s = async function () {
     })
 }
 
+export const paginate${model.name} = function (limit, pageNumber = 1, search = null) {
+
+    function qs(search) {
+        let qs = {}
+        if (search) {
+            qs = {
+                $or: [
+                    ${searchParams(model.properties)}
+                ]
+            }
+        }
+        return qs
+    }
+
+    let query = {deleted: false, ...qs(search)}
+    let populate = ${populateArray(model.properties)}
+    let params = {page: pageNumber, limit: limit, populate}
+
+    return new Promise((resolve, reject) => {
+        ${model.name}.paginate(query, params).then(result => {
+                resolve({items: result.docs, totalItems: result.totalDocs, page: result.page})
+            }
+        ).catch(err => reject(err))
+    })
+}
+
 export const find${model.name} = async function (id) {
     return new Promise((resolve, reject) => {
         ${model.name}.findOne({_id: id}).${populate(model.properties)}exec((err, res) => (
@@ -88,6 +114,13 @@ export const find${model.name}sBy${capitalize(field.name)} = async function (${f
 }
 // ---------------- END FINDS BY ----------------------
 
+// ---------------- SEARCH ----------------------
+function searchParams(properties){
+    properties = properties.filter(field => field.search)
+    return properties.map(field => {
+        return `{${field.name}: {$regex: search, $options: 'i'}}`
+    }).join(',\n')
+}
 
 // ---------------- POPULATE ----------------------
 function resolvePopulate(properties){
@@ -99,6 +132,18 @@ function resolvePopulate(properties){
         }).join('.') + '.execPopulate(() => resolve(doc))'
     }
     return 'resolve(doc)'
+}
+
+
+function populateArray(properties){
+    properties = getObjectIdProperties(properties)
+
+    if(properties.length > 0){
+        return '[' + properties.map(field => {
+            return `'${field.name}'`
+        }).join(',') + ']'
+    }
+    return null
 }
 
 function populate(properties){

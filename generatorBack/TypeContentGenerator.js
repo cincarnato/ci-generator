@@ -10,8 +10,15 @@ id: ID!
 ${fields(model.properties)}
 }
 
+type ${model.name}Paginated{
+    totalItems: Int!
+    page: Int!
+    items: [${model.name}!]
+}
+
 type Query {
     ${model.name.toLowerCase()}s: [${model.name}]
+    ${model.name.toLowerCase()}sPaginate(limit: Int!, pageNumber: Int, search: String): ${model.name}Paginated  
     ${model.name.toLowerCase()}(id:ID!): ${model.name}
     ${findBy(model)}
     
@@ -25,6 +32,7 @@ type ${model.name}Delete{
     id: ID!
     deleteSuccess: Boolean!
 }
+
 
 type Mutation {
     ${model.name.toLowerCase()}Create(input: ${model.name}Input): ${model.name}

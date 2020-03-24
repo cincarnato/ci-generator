@@ -4,6 +4,7 @@ const GqlFetchByIDContentGenerator = require("./generatorFront/GqlFetchByIDConte
 const GqlCreateContentGenerator = require("./generatorFront/GqlCreateContentGenerator");
 const GqlUpdateContentGenerator = require("./generatorFront/GqlUpdateContentGenerator");
 const GqlDeleteContentGenerator = require("./generatorFront/GqlDeleteContentGenerator");
+const GqlPaginateContentGenerator = require("./generatorFront/GqlPaginateContentGenerator");
 
 const GqlFetchBySomethingContentGenerator = require("./generatorFront/GqlFetchBySomethingContentGenerator");
 
@@ -115,6 +116,16 @@ source.models.forEach(model => {
         })
 })
 
+//CREATE  GQL PAGINATE FILES
+
+source.models.forEach(model => {
+    let path = gqlPath + model.name.toLowerCase() + 'sPaginate.graphql'
+    fs.writeFile(path, GqlPaginateContentGenerator(model),
+        (err) => {
+            if (err) return console.log(err);
+            console.log('GQL Paginate File OK: ' + model.name);
+        })
+})
 
 //CREATE  Component Create FILES
 

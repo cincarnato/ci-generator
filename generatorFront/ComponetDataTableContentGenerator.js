@@ -14,11 +14,13 @@ module.exports = function (model) {
         <v-card-text>
            
            <v-col md6 xs12 class="offset-md6">
-            <v-text-field v-model="filter.search" append-icon="search" label="Buscar" hide-details />
+            <v-text-field v-model="filter.search" v-on:keyup.native.enter="updatePage" append-icon="search" label="Buscar" hide-details />
            </v-col>
 
            <v-data-table dense class="mt-3" :headers="headers" :items="items"
-                          :search="filter.search" :single-expand="false" :loading="loading">
+                          :search="filter.search" :single-expand="false" :loading="loading"
+                         :server-items-length="totalItems" :items-per-page="limit" :page.sync="pageNumber" @update:page="updatePage"
+                          >
 
               <div slot="no-data" color="info" outline class="text-xs-center">Sin datos</div>
                
@@ -39,7 +41,7 @@ module.exports = function (model) {
         </v-dialog>
         
         <v-dialog :value="deleting" width="850" fullscreen persistent>
-            <${model.name.toLowerCase()}-delete :item="itemToDelete" v-if="deleting" v-on:itemDelete="update" v-on:closeDialog="deleting=false" />
+            <${model.name.toLowerCase()}-delete :item="itemToDelete" v-if="deleting" v-on:itemDelete="updatePage" v-on:closeDialog="deleting=false" />
         </v-dialog>
 
         <v-dialog :value="creating" width="850" fullscreen persistent>
@@ -70,11 +72,7 @@ module.exports = function (model) {
         name: "${model.name}DataTable",
         components: {${model.name}Create, ${model.name}Update, ${model.name}Delete, ${model.name}Show},
         created() {
-            this.loading = true
-            ${model.name}Provider.${model.name.toLowerCase()}s().then(r => {
-                this.items = r.data.${model.name.toLowerCase()}s
-                this.loading = false
-            })
+            this.updatePage()
         },
         methods: {
             itemCreate(item) {
@@ -102,11 +100,19 @@ module.exports = function (model) {
                     this.items = r.data.${model.name.toLowerCase()}s
                     this.loading = false
                 })
+            },
+            updatePage() {
+                this.loading = true
+                ${model.name}Provider.paginate${model.name}s(this.limit, this.pageNumber, this.filter.search).then(r => {
+                    this.items = r.data.${model.name.toLowerCase()}sPaginate.items
+                    this.totalItems = r.data.${model.name.toLowerCase()}sPaginate.totalItems
+                    this.loading = false
+                })
             }
         },
         data() {
             return {
-                title: 'Creando ${model.name}',
+                title: 'Listado de ${model.name}',
                 creating: false,
                 updating: false,
                 deleting: false,
@@ -124,6 +130,9 @@ module.exports = function (model) {
                     ${headers(model.properties)},
                     {text: 'Aciones', value: 'action', sortable: false},
                 ],
+                totalItems: 0,
+                limit: 5,
+                pageNumber: 1
             }
         }
     }
