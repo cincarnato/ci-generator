@@ -18,8 +18,12 @@ module.exports = function (model) {
            </v-col>
 
            <v-data-table dense class="mt-3" :headers="headers" :items="items"
-                          :search="filter.search" :single-expand="false" :loading="loading"
-                         :server-items-length="totalItems" :items-per-page="limit" :page.sync="pageNumber" @update:page="updatePage"
+                         :search="filter.search" :single-expand="false" :loading="loading"
+                         :server-items-length="totalItems" 
+                         :items-per-page.sync="limit" :page.sync="pageNumber" 
+                         :sort-by.sync="orderBy" :sort-desc.sync="orderDesc"
+                         @update:page="updatePage" @update:items-per-page="updatePage"
+                          @update:sort-by="updatePage" @update:sort-desc="updatePage"
                           >
 
               <div slot="no-data" color="info" outline class="text-xs-center">Sin datos</div>
@@ -103,12 +107,20 @@ module.exports = function (model) {
             },
             updatePage() {
                 this.loading = true
-                ${model.name}Provider.paginate${model.name}s(this.limit, this.pageNumber, this.filter.search).then(r => {
+                ${model.name}Provider.paginate${model.name}s(this.limit, this.pageNumber, this.filter.search, this.getOrderBy, this.getOrderDesc).then(r => {
                     this.items = r.data.${model.name.toLowerCase()}sPaginate.items
                     this.totalItems = r.data.${model.name.toLowerCase()}sPaginate.totalItems
                     this.loading = false
                 })
             }
+        },
+        computed: {
+          getOrderBy(){
+              return  (Array.isArray(this.orderBy)) ? this.orderBy[0]: this.orderBy
+          },
+          getOrderDesc(){
+              return  (Array.isArray(this.orderDesc)) ? this.orderDesc[0]: this.orderDesc
+          } 
         },
         data() {
             return {
@@ -132,7 +144,9 @@ module.exports = function (model) {
                 ],
                 totalItems: 0,
                 limit: 5,
-                pageNumber: 1
+                pageNumber: 1,
+                orderBy: null,
+                orderDesc: false
             }
         }
     }

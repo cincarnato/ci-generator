@@ -16,8 +16,8 @@ export default {
             if (!user) throw new AuthenticationError("Unauthenticated")
             return find${model.name}(id)
         },
-        ${model.name.toLowerCase()}sPaginate: (_, {limit, pageNumber, search}) => {
-            return paginate${model.name}(limit, pageNumber, search)
+        ${model.name.toLowerCase()}sPaginate: (_, {limit, pageNumber, search, orderBy, orderDesc}) => {
+            return paginate${model.name}(limit, pageNumber, search, orderBy, orderDesc)
         },
         ${findBy(model)}
     },

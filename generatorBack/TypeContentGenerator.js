@@ -18,7 +18,7 @@ type ${model.name}Paginated{
 
 type Query {
     ${model.name.toLowerCase()}s: [${model.name}]
-    ${model.name.toLowerCase()}sPaginate(limit: Int!, pageNumber: Int, search: String): ${model.name}Paginated  
+    ${model.name.toLowerCase()}sPaginate(limit: Int!, pageNumber: Int, search: String, orderBy: String, orderDesc: Boolean): ${model.name}Paginated  
     ${model.name.toLowerCase()}(id:ID!): ${model.name}
     ${findBy(model)}
     

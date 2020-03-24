@@ -14,7 +14,7 @@ export const fetch${model.name}s = async function () {
     })
 }
 
-export const paginate${model.name} = function (limit, pageNumber = 1, search = null) {
+export const paginate${model.name} = function (limit, pageNumber = 1, search = null, orderBy = null, orderDesc = false) {
 
     function qs(search) {
         let qs = {}
@@ -27,10 +27,20 @@ export const paginate${model.name} = function (limit, pageNumber = 1, search = n
         }
         return qs
     }
+    
+     function getSort(orderBy, orderDesc) {
+        if (orderBy) {
+            return (orderDesc ? '-' : '') + orderBy
+        } else {
+            return null
+        }
+    }
+
 
     let query = {deleted: false, ...qs(search)}
     let populate = ${populateArray(model.properties)}
-    let params = {page: pageNumber, limit: limit, populate}
+    let sort = getSort(orderBy, orderDesc)
+    let params = {page: pageNumber, limit: limit, populate, sort}
 
     return new Promise((resolve, reject) => {
         ${model.name}.paginate(query, params).then(result => {

@@ -11,10 +11,10 @@ class ${model.name}Provider {
         return graphqlClient.query({query: require('./gql/${model.name.toLowerCase()}s.graphql')})
     }
     
-    paginate${model.name}s(limit, pageNumber, search = null) {
+    paginate${model.name}s(limit, pageNumber, search = null, orderBy = null, orderDesc = false) {
         return graphqlClient.query({
             query: require('./gql/${model.name.toLowerCase()}sPaginate.graphql'),
-            variables: {limit, pageNumber, search},
+            variables: {limit, pageNumber, search, orderBy, orderDesc},
             fetchPolicy: "network-only"
         })
     }
