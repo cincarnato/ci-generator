@@ -1,23 +1,23 @@
-module.exports = function (model) {
+module.exports = function (model, moduleName) {
     let columns = distribute(model.properties)
     let content =
         `<template>
     <v-row>
         <v-col cols="12" sm="6" md="4">
             <v-list>
-                ${getItems(model, columns[1])}
+                ${getItems(model, columns[1], moduleName)}
             </v-list>
         </v-col>
 
         <v-col cols="12" sm="6" md="4">
             <v-list>
-                ${getItems(model, columns[2])}
+                ${getItems(model, columns[2], moduleName)}
             </v-list>
         </v-col>
 
         <v-col cols="12" sm="6" md="4">
             <v-list>
-                ${getItems(model, columns[3])}
+                ${getItems(model, columns[3], moduleName)}
             </v-list>
         </v-col>
 
@@ -56,9 +56,13 @@ function distribute(properties) {
 }
 
 
-function getItems(model, column) {
+function getItems(model, column, moduleName) {
 
     return column.map(field => {
-        return ` <${model.name.toLowerCase()}-show-item :item="item.${field.name}" label="${field.label}" icon="${field.icon}"/>`
+        return ` <${model.name.toLowerCase()}-show-item :item="item.${field.name}" :label="$t('${getI18nKey(moduleName,model.name, field.name)}')" icon="${field.icon}"/>`
     }).join('\n                ')
+}
+
+function getI18nKey(moduleName, modelName, fieldName) {
+    return moduleName.toLowerCase() + '.' + modelName.toLowerCase() + '.' + fieldName.toLowerCase()
 }

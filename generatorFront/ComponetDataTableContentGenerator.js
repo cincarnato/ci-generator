@@ -1,6 +1,6 @@
 const capitalize = require('../generatorUtils/capitalize')
 
-module.exports = function (model) {
+module.exports = function (model, moduleName) {
     let content =
         `<template>
     <v-card class="elevation-6">
@@ -81,6 +81,7 @@ module.exports = function (model) {
         methods: {
             itemCreate(item) {
                 this.items.push(item)
+                this.totalItems++
             },
             itemUpdate(item) {
                 let index = this.items.findIndex(i => i.id == item.id)
@@ -139,7 +140,7 @@ module.exports = function (model) {
                 },
                 items: [],
                 headers: [
-                    ${headers(model.properties)},
+                    ${headers(model.properties, model.name, moduleName)},
                     {text: 'Aciones', value: 'action', sortable: false},
                 ],
                 totalItems: 0,
@@ -159,10 +160,14 @@ module.exports = function (model) {
 }
 
 
-function headers(properties) {
+function headers(properties, modelName, moduleName) {
 
     let content = properties.map(field => {
-        return `{text: '${capitalize(field.name)}', value: '${field.name}'}`
+        return `{text: this.$t('${getI18nKey(moduleName,modelName,field.name)}'), value: '${field.name}'}`
     }).join(',\n                    ')
     return content
+}
+
+function getI18nKey(moduleName, modelName, fieldName) {
+    return moduleName.toLowerCase() + '.' + modelName.toLowerCase() + '.' + fieldName.toLowerCase()
 }

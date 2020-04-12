@@ -1,0 +1,60 @@
+{
+  "module": "Customization",
+  "models": [
+    {
+      "name": "Customization",
+      "timestamp": false,
+      "properties": [
+        {
+          "name": "primary",
+          "type": "String",
+          "label": "Primary",
+          "icon": "palette",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "onPrimary",
+          "type": "String",
+          "label": "OnPrimary",
+          "icon": "colorize",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "secondary",
+          "type": "String",
+          "label": "Secondary",
+          "icon": "palette",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "onSecondary",
+          "type": "String",
+          "label": "OnSecondary",
+          "icon": "colorize",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "logo",
+          "type": "String",
+          "label": "Logo",
+          "icon": "photo",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "language",
+          "type": "String",
+          "label": "Language",
+          "icon": "language",
+          "required": true,
+          "search": true
+        }
+      ]
+    }
+  ]
+}
+

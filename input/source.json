@@ -1,14 +1,66 @@
 {
-  "module": "Security",
+  "module": "People",
   "models": [
     {
-      "name": "Group",
+      "name": "person",
       "timestamp": false,
       "properties": [
         {
           "name": "name",
           "type": "String",
-          "label": "Nombre",
+          "i18n": {
+            "en": "Name",
+            "es": "Nombre",
+            "pt": "Nome"
+          },
+          "icon": "account_box",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "lastname",
+          "type": "String",
+          "i18n": {
+            "en": "Lastname",
+            "es": "Apellido",
+            "pt": "Sobrenome"
+          },
+          "icon": "account_box",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "sex",
+          "type": "String",
+          "i18n": {
+            "en": "Sex",
+            "es": "Sexo",
+            "pt": "Sexo"
+          },
+          "icon": "account_box",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "birthDate",
+          "type": "date",
+          "i18n": {
+            "en": "Birth Date",
+            "es": "Fecha Nacimiento",
+            "pt": "Data de nascimento"
+          },
+          "icon": "account_box",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "identification",
+          "type": "String",
+          "i18n": {
+            "en": "Identification Number",
+            "es": "Numero de Identificación (DNI)",
+            "pt": "Búmero de identificação"
+          },
           "icon": "account_box",
           "required": true,
           "search": true

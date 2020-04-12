@@ -1,0 +1,20 @@
+{
+  "module": "Security",
+  "models": [
+    {
+      "name": "Group",
+      "timestamp": false,
+      "properties": [
+        {
+          "name": "name",
+          "type": "String",
+          "label": "Nombre",
+          "icon": "account_box",
+          "required": true,
+          "search": true
+        }
+      ]
+    }
+  ]
+}
+

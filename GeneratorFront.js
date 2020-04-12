@@ -18,6 +18,8 @@ const ComponetShowDataItemContentGenerator = require("./generatorFront/ComponetS
 const ComponetShowDataContentGenerator = require("./generatorFront/ComponetShowDataContentGenerator");
 const ComponetShowContentGenerator = require("./generatorFront/ComponetShowContentGenerator");
 
+//i18n
+const I18nMessagesGenerator = require("./generatorFront/I18nMessagesGenerator");
 
 const PageCRUDContentGenerator = require("./generatorFront/PageCRUDContentGenerator");
 
@@ -47,6 +49,18 @@ CreateDir(pagePath)
 CreateDir(providerPath)
 //DIR: GQL
 CreateDir(gqlPath)
+
+
+//I18N
+
+let path = basepath + '/' + source.module.toLowerCase() +'-i18n-messages.js'
+fs.writeFile(path, I18nMessagesGenerator(source),
+    (err) => {
+        if (err) return console.log(err);
+        console.log('i18n File OK: ' + source);
+    })
+
+
 
 //CREATE  PROVIDER FILES
 
@@ -131,7 +145,7 @@ source.models.forEach(model => {
 
 source.models.forEach(model => {
     let path = componentPath + model.name + 'Create.vue'
-    fs.writeFile(path, ComponentCreateContentGenerator(model),
+    fs.writeFile(path, ComponentCreateContentGenerator(model,source.module),
         (err) => {
             if (err) return console.log(err);
             console.log('Component Create File OK: ' + model.name);
@@ -143,7 +157,7 @@ source.models.forEach(model => {
 
 source.models.forEach(model => {
     let path = componentPath + model.name + 'Update.vue'
-    fs.writeFile(path, ComponentUpdateContentGenerator(model),
+    fs.writeFile(path, ComponentUpdateContentGenerator(model,source.module),
         (err) => {
             if (err) return console.log(err);
             console.log('Component Update File OK: ' + model.name);
@@ -165,7 +179,7 @@ source.models.forEach(model => {
 
 source.models.forEach(model => {
     let path = componentPath + model.name + 'DataTable.vue'
-    fs.writeFile(path, ComponetDataTableContentGenerator(model),
+    fs.writeFile(path, ComponetDataTableContentGenerator(model,source.module),
         (err) => {
             if (err) return console.log(err);
             console.log('Component DataTable File OK: ' + model.name);
@@ -177,7 +191,7 @@ source.models.forEach(model => {
 
 source.models.forEach(model => {
     let path = componentPath + model.name + 'ShowDataItem.vue'
-    fs.writeFile(path, ComponetShowDataItemContentGenerator(model),
+    fs.writeFile(path, ComponetShowDataItemContentGenerator(model,source.module),
         (err) => {
             if (err) return console.log(err);
             console.log('Component ShowDataItem File OK: ' + model.name);
@@ -188,7 +202,7 @@ source.models.forEach(model => {
 
 source.models.forEach(model => {
     let path = componentPath + model.name + 'ShowData.vue'
-    fs.writeFile(path, ComponetShowDataContentGenerator(model),
+    fs.writeFile(path, ComponetShowDataContentGenerator(model,source.module),
         (err) => {
             if (err) return console.log(err);
             console.log('Component ShowData File OK: ' + model.name);

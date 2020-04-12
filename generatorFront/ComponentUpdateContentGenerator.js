@@ -4,7 +4,7 @@ const componentField = require('../generatorUtils/componentField')
 const {generateDataCombos, generateImportCombos, generateMethodsCombos, generateMountedCombos} = require('../generatorUtils/componentFieldCombos')
 const importMomentIfDateExist = require('../generatorUtils/importMomentIfDateExist')
 
-module.exports = function (model) {
+module.exports = function (model,moduleName) {
     let content =
         `<template>
     <v-card tile>
@@ -28,7 +28,7 @@ module.exports = function (model) {
 
                 <v-row>
     
-                   ${generateFields(model.properties)}
+                   ${generateFields(model.properties, model.name, moduleName)}
                     
                 </v-row>
 
@@ -106,7 +106,6 @@ module.exports = function (model) {
         methods: {
             save() {
                 if (this.$refs.form.validate()) {
-                    this.form.amount = parseFloat(this.form.amount)
                     ${model.name}Provider.update${model.name}(this.form).then(r => {
                             if (r) {
                                 this.$emit('itemUpdate',r.data.${model.name.toLowerCase()}Update)
@@ -154,11 +153,11 @@ function generateFormObjectFields(properties) {
 
 
 
-function generateFields(properties) {
+function generateFields(properties, modelName, moduleName) {
     let propFiltered = filterBackendProperties(properties);
 
     return propFiltered.map(field => {
-        return componentField(field)
+        return componentField(field, modelName, moduleName)
     }).join('\n ')
 
 }

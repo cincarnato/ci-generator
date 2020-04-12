@@ -1,31 +1,36 @@
-module.exports = function componentField(field){
+module.exports = function componentField(field, modelName, moduleName) {
     switch (field.type) {
         case 'String':
-            return generateTextField(field)
+            return generateTextField(field, modelName, moduleName)
         case 'Date':
-            return generateDateField(field)
+            return generateDateField(field, modelName, moduleName)
         case 'ObjectId':
-            return generateComboField(field)
+            return generateComboField(field, modelName, moduleName)
         default:
-            return generateTextField(field)
+            return generateTextField(field, modelName, moduleName)
     }
 }
 
-function generateTextField(field) {
+function getI18nKey(moduleName, modelName, fieldName) {
+    return moduleName.toLowerCase() + '.' + modelName.toLowerCase() + '.' + fieldName.toLowerCase()
+}
+
+function generateTextField(field, modelName, moduleName) {
     let content = `
                     <v-col cols="12" sm="6">
                         <v-text-field
-                                prepend-icon="${field.icon?field.icon:'label'}"
+                                prepend-icon="${field.icon ? field.icon : 'label'}"
                                 name="${field.name}"
-                                label="${field.label?field.label:field.name}"
                                 type="text"
                                 v-model="form.${field.name}"
-                                placeholder="${field.label?field.label:field.name}"
+                                :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
+                                :placeholder="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 class="pa-3"
                                 :rules="[rules.required]"
                                 :error="hasErrors('${field.name}')"
                                 :error-messages="getMessageErrors('${field.name}')"
                                 required
+                                 color="secondary"
                         ></v-text-field>
                     </v-col>
     `
@@ -33,22 +38,24 @@ function generateTextField(field) {
 }
 
 
-function generateComboField(field) {
+function generateComboField(field, modelName, moduleName) {
     let content = `
                      <v-col cols="12" sm="6">
                         <v-select
-                                prepend-icon="${field.icon?field.icon:'label'}"
+                                prepend-icon="${field.icon ? field.icon : 'label'}"
                                 class="pa-3"
                                 :items="${field.name}s"
                                 :item-text="'name'"
                                 :item-value="'id'"
                                 v-model="form.${field.name}"
-                                label="${field.label?field.label:field.name}"
+                                :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 :loading="loading"
                                 :rules="[rules.required]"
                                 :error="hasErrors('${field.name}')"
                                 :error-messages="getMessageErrors('${field.name}')"
                                 required
+                                color="secondary"
+                                item-color="secondary"
                         ></v-select>
                     </v-col>
     `
@@ -56,7 +63,7 @@ function generateComboField(field) {
 }
 
 
-function generateDateField(field) {
+function generateDateField(field, modelName, moduleName) {
     let content = `
                    <v-col cols="12" sm="6">
                         <v-menu
@@ -71,14 +78,15 @@ function generateDateField(field) {
                                 <v-text-field
                                         class="pa-3"
                                         v-model="form.${field.name}"
-                                        label="${field.label?field.label:field.name}"
-                                        prepend-icon="${field.icon?field.icon:'event'}"
+                                        :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
+                                        prepend-icon="${field.icon ? field.icon : 'event'}"
                                         readonly
                                         hide-details
                                         v-on="on"
                                         :rules="[rules.required]"
                                         :error="hasErrors('${field.name}')"
                                         :error-messages="getMessageErrors('${field.name}')"
+                                         color="secondary"
                                 ></v-text-field>
                             </template>
                             <v-date-picker v-model="form.${field.name}" scrollable @input="modal =false">
