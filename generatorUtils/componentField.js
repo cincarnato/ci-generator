@@ -1,3 +1,5 @@
+const getI18nKey = require('./getI18nKey')
+
 module.exports = function componentField(field, modelName, moduleName) {
     switch (field.type) {
         case 'String':
@@ -9,10 +11,6 @@ module.exports = function componentField(field, modelName, moduleName) {
         default:
             return generateTextField(field, modelName, moduleName)
     }
-}
-
-function getI18nKey(moduleName, modelName, fieldName) {
-    return moduleName.toLowerCase() + '.' + modelName.toLowerCase() + '.' + fieldName.toLowerCase()
 }
 
 function generateTextField(field, modelName, moduleName) {

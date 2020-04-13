@@ -43,7 +43,7 @@
         },
         {
           "name": "birthDate",
-          "type": "date",
+          "type": "Date",
           "i18n": {
             "en": "Birth Date",
             "es": "Fecha Nacimiento",
@@ -60,6 +60,18 @@
             "en": "Identification Number",
             "es": "Numero de Identificación (DNI)",
             "pt": "Búmero de identificação"
+          },
+          "icon": "account_box",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "address",
+          "type": "String",
+          "i18n": {
+            "en": "Address",
+            "es": "Dirección",
+            "pt": "Endereço"
           },
           "icon": "account_box",
           "required": true,

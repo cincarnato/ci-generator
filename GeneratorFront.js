@@ -223,7 +223,7 @@ source.models.forEach(model => {
 //CREATE  PAGE FILES
 
 source.models.forEach(model => {
-    let path = pagePath + model.name + 'Crud.vue'
+    let path = pagePath + model.name + 'CrudPage.vue'
     fs.writeFile(path, PageCRUDContentGenerator(model),
         (err) => {
             if (err) return console.log(err);

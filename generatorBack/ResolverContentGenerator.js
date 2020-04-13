@@ -6,6 +6,14 @@ module.exports = function (model) {
         `
 import {${findByImport(model)} create${model.name}, update${model.name}, delete${model.name},  find${model.name}, fetch${model.name}s, paginate${model.name}} from '../../services/${model.name}Service'
 
+import {AuthenticationError, ForbiddenError} from "apollo-server-express";
+
+import {
+    ${model.name.toUpperCase()}_UPDATE,
+    ${model.name.toUpperCase()}_CREATE,
+    ${model.name.toUpperCase()}_DELETE
+} from "../../../security/permissions";
+
 export default {
     Query: {
         ${model.name.toLowerCase()}s: (_, {}, {user,rbac}) => {
@@ -24,17 +32,17 @@ export default {
     Mutation: {
         ${model.name.toLowerCase()}Create: (_, {input}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
-            if(!rbac.isAllowed(user.id, "SECURITY-ADMIN-CREATE")) throw new ForbiddenError("Not Authorized")
+            if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_CREATE)) throw new ForbiddenError("Not Authorized")
             return create${model.name}(user, input)
         },
           ${model.name.toLowerCase()}Update: (_, {id, input}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
-            if(!rbac.isAllowed(user.id, "SECURITY-ADMIN-UPDATE")) throw new ForbiddenError("Not Authorized")
+            if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_UPDATE)) throw new ForbiddenError("Not Authorized")
             return update${model.name}(user, id, input)
         },
          ${model.name.toLowerCase()}Delete: (_, {id}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
-            if(!rbac.isAllowed(user.id, "SECURITY-ADMIN-DELETE")) throw new ForbiddenError("Not Authorized")
+            if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_DELETE)) throw new ForbiddenError("Not Authorized")
             return delete${model.name}(id)
         },
     }

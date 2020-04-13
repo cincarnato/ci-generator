@@ -1,4 +1,5 @@
 const capitalize = require('../generatorUtils/capitalize')
+const getI18nKey = require('../generatorUtils/getI18nKey')
 
 module.exports = function (model, moduleName) {
     let content =
@@ -166,8 +167,4 @@ function headers(properties, modelName, moduleName) {
         return `{text: this.$t('${getI18nKey(moduleName,modelName,field.name)}'), value: '${field.name}'}`
     }).join(',\n                    ')
     return content
-}
-
-function getI18nKey(moduleName, modelName, fieldName) {
-    return moduleName.toLowerCase() + '.' + modelName.toLowerCase() + '.' + fieldName.toLowerCase()
 }

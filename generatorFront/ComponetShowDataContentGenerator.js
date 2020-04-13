@@ -1,3 +1,5 @@
+const getI18nKey = require('../generatorUtils/getI18nKey')
+
 module.exports = function (model, moduleName) {
     let columns = distribute(model.properties)
     let content =
@@ -61,8 +63,4 @@ function getItems(model, column, moduleName) {
     return column.map(field => {
         return ` <${model.name.toLowerCase()}-show-item :item="item.${field.name}" :label="$t('${getI18nKey(moduleName,model.name, field.name)}')" icon="${field.icon}"/>`
     }).join('\n                ')
-}
-
-function getI18nKey(moduleName, modelName, fieldName) {
-    return moduleName.toLowerCase() + '.' + modelName.toLowerCase() + '.' + fieldName.toLowerCase()
 }
