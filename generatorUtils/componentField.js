@@ -24,7 +24,7 @@ function generateTextField(field, modelName, moduleName) {
                                 :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 :placeholder="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 class="pa-3"
-                                :rules="[rules.required]"
+                                ${field.required?':rules="[rules.required]"':''}
                                 :error="hasErrors('${field.name}')"
                                 :error-messages="getMessageErrors('${field.name}')"
                                 required

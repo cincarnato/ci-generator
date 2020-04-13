@@ -3,11 +3,11 @@ module.exports = function (model) {
         `<template>
     <v-card>
 
-        <v-toolbar  flat dark color="primary">
-            <v-toolbar-title>{{title}}</v-toolbar-title>
+        <v-toolbar  flat color="primary">
+            <v-toolbar-title class="onPrimary--text">{{title}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn icon dark @click="$emit('closeDialog')">
+                <v-btn icon color="primary" class="onPrimary--text" @click="$emit('closeDialog')">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-toolbar-items>

@@ -27,9 +27,16 @@ export default messages
 function getModelMessages(models, lang) {
     return models.map(model => {
         return `${model.name}: { 
-          ${getPropertiesMessages(model.properties, lang)} 
+          ${getPropertiesMessages(model.properties, lang)},
+          ${getAditionalMessages(model.i18n,lang)}
           }`
     }).join(",\n")
+}
+
+function getAditionalMessages(aditionals, lang) {
+    return aditionals.map(aditional => {
+        return `  ${getPropertyMessage(aditional, lang)}`
+    }).join(",\n          ")
 }
 
 function getPropertiesMessages(properties, lang) {

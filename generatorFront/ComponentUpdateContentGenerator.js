@@ -9,11 +9,11 @@ module.exports = function (model,moduleName) {
         `<template>
     <v-card tile>
 
-        <v-toolbar flat dark color="primary">
-            <v-toolbar-title>{{title}}</v-toolbar-title>
+        <v-toolbar flat color="primary">
+            <v-toolbar-title class="onPrimary--text">{{title}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn icon dark @click="$emit('closeDialog')">
+                <v-btn icon color="primary" class="onPrimary--text" @click="$emit('closeDialog')">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-toolbar-items>
@@ -45,7 +45,7 @@ module.exports = function (model,moduleName) {
 
             <v-spacer></v-spacer>
 
-            <v-btn  color="primary" @click="save" :loading="loading">
+            <v-btn   color="secondary" class="onSecondary--text" @click="save" :loading="loading">
                 Modificar
             </v-btn>
 
