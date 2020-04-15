@@ -1,67 +1,10 @@
 {
-  "module": "People",
+  "module": "Appointment",
   "models": [
     {
-      "name": "person",
+      "name": "BranchOffice",
       "timestamp": false,
-      "i18n": [
-        {
-          "name": "main",
-          "i18n": {
-            "en": "Main",
-            "es": "Principal",
-            "pt": "Principal"
-          }
-        },
-        {
-          "name": "context",
-          "i18n": {
-            "en": "Context",
-            "es": "Contexto",
-            "pt": "Contexto"
-          }
-        },
-        {
-          "name": "contactData",
-          "i18n": {
-            "en": "Contact Data",
-            "es": "Datos de Contacto",
-            "pt": "Dados de contato"
-          }
-        },
-        {
-          "name": "socialNetworks",
-          "i18n": {
-            "en": "Social Networks",
-            "es": "Redes Sociales",
-            "pt": "Redes Sociais"
-          }
-        },
-        {
-          "name": "location",
-          "i18n": {
-            "en": "Location",
-            "es": "Ubicación",
-            "pt": "Localização"
-          }
-        },
-        {
-          "name": "lat",
-          "i18n": {
-            "en": "Latitude",
-            "es": "Latitud",
-            "pt": "Localização"
-          }
-        },
-        {
-          "name": "lng",
-          "i18n": {
-            "en": "Longitude",
-            "es": "Longitud",
-            "pt": "Localização"
-          }
-        }
-      ],
+      "i18n": [],
       "properties": [
         {
           "name": "name",
@@ -71,276 +14,48 @@
             "es": "Nombre",
             "pt": "Nome"
           },
+          "icon": "house",
+          "required": true,
+          "search": true
+        },
+        {
+          "name": "code",
+          "type": "String",
+          "i18n": {
+            "en": "Code",
+            "es": "Código",
+            "pt": "Código"
+          },
           "icon": "account_box",
           "required": true,
           "search": true
         },
         {
-          "name": "lastname",
+          "name": "location",
           "type": "String",
           "i18n": {
-            "en": "Lastname",
-            "es": "Apellido",
-            "pt": "Sobrenome"
+            "en": "Location",
+            "es": "Ubicación",
+            "pt": "Localização"
           },
-          "icon": "account_box",
+          "icon": "place",
           "required": true,
           "search": true
         },
         {
-          "name": "sex",
+          "name": "zipCodes",
           "type": "String",
           "i18n": {
-            "en": "Sex",
-            "es": "Sexo",
-            "pt": "Sexo"
+            "en": "ZipCodes",
+            "es": "Códigos Postales",
+            "pt": "Códigos Postales"
           },
           "icon": "account_box",
           "required": true,
-          "search": false
-        },
-        {
-          "name": "birthDate",
-          "type": "Date",
-          "i18n": {
-            "en": "Birth Date",
-            "es": "Fecha Nacimiento",
-            "pt": "Data de nascimento"
-          },
-          "icon": "account_box",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "identification",
-          "type": "String",
-          "i18n": {
-            "en": "Identification Number",
-            "es": "Numero de Identificación (DNI)",
-            "pt": "Búmero de identificação (CPF)"
-          },
-          "icon": "account_box",
-          "required": false,
           "search": true
-        },
-        {
-          "name": "civilStatus",
-          "type": "String",
-          "i18n": {
-            "en": "Civil Status",
-            "es": "Estado Civil",
-            "pt": "Estado civil"
-          },
-          "icon": "ballot",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "socioeconomicLevel",
-          "type": "String",
-          "i18n": {
-            "en": "Socioeconomic level",
-            "es": "Nivel socioeconómico",
-            "pt": "Nivel socioeconômico"
-          },
-          "icon": "work_outline",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "email",
-          "type": "String",
-          "i18n": {
-            "en": "Email",
-            "es": "Email",
-            "pt": "Email"
-          },
-          "icon": "email",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "phone",
-          "type": "String",
-          "i18n": {
-            "en": "Phone",
-            "es": "Telefono",
-            "pt": "Telefone"
-          },
-          "icon": "phone",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "mobile",
-          "type": "String",
-          "i18n": {
-            "en": "Mobile",
-            "es": "Celular",
-            "pt": "Celular"
-          },
-          "icon": "smartphone",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "facebook",
-          "type": "String",
-          "i18n": {
-            "en": "Facebook",
-            "es": "Facebook",
-            "pt": "Facebook"
-          },
-          "icon": "mdi-facebook",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "twitter",
-          "type": "String",
-          "i18n": {
-            "en": "Twitter",
-            "es": "Twitter",
-            "pt": "Twitter"
-          },
-          "icon": "mdi-twiter",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "address",
-          "type": "String",
-          "i18n": {
-            "en": "Address",
-            "es": "Dirección",
-            "pt": "Endereço"
-          },
-          "icon": "location_on",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "floor",
-          "type": "String",
-          "i18n": {
-            "en": "floor",
-            "es": "Piso",
-            "pt": "Piso"
-          },
-          "icon": "location_on",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "apartment",
-          "type": "String",
-          "i18n": {
-            "en": "Apartment/Office",
-            "es": "Depto/Oficina",
-            "pt": "Apartamento/Escritório"
-          },
-          "icon": "drag_indicator",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "housingType",
-          "type": "String",
-          "i18n": {
-            "en": "Housing type",
-            "es": "Tipo de vivienda",
-            "pt": "tipo de habitação"
-          },
-          "icon": "list",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "postalCode",
-          "type": "String",
-          "i18n": {
-            "en": "Postal Code",
-            "es": "Código Postal",
-            "pt": "Código postal"
-          },
-          "icon": "code",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "country",
-          "type": "String",
-          "i18n": {
-            "en": "Country",
-            "es": "País",
-            "pt": "País"
-          },
-          "icon": "flag",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "province",
-          "type": "String",
-          "i18n": {
-            "en": "State",
-            "es": "Provincia",
-            "pt": "Província"
-          },
-          "icon": "account_balance",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "locality",
-          "type": "String",
-          "i18n": {
-            "en": "locality",
-            "es": "Localidad",
-            "pt": "Localidade"
-          },
-          "icon": "location_city",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "schoolDistrict",
-          "type": "String",
-          "i18n": {
-            "en": "School District",
-            "es": "Distrito escolar",
-            "pt": "Distrito escolar"
-          },
-          "icon": "school",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "latitude",
-          "type": "Float",
-          "i18n": {
-            "en": "Latitude",
-            "es": "Latitud",
-            "pt": "Latitud"
-          },
-          "icon": "explore",
-          "required": false,
-          "search": false
-        },
-        {
-          "name": "longitude",
-          "type": "Float",
-          "i18n": {
-            "en": "longitude",
-            "es": "Longitud",
-            "pt": "longitude"
-          },
-          "icon": "explore",
-          "required": false,
-          "search": false
         }
       ]
     }
+
   ]
 }
-

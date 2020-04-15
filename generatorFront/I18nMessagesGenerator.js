@@ -2,17 +2,17 @@ module.exports = function (source) {
     let content = `
 const messages = {
     en: {
-       ${source.module.toLowerCase()}: {
+       ${source.module}: {
           ${getModelMessages(source.models, 'en')}
        }
     },
     es: {
-       ${source.module.toLowerCase()}: {
+       ${source.module}: {
           ${getModelMessages(source.models, 'es')}
        }
     },
     pt: {
-       ${source.module.toLowerCase()}: {
+       ${source.module}: {
           ${getModelMessages(source.models, 'pt')}
        }
     }

@@ -1,10 +1,11 @@
+const kebabCase = require('../generatorUtils/kebabCase')
 module.exports = function (model) {
     let content =
 `<template>
     <v-container fluid>
         <v-row>
             <v-col cols="12" class="pa-3">
-               <${model.name.toLowerCase()}-data-table />
+               <${kebabCase(model.name)}-data-table />
             </v-col>
         </v-row>
     </v-container>

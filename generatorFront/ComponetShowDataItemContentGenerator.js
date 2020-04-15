@@ -14,7 +14,7 @@ module.exports = function (model) {
 </template>
 <script>
     export default {
-        name: '${model.name.toLowerCase()}-show-item',
+        name: '${model.name}ShowItem',
         props: {
             item: String,
             label: String,

@@ -1,5 +1,5 @@
 const getI18nKey = require('../generatorUtils/getI18nKey')
-
+const kebabCase = require('../generatorUtils/kebabCase')
 module.exports = function (model, moduleName) {
     let columns = distribute(model.properties)
     let content =
@@ -29,7 +29,7 @@ module.exports = function (model, moduleName) {
     import ${model.name}ShowItem from "./${model.name}ShowDataItem"
 
     export default {
-        name: '${model.name.toLowerCase()}-show-data',
+        name: '${model.name}ShowData',
         components: {${model.name}ShowItem},
         props: {
             item: {}
@@ -61,6 +61,6 @@ function distribute(properties) {
 function getItems(model, column, moduleName) {
 
     return column.map(field => {
-        return ` <${model.name.toLowerCase()}-show-item :item="item.${field.name}" :label="$t('${getI18nKey(moduleName,model.name, field.name)}')" icon="${field.icon}"/>`
+        return ` <${kebabCase(model.name)}-show-item :item="item.${field.name}" :label="$t('${getI18nKey(moduleName,model.name, field.name)}')" icon="${field.icon}"/>`
     }).join('\n                ')
 }

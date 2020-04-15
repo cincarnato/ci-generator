@@ -1,3 +1,4 @@
+const kebabCase = require('../generatorUtils/kebabCase')
 module.exports = function (model) {
     let content =
         `<template>
@@ -14,7 +15,7 @@ module.exports = function (model) {
         </v-toolbar>
 
         <v-card-text>
-          <${model.name.toLowerCase()}-show-data :item="item" />
+          <${kebabCase(model.name)}-show-data :item="item" />
         </v-card-text>
 
         <v-card-text>

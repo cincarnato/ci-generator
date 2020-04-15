@@ -1,5 +1,6 @@
 const capitalize = require('../generatorUtils/capitalize')
 const getI18nKey = require('../generatorUtils/getI18nKey')
+const kebabCase = require('../generatorUtils/kebabCase')
 
 module.exports = function (model, moduleName) {
     let content =
@@ -33,7 +34,7 @@ module.exports = function (model, moduleName) {
 
               <template v-slot:item.action="{ item }">
                   <v-icon color="info" small class="mr-2" @click="openShow(item)">search</v-icon>
-                  <v-icon color="primary" small class="mr-2" @click="openEdit(item)">edit</v-icon>
+                  <v-icon color="purple" small class="mr-2" @click="openEdit(item)">edit</v-icon>
                   <v-icon color="red" small class="mr-2" @click="openDelete(item)">delete</v-icon>
               </template>
 
@@ -42,19 +43,19 @@ module.exports = function (model, moduleName) {
 
 
         <v-dialog :value="showing" max-width="950" fullscreen persistent>
-            <${model.name.toLowerCase()}-show :item="itemToShow" v-if="showing"  v-on:closeDialog="showing=false" />
+            <${kebabCase(model.name)}-show :item="itemToShow" v-if="showing"  v-on:closeDialog="showing=false" />
         </v-dialog>
         
         <v-dialog :value="deleting" max-width="950" fullscreen persistent>
-            <${model.name.toLowerCase()}-delete :item="itemToDelete" v-if="deleting" v-on:itemDelete="updatePage" v-on:closeDialog="deleting=false" />
+            <${kebabCase(model.name)}-delete :item="itemToDelete" v-if="deleting" v-on:itemDelete="updatePage" v-on:closeDialog="deleting=false" />
         </v-dialog>
 
         <v-dialog :value="creating"  fullscreen persistent>
-            <${model.name.toLowerCase()}-create v-if="creating" v-on:itemCreate="itemCreate" v-on:closeDialog="creating=false" />
+            <${kebabCase(model.name)}-create v-if="creating" v-on:itemCreate="itemCreate" v-on:closeDialog="creating=false" />
         </v-dialog>
         
          <v-dialog :value="updating" max-width="950" persistent>
-            <${model.name.toLowerCase()}-update v-if="updating" :item="itemToEdit" v-on:itemUpdate="itemUpdate" v-on:closeDialog="updating=false" />
+            <${kebabCase(model.name)}-update v-if="updating" :item="itemToEdit" v-on:itemUpdate="itemUpdate" v-on:closeDialog="updating=false" />
         </v-dialog>
 
 
