@@ -143,7 +143,7 @@ module.exports = function (model, moduleName) {
                 items: [],
                 headers: [
                     ${headers(model.properties, model.name, moduleName)},
-                    {text: 'Aciones', value: 'action', sortable: false},
+                    {text: this.$t('common.actions'), value: 'action', sortable: false},
                 ],
                 totalItems: 0,
                 limit: 5,

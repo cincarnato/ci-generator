@@ -5,7 +5,7 @@ module.exports.generateDataCombos = function generateDataCombos(properties) {
     let propFiltered = filterObjectIdProperties(properties);
 
     return propFiltered.map(field => {
-        return `${field.name}s: []`
+        return `${field.name.toLowerCase()}s: []`
     }).join(',\n')
 }
 

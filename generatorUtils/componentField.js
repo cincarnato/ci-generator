@@ -42,7 +42,7 @@ function generateComboField(field, modelName, moduleName) {
                         <v-select
                                 prepend-icon="${field.icon ? field.icon : 'label'}"
                                 class="pa-3"
-                                :items="${field.name}s"
+                                :items="${field.name.toLowerCase()}s"
                                 :item-text="'name'"
                                 :item-value="'id'"
                                 v-model="form.${field.name}"
