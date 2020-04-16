@@ -10,8 +10,8 @@ const ${model.name}Schema = new Schema({
 
 ${fields(model.properties)}
 
-${timestamp(model.timestamp)}
-});
+
+}${timestamp(model.timestamp)});
 
 ${model.name}Schema.plugin(softDelete);
 ${model.name}Schema.plugin(mongoosePaginate);
