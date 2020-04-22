@@ -27,8 +27,9 @@ export default messages
 function getModelMessages(models, lang) {
     return models.map(model => {
         return `${model.name}: { 
+          ${getTitlesMessages(model, lang)},
           ${getPropertiesMessages(model.properties, lang)},
-          ${getAditionalMessages(model.i18n,lang)}
+          ${getAditionalMessages(model.i18n, lang)}
           }`
     }).join(",\n")
 }
@@ -39,6 +40,7 @@ function getAditionalMessages(aditionals, lang) {
     }).join(",\n          ")
 }
 
+
 function getPropertiesMessages(properties, lang) {
     return properties.map(property => {
         return `  ${getPropertyMessage(property, lang)}`
@@ -48,3 +50,36 @@ function getPropertiesMessages(properties, lang) {
 function getPropertyMessage(property, lang) {
     return `${property.name}: '${property.i18n[lang]}'`
 }
+
+function getTitlesMessages(model, lang) {
+
+    const titles = {
+        en: {
+            title: '',
+            creating: 'Creating ',
+            editing: 'Editing ',
+            deleting: 'Deleting ',
+            areYouSure: 'Are you sure you want to blur this record?'
+        },
+        es: {
+            title: '',
+            creating: 'Creando ',
+            editing: 'Modificando ',
+            deleting: 'Eliminando ',
+            areYouSure: '¿Esta seguro que desea borrar este registro?'
+        },
+        pt: {
+            title: '',
+            creating: 'Criando ',
+            editing: 'Edição ',
+            deleting: 'Apagando ',
+            areYouSure: 'Tem certeza de que deseja excluir este registro?'
+        },
+    }
+
+    return `  title: '${ titles[lang].title + (model.namei18n?model.namei18n[lang]:model.name) }',
+            creating: '${titles[lang].creating + (model.namei18n?model.namei18n[lang]:model.name) }',
+            editing: '${titles[lang].editing + (model.namei18n?model.namei18n[lang]:model.name) }',
+            deleting: '${titles[lang].deleting + (model.namei18n?model.namei18n[lang]:model.name) }''`
+}
+

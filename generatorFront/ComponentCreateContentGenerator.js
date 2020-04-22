@@ -4,7 +4,7 @@ const filterBackendProperties = require('../generatorUtils/filterBackendProperti
 const componentField = require('../generatorUtils/componentField')
 const {generateDataCombos, generateImportCombos, generateMethodsCombos, generateMountedCombos} = require('../generatorUtils/componentFieldCombos')
 const importMomentIfDateExist = require('../generatorUtils/importMomentIfDateExist')
-
+const getI18nKey = require('./../generatorUtils/getI18nKey')
 module.exports = function (model,moduleName) {
     let content =
         `<template>
@@ -70,7 +70,7 @@ module.exports = function (model,moduleName) {
         data() {
             return {
                 modal: false,
-                title: "Creando ${model.name}",
+                title: this.$t('${getI18nKey(moduleName,model.name,'creating')}'),
                 errorMessage: '',
                 inputErrors: {},
                 loading: false,

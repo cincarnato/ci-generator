@@ -127,7 +127,7 @@ module.exports = function (model, moduleName) {
         },
         data() {
             return {
-                title: 'Listado de ${model.name}',
+                title: this.$t('${getI18nKey(moduleName,model.name,'title')}'),
                 creating: false,
                 updating: false,
                 deleting: false,

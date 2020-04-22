@@ -1,5 +1,6 @@
 const kebabCase = require('../generatorUtils/kebabCase')
-module.exports = function (model) {
+const getI18nKey = require('./../generatorUtils/getI18nKey')
+module.exports = function (model, moduleName) {
     let content =
         `<template>
     <v-card>
@@ -55,8 +56,8 @@ module.exports = function (model) {
         data() {
             return {
                 modal: false,
-                title: "Borrando ${model.name}",
-                areYouSure: "¿Esta seguro que desea borrar este registro?",
+                title: this.$t('${getI18nKey(moduleName,model.name,'deleting')}'),
+                areYouSure: this.$t('common.areYouSureDeleteRecord'),
                 errorMessage: '',
                 loading: false,
             }

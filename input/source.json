@@ -3,6 +3,11 @@
   "models": [
     {
       "name": "BranchOffice",
+      "namei18n": {
+        "en": "Branch Offices",
+        "es": "Sucursales",
+        "pt": "Galhos"
+      },
       "timestamp": false,
       "i18n": [],
       "properties": [

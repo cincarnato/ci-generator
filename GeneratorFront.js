@@ -168,7 +168,7 @@ source.models.forEach(model => {
 
 source.models.forEach(model => {
     let path = componentPath + model.name + 'Delete.vue'
-    fs.writeFile(path, ComponentDeleteContentGenerator(model),
+    fs.writeFile(path, ComponentDeleteContentGenerator(model,source.module ),
         (err) => {
             if (err) return console.log(err);
             console.log('Component Delete File OK: ' + model.name);
