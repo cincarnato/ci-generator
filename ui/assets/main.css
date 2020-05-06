@@ -10,8 +10,27 @@ label{
 
 li{
     list-style: none;
+    cursor: pointer;
 }
 
 .module{
     color:purple;
+}
+
+.selected{
+    background-color: thistle;
+}
+
+button{
+    border:none;
+    background-color: transparent;
+    color: indigo;
+}
+
+.error{
+    border: 1px solid red;
+}
+
+.warning{
+    border: 1px solid orangered;
 }
