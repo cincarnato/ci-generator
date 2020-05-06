@@ -2,8 +2,8 @@ select, input{
     width: 200px;
 }
 label{
-    width: 120px;
-    min-width: 120px;
+    width: 100px;
+    min-width: 100px;
     text-align: right;
     display:inline-block
 }

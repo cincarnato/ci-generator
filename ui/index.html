@@ -13,18 +13,22 @@
 <div id="app">
     <div class="row">
 
-        <div class="col-3">
+        <div class="col-4">
             <div class="card">
-                <h1>Modulos</h1>
+                <h1>Models</h1>
                 <ul>
-                    <li :class="{'selected': index==moduleSelected}" v-for="(module,index) in modules" :key="index" @click="moduleSelected=index">{{module.name}}</li>
+                    <li :class="{'selected': index==modelselected}" v-for="(model,index) in models" :key="index" @click="modelselected=index">{{model.name}}</li>
                 </ul>
+                <button @click="showNewModel=true">New</button>
+                <div v-if="showNewModel">
+                    <form-model :name="''" @model="addModel"></form-model>
+                </div>
             </div>
         </div>
 
-        <div class="col-5">
-            <div class="card" v-if="moduleSelected !== null">
-                <h3>Add property to <span class="module">{{modules[moduleSelected].name}}</span></h3>
+        <div class="col-4">
+            <div class="card" v-if="modelselected !== null">
+                <h3>Add property to <span class="module">{{models[modelselected].name}}</span></h3>
 
                 <form-property @apply="apply" :p="getPropSelected"></form-property>
 
@@ -35,10 +39,10 @@
         </div>
 
         <div class="col-4">
-            <div class="card" v-if="moduleSelected !== null">
-                <h3><span class="module">{{modules[moduleSelected].name}}</span> Properties </h3>
+            <div class="card" v-if="modelselected !== null">
+                <h3><span class="module">{{models[modelselected].name}}</span> Properties </h3>
                 <ul>
-                    <li :class="{'selected': index==propSelected}" v-for="(prop,index) in modules[moduleSelected].properties" :key="index" @click="propSelected=index">{{prop.name}}</li>
+                    <li :class="{'selected': index==propSelected}" v-for="(prop,index) in models[modelselected].properties" :key="index" @click="propSelected=index">{{prop.name}}</li>
                 </ul>
                 <button @click="propSelected=null">New</button>
             </div>
@@ -48,6 +52,7 @@
 </div>
 
 
+<script src="formModel.js"></script>
 <script src="formProperty.js"></script>
 <script src="app.js"></script>
 </body>

@@ -1,7 +1,7 @@
 
 Vue.component('formProperty', {
     props:{
-        p: {type:Object, default: () => {return {name:'',type:'', ref:'', label:'',icon:'',required:false,search: false} } }
+        p: {type:Object, default: () => {return {name:'',type:'', ref:'', label:'',icon:'',required:false,search: false, en:'',es:'',pt:''} } }
     },
     data() {
         return {
@@ -14,7 +14,10 @@ Vue.component('formProperty', {
                 label: this.p.label?this.p.label:'',
                 icon: this.p.icon?this.p.icon:'',
                 required: this.p.required?this.p.required:false,
-                search: this.p.search?this.p.search:false
+                search: this.p.search?this.p.search:false,
+                en: this.p.en?this.p.en:'',
+                es: this.p.es?this.p.es:'',
+                pt: this.p.pt?this.p.pt:'',
             }
         }
     },
@@ -22,7 +25,7 @@ Vue.component('formProperty', {
         p:{
             deep:true,
             handler: function(val){
-                this.form = val
+                this.form = Object.assign({},val)
             }
         }
     },
@@ -96,6 +99,23 @@ Vue.component('formProperty', {
     <div class="col-12 py-1" >
         <label class="px-1">Use in search: </label><input type="checkbox" v-model="form.search">
     </div>
+    
+    <div class="col-12 py-1">
+        <h4>Translations</h4>
+    </div>
+    
+    <div class="col-12 py-1">
+       <label class="px-1">en: </label><input type="text" v-model="form.en">
+    </div>
+    
+    <div class="col-12 py-1">
+       <label class="px-1">es: </label><input type="text" v-model="form.es">
+    </div>
+    
+    <div class="col-12 py-1">
+       <label class="px-1">pt: </label><input type="text" v-model="form.pt">
+    </div>
+    
      <div class="col-12 py-1" >
         <button @click="apply">Apply</button>
      </div>
