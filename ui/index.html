@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generator</title>
+    <script src="assets/vue.js"></script>
+    <link rel="stylesheet" href="assets/miniframework.css" />
+    <link rel="stylesheet" href="assets/main.css" />
+</head>
+<body>
+
+
+<div id="app">
+    <div class="row">
+
+        <div class="col-3">
+            <div class="card center">
+                <h1>Modulos</h1>
+                <ul>
+                    <li :style="{'background-color': getModuleColor(index)}" v-for="(module,index) in modules" :key="index" @click="selected=0">{{module.name}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-5">
+            <div class="card center" v-if="selected !== null">
+                <h3>Add property to <span class="module">{{modules[selected].name}}</span></h3>
+
+                <form-property></form-property>
+
+            </div>
+            <div class="card" v-else>
+                Seleccionar o crear un modulo
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card center" v-if="selected !== null">
+                <h3><span class="module">{{modules[selected].name}}</span> Properties </h3>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="app.js"></script>
+</body>
+</html>

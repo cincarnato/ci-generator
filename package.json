@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "light-server": "^2.6.4",
     "vue-cli-plugin-vuetify": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ui": "light-server -s ui --historyindex '/index.html'",
+    "generate-backend": "node GeneratorBack.js",
+    "generate-frontend": "node GeneratorFront.js"
   },
   "repository": {
     "type": "git",
