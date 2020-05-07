@@ -27,10 +27,4 @@ button{
     color: indigo;
 }
 
-.error{
-    border: 1px solid red;
-}
 
-.warning{
-    border: 1px solid orangered;
-}

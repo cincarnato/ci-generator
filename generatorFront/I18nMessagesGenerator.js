@@ -29,15 +29,18 @@ function getModelMessages(models, lang) {
         return `${model.name}: { 
           ${getTitlesMessages(model, lang)},
           ${getPropertiesMessages(model.properties, lang)},
-          ${getAditionalMessages(model.i18n, lang)}
+          ${geti18nMessages(model, lang)}
           }`
     }).join(",\n")
 }
 
-function getAditionalMessages(aditionals, lang) {
-    return aditionals.map(aditional => {
-        return `  ${getPropertyMessage(aditional, lang)}`
-    }).join(",\n          ")
+function geti18nMessages(model, lang) {
+    if(model.i18n){
+        return aditionals.map(aditional => {
+            return `  ${getPropertyMessage(aditional, lang)}`
+        }).join(",\n          ")
+    }
+    return ''
 }
 
 

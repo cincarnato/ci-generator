@@ -15,17 +15,44 @@
 
         <div class="col-4">
             <div class="card">
-                <h1>Models</h1>
+                <h3>MODULE: <span class="module">{{moduleName}}</span></h3>
+                <template v-if="moduleEdit">
+                    <form-model @model="editModule" :name="moduleName" @close="moduleEdit= null"></form-model>
+                </template>
+                <template v-else>
+                    <button @click="moduleEdit=true">edit</button>
+                    <button class="float-right">load</button>
+                </template>
+            </div>
+            <div class="card">
+                Api Status: {{apiStatus}}
+                <button class="float-right" @click="saveSource">Save</button>
+            </div>
+            <div class="card">
+                <h3>Models</h3>
                 <ul>
-                    <li :class="{'selected': index==modelselected}" v-for="(model,index) in models" :key="index" @click="modelselected=index">{{model.name}}</li>
+                    <li :class="{'selected': index==modelselected}" v-for="(model,index) in models" :key="index" @click="modelselected=index">
+
+                        <template v-if="modeledit == index">
+                            <form-model @model="editModel" :name="model.name" @close="modeledit= null"></form-model>
+                        </template>
+
+                        <template v-else>
+                            {{model.name}}
+                            <button class="float-right edit" @click="modeledit=index">edit</button>
+                        </template>
+
+                    </li>
                 </ul>
                 <button @click="showNewModel=true">New</button>
                 <div v-if="showNewModel">
-                    <form-model :name="''" @model="addModel"></form-model>
+                    <form-model @model="addModel" @close="showNewModel= false"></form-model>
                 </div>
             </div>
+
         </div>
 
+       <!-- FORM PROPERTIES-->
         <div class="col-4">
             <div class="card" v-if="modelselected !== null">
                 <h3>Add property to <span class="module">{{models[modelselected].name}}</span></h3>
@@ -38,6 +65,7 @@
             </div>
         </div>
 
+        <!-- LIST PROPERTIES-->
         <div class="col-4">
             <div class="card" v-if="modelselected !== null">
                 <h3><span class="module">{{models[modelselected].name}}</span> Properties </h3>

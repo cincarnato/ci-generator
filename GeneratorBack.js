@@ -6,8 +6,17 @@ const GraphIndexContentGenerator = require("./generatorBack/GraphIndexContentGen
 const CreateDir = require("./CreateDir");
 const fs = require('fs');
 
+const commander = require('commander');
+commander
+    .version('1.0.0', '-v, --version')
+    .usage('[OPTIONS]...')
+    .option('-f, --file <file>', 'Set the source file')
+    .parse(process.argv);
 
-const source = require('./input/source.json')
+const sourceFile = (commander.file ? commander.file : './input/source.json');
+
+console.log("FILE:", sourceFile)
+const source = require(sourceFile)
 
 
 const outputpath = './output/back/'
@@ -76,7 +85,7 @@ source.models.forEach(model => {
 })
 
 //CREATE GRAPH INDEX
-let path = graphqlpath + '/index.js'
+let path = graphqlpath + '/api.js'
 fs.writeFile(path, GraphIndexContentGenerator(),
     (err) => {
         if (err) return console.log(err);

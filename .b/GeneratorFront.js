@@ -28,7 +28,7 @@ const CreateDir = require("./CreateDir");
 const fs = require('fs');
 
 
-const source = require('./input/source.json')
+const source = require('./input/source_appointment.json')
 
 
 const outputpath = './output/front/'

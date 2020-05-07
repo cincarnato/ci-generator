@@ -7,7 +7,7 @@ const CreateDir = require("./CreateDir");
 const fs = require('fs');
 
 
-const source = require('./input/source.json')
+const source = require('./input/source_appointment.json')
 
 
 const outputpath = './output/back/'
@@ -76,7 +76,7 @@ source.models.forEach(model => {
 })
 
 //CREATE GRAPH INDEX
-let path = graphqlpath + '/index.js'
+let path = graphqlpath + '/api.js'
 fs.writeFile(path, GraphIndexContentGenerator(),
     (err) => {
         if (err) return console.log(err);

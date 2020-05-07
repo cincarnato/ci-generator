@@ -1,7 +1,10 @@
 
 Vue.component('formProperty', {
     props:{
-        p: {type:Object, default: () => {return {name:'',type:'', ref:'', label:'',icon:'',required:false,search: false, en:'',es:'',pt:''} } }
+        p: {type:Object, default: () => {return {name:'',type:'', ref:'', label:'',icon:'',required:false,search: false, i18n:{en:'',es:'',pt:''} } } }
+    },
+    created(){
+      console.log(this.p)
     },
     data() {
         return {
@@ -15,17 +18,23 @@ Vue.component('formProperty', {
                 icon: this.p.icon?this.p.icon:'',
                 required: this.p.required?this.p.required:false,
                 search: this.p.search?this.p.search:false,
-                en: this.p.en?this.p.en:'',
-                es: this.p.es?this.p.es:'',
-                pt: this.p.pt?this.p.pt:'',
+                i18n:{
+                    en: this.p.i18n?this.p.i18n.en:'',
+                    es: this.p.i18n?this.p.i18n.es:'',
+                    pt: this.p.i18n?this.p.i18n.pt:''
+                }
+
             }
         }
     },
     watch:{
         p:{
             deep:true,
-            handler: function(val){
-                this.form = Object.assign({},val)
+            handler: function(val) {
+                this.form = Object.assign({}, val)
+                console.log(val.i18n)
+                this.$set(this.form,'i18n',Object.assign({}, val.i18n))
+                this.$nextTick()
             }
         }
     },
@@ -61,7 +70,9 @@ Vue.component('formProperty', {
             }
 
             if(!error){
-                this.$emit('apply', Object.assign({}, this.form) )
+                let f = Object.assign({}, this.form)
+                f.i18n = Object.assign({}, this.form.i18n)
+                this.$emit('apply', f )
             }else{
                 console.log('ERROR')
             }
@@ -105,15 +116,15 @@ Vue.component('formProperty', {
     </div>
     
     <div class="col-12 py-1">
-       <label class="px-1">en: </label><input type="text" v-model="form.en">
+       <label class="px-1">en: </label><input type="text" v-model="form.i18n.en">
     </div>
     
     <div class="col-12 py-1">
-       <label class="px-1">es: </label><input type="text" v-model="form.es">
+       <label class="px-1">es: </label><input type="text" v-model="form.i18n.es">
     </div>
     
     <div class="col-12 py-1">
-       <label class="px-1">pt: </label><input type="text" v-model="form.pt">
+       <label class="px-1">pt: </label><input type="text" v-model="form.i18n.pt">
     </div>
     
      <div class="col-12 py-1" >

@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "light-server": "^2.6.4",
-    "vue-cli-plugin-vuetify": "^1.1.0"
+    "commander": "^5.1.0",
+    "express": "^4.17.1",
+    "light-server": "^2.6.4"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ui": "light-server -s ui --historyindex '/index.html'",
+    "ui": "node ui-api/api.js & light-server -s ui -p 4050",
     "generate-backend": "node GeneratorBack.js",
     "generate-frontend": "node GeneratorFront.js"
   },
