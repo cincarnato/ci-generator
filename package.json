@@ -10,7 +10,6 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "ui": "node ui-api/api.js & light-server -s ui -p 4050",
     "generate-backend": "node GeneratorBack.js",
     "generate-frontend": "node GeneratorFront.js"
