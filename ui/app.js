@@ -10,17 +10,16 @@ var app = new Vue({
             } else {
                 return this.models[this.modelselected].properties[this.propSelected]
             }
-        },
-        getSource() {
-            let body = JSON.stringify({module: this.moduleName, models: this.models})
-            console.log(body)
-            return body
         }
     },
     created() {
         this.getApiStatus()
     },
     methods: {
+        getSource() {
+            let body = JSON.stringify({module: this.moduleName, models: this.models})
+            return body
+        },
         loadSource() {
             fetch('http://localhost:4060/load/'+this.moduleName)
                 .then(r => {
@@ -33,7 +32,7 @@ var app = new Vue({
         },
         saveSource() {
             fetch('http://localhost:4060/save',
-                {method: 'POST', body: this.getSource, headers: {'Content-type': 'application/json'}}
+                {method: 'POST', body: this.getSource(), headers: {'Content-type': 'application/json'}}
             )
                 .then(r => {
                     r.text().then(b => this.apiStatus = b)

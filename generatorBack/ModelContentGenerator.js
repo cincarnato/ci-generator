@@ -34,6 +34,8 @@ function fields(properties) {
                 return ` ${field.name}: {type: mongoose.Schema.Types.ObjectId, ref: "${field.ref}",required: ${field.required}}`
             case "Float":
                 return ` ${field.name}: {type: Number, required: ${field.required}}`
+            case "Int":
+                return ` ${field.name}: {type: Number, required: ${field.required}}`
             default:
                 return ` ${field.name}: {type: ${field.type}, required: ${field.required}}`
 
