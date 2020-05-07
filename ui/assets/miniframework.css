@@ -47,6 +47,8 @@ color: darkblue;
 
 .error{
   border: 1px solid red;
+  padding:5px;
+  color: darkred;
 }
 
 .warning{
@@ -55,6 +57,8 @@ color: darkblue;
 
 .success{
   border: 1px solid green;
+  padding:5px;
+  color: darkgreen;
 }
 
 /*PADDING*/

@@ -13,7 +13,19 @@ app.use( (req, res, next)=> {
 
 app.get("/status",(req,res)=>{res.send('RUN')})
 
-app.get("/load/:modulename",(req,res)=>{res.send('RUN')})
+app.get("/load/:modulename",async (req,res)=>{
+    let fileName = '../input/source_'+req.params.modulename.toLowerCase()+'.json'
+    console.log(fileName)
+    res.json(require(fileName))
+ /*   fs.readFile(fileName, 'utf8', (err, data)=>{
+        if(err){
+            console.error(err)
+        }
+        console.log(data)
+        res.json(data)
+    });*/
+
+})
 
 app.post("/save",(req,res)=>{
     console.log(req.body)

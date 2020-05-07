@@ -1,0 +1,49 @@
+{
+  "module": "Demo",
+  "models": [
+    {
+      "name": "Contact",
+      "properties": [
+        {
+          "name": "name",
+          "type": "String",
+          "label": "",
+          "icon": "",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Name",
+            "es": "Nombre",
+            "pt": "Nome"
+          }
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "label": "",
+          "icon": "",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Email",
+            "es": "Correo electronico",
+            "pt": "Email"
+          }
+        },
+        {
+          "name": "phone",
+          "type": "String",
+          "label": "",
+          "icon": "",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Phone",
+            "es": "Telefono",
+            "pt": "Telefono"
+          }
+        }
+      ]
+    }
+  ]
+}

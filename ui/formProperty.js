@@ -129,6 +129,7 @@ Vue.component('formProperty', {
     
      <div class="col-12 py-1" >
         <button @click="apply">Apply</button>
+         <button class="float-right" @click="$emit('new')">New</button>
      </div>
 </div>`
 })

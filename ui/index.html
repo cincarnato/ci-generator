@@ -21,7 +21,7 @@
                 </template>
                 <template v-else>
                     <button @click="moduleEdit=true">edit</button>
-                    <button class="float-right">load</button>
+                    <button class="float-right" @click="loadSource">load</button>
                 </template>
             </div>
             <div class="card">
@@ -56,8 +56,8 @@
         <div class="col-4">
             <div class="card" v-if="modelselected !== null">
                 <h3>Add property to <span class="module">{{models[modelselected].name}}</span></h3>
-
-                <form-property @apply="apply" :p="getPropSelected"></form-property>
+                <alert v-if="alert" :message="alert" @end="alert=null"></alert>
+                <form-property @new="propSelected=null" @apply="apply" :p="getPropSelected"></form-property>
 
             </div>
             <div class="card" v-else>
@@ -80,6 +80,7 @@
 </div>
 
 
+<script src="alert.js"></script>
 <script src="formModel.js"></script>
 <script src="formProperty.js"></script>
 <script src="app.js"></script>

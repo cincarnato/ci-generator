@@ -22,12 +22,13 @@ var app = new Vue({
     },
     methods: {
         loadSource() {
-            fetch('http://localhost:4060/load',
-                {method: 'POST', body: this.getSource, headers: {'Content-type': 'application/json'}}
-            )
+            fetch('http://localhost:4060/load/'+this.moduleName)
                 .then(r => {
-                    r.text().then(b => this.apiStatus = b)
-                })
+                    return r.json()
+                }).then(j => {
+                    this.models = j.models
+                }
+            )
                 .catch(err => this.apiStatus = 'FAIL')
         },
         saveSource() {
@@ -69,14 +70,17 @@ var app = new Vue({
             if (this.modelselected !== null && this.models[this.modelselected] !== undefined) {
                 let index = this.models[this.modelselected].properties.findIndex(prop => prop.name == property.name)
                 if (index === -1) {
+                    this.alert = 'Added'
                     this.propSelected = this.models[this.modelselected].properties.push(property) - 1
                 } else {
+                    this.alert = 'Updated'
                     this.models[this.modelselected].properties[index] = property
                 }
             }
         }
     },
     data: {
+        alert: null,
         moduleName: 'Demo',
         moduleEdit: false,
         apiStatus: '',
@@ -84,29 +88,7 @@ var app = new Vue({
         modeledit: null,
         propSelected: null,
         showNewModel: false,
-        models: [{
-            name: "Contact",
-            properties: [
-                {
-                    name: 'nickname',
-                    type: 'String',
-                    label: '',
-                    icon: '',
-                    required: false,
-                    search: false,
-                    i18n: {en: 'Nickname', es: 'Sobrenombre', pt: 'Apelido'}
-                },
-                {
-                    name: 'email',
-                    type: 'String',
-                    label: '',
-                    icon: '',
-                    required: false,
-                    search: false,
-                    i18n: {en: 'Email', es: 'Correo electronico', pt: 'Email'}
-                }
-            ]
-        }]
+        models: []
     }
 })
 
