@@ -24,6 +24,8 @@ Vue.component('EntityCard', {
                 this.editing = null
             },
             deleteEntity(index) {
+                this.selected = null
+                this.$emit('selected-entity', this.selected)
                 this.$emit('delete-entity', index)
             }
         },
