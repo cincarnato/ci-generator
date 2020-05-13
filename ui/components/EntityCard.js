@@ -62,7 +62,7 @@ Vue.component('EntityCard', {
          edit
          </button>
         <button class="btn btn-sm btn-outline-success" @click="creating=true">
-        New
+         Add
         </button>
         <div v-if="creating">
             <form-name @update-name="createEntity" @close="creating= false"></form-name>

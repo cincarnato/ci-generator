@@ -31,18 +31,15 @@
             <!-- LIST PROPERTIES-->
             <div class="col-3">
                 <div class="p-1">
-                    <div class="card" v-if="modelselected !== null">
-                        <div class="card-body">
-                            <h3><span class="module">{{models[modelselected].name}}</span> Properties </h3>
-                            <ul>
-                                <li :class="{'selected': index==propSelected}"
-                                    v-for="(prop,index) in models[modelselected].properties" :key="index"
-                                    @click="propSelected=index">{{prop.name}}
-                                </li>
-                            </ul>
-                            <button @click="propSelected=null">New</button>
-                        </div>
-                    </div>
+                    <list-property-card
+                            @add-prop="addProp"
+                            @select-prop="selectProp"
+                            :properties="getModelProperties"
+                            :entity-name="getModelName"
+                            :selected="propSelected"
+                    >
+
+                    </list-property-card>
                 </div>
             </div>
 
@@ -71,6 +68,7 @@
 <script src="components/FormName.js"></script>
 <script src="components/ModuleCard.js"></script>
 <script src="components/EntityCard.js"></script>
+<script src="components/ListPropertyCard.js"></script>
 <script src="components/alert.js"></script>
 <script src="components/formModel.js"></script>
 <script src="components/FormProperty.js"></script>

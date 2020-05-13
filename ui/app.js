@@ -10,25 +10,37 @@ var app = new Vue({
             } else {
                 return this.models[this.modelselected].properties[this.propSelected]
             }
+        },
+        getModelProperties() {
+            if (this.modelselected !== null) {
+                return this.models[this.modelselected].properties
+            }
+            return null
+        },
+        getModelName() {
+            if (this.modelselected !== null) {
+                return this.models[this.modelselected].name
+            }
+            return null
         }
     },
     created() {
         this.getApiStatus()
     },
     methods: {
-        updateModuleName(name){
+        updateModuleName(name) {
             this.moduleName = name
         },
         getSource() {
             let body = JSON.stringify({module: this.moduleName, models: this.models})
             return body
         },
-        loadDemoModule(){
-          this.moduleName = 'Demo'
-          this.loadModule()
+        loadDemoModule() {
+            this.moduleName = 'Demo'
+            this.loadModule()
         },
         loadModule() {
-            fetch('http://localhost:4060/load/'+this.moduleName)
+            fetch('http://localhost:4060/load/' + this.moduleName)
                 .then(r => {
                     return r.json()
                 }).then(j => {
@@ -37,7 +49,7 @@ var app = new Vue({
             )
                 .catch(err => this.apiStatus = 'FAIL')
         },
-        generate(){
+        generate() {
 
         },
         save() {
@@ -61,7 +73,7 @@ var app = new Vue({
             this.moduleEdit = false
         },
         editModel(index, name) {
-            console.log('edit',index,name)
+            console.log('edit', index, name)
             this.models[index].name = name
         },
         createModel(name) {
@@ -70,15 +82,15 @@ var app = new Vue({
                 this.models.push({name: name, properties: []})
             } else {
                 this.modelselected = index
-                alert('The model '+name+ ' already exists')
+                alert('The model ' + name + ' already exists')
             }
             this.showNewModel = false
         },
-        deleteModel(index){
-          this.models.splice(index,1)
+        deleteModel(index) {
+            this.models.splice(index, 1)
         },
-        selectModel(index){
-          this.modelselected = index
+        selectModel(index) {
+            this.modelselected = index
         },
         apply(property) {
             console.log(property)
@@ -92,6 +104,12 @@ var app = new Vue({
                     this.models[this.modelselected].properties[index] = property
                 }
             }
+        },
+        selectProp(index) {
+            this.propSelected = index
+        },
+        addProp() {
+            this.propSelected = null
         }
     },
     data: {
