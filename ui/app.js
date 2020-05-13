@@ -16,11 +16,18 @@ var app = new Vue({
         this.getApiStatus()
     },
     methods: {
+        updateModuleName(name){
+            this.moduleName = name
+        },
         getSource() {
             let body = JSON.stringify({module: this.moduleName, models: this.models})
             return body
         },
-        loadSource() {
+        loadDemoModule(){
+          this.moduleName = 'Demo'
+          this.loadModule()
+        },
+        loadModule() {
             fetch('http://localhost:4060/load/'+this.moduleName)
                 .then(r => {
                     return r.json()
@@ -30,7 +37,10 @@ var app = new Vue({
             )
                 .catch(err => this.apiStatus = 'FAIL')
         },
-        saveSource() {
+        generate(){
+
+        },
+        save() {
             fetch('http://localhost:4060/save',
                 {method: 'POST', body: this.getSource(), headers: {'Content-type': 'application/json'}}
             )
@@ -50,19 +60,25 @@ var app = new Vue({
             this.moduleName = name
             this.moduleEdit = false
         },
-        editModel(name) {
-            this.models[this.modeledit].name = name
-            this.modeledit = null
+        editModel(index, name) {
+            console.log('edit',index,name)
+            this.models[index].name = name
         },
-        addModel(model) {
-            let index = this.models.findIndex(m => m.name == model)
+        createModel(name) {
+            let index = this.models.findIndex(m => m.name == name)
             if (index === -1) {
-                this.models.push({name: model, properties: []})
+                this.models.push({name: name, properties: []})
             } else {
                 this.modelselected = index
+                alert('The model '+name+ ' already exists')
             }
             this.showNewModel = false
-
+        },
+        deleteModel(index){
+          this.models.splice(index,1)
+        },
+        selectModel(index){
+          this.modelselected = index
         },
         apply(property) {
             console.log(property)
@@ -80,8 +96,7 @@ var app = new Vue({
     },
     data: {
         alert: null,
-        moduleName: 'Demo',
-        moduleEdit: false,
+        moduleName: '',
         apiStatus: '',
         modelselected: null,
         modeledit: null,

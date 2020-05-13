@@ -1,5 +1,5 @@
 
-Vue.component('formProperty', {
+Vue.component('FormProperty', {
     props:{
         p: {type:Object, default: () => {return {name:'',type:'', ref:'', label:'',icon:'',required:false,search: false, i18n:{en:'',es:'',pt:''} } } }
     },
@@ -108,7 +108,7 @@ Vue.component('formProperty', {
     </div>
     
     <div class="col-12 py-1" >
-        <label class="px-1">Use in search: </label><input type="checkbox" v-model="form.search">
+        <label class="px-1">Search: </label><input type="checkbox" v-model="form.search">
     </div>
     
     <div class="col-12 py-1">

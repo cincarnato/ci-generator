@@ -41,4 +41,4 @@ app.post("/save",(req,res)=>{
         })
 })
 
-app.listen(4060,()=>{console.log("UI-API Start on http://localhost:4060")})
+app.listen(4060,()=>{console.log("UI-API Start")})

@@ -1,13 +1,3 @@
-select, input{
-    width: 200px;
-}
-label{
-    width: 100px;
-    min-width: 100px;
-    text-align: right;
-    display:inline-block
-}
-
 li{
     list-style: none;
     cursor: pointer;
@@ -15,16 +5,6 @@ li{
 
 .module{
     color:purple;
-}
-
-.selected{
-    background-color: thistle;
-}
-
-button{
-    border:none;
-    background-color: transparent;
-    color: indigo;
 }
 
 
