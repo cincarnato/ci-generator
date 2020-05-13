@@ -50,14 +50,20 @@ var app = new Vue({
                 .catch(err => this.apiStatus = 'FAIL')
         },
         generate() {
-
+            fetch('http://localhost:4060/generate',
+                {method: 'POST', body: this.getSource(), headers: {'Content-type': 'application/json'}}
+            )
+                .then(r => {
+                    r.text().then(result => this.apiResult = result)
+                })
+                .catch(err => this.apiStatus = 'FAIL')
         },
         save() {
             fetch('http://localhost:4060/save',
                 {method: 'POST', body: this.getSource(), headers: {'Content-type': 'application/json'}}
             )
                 .then(r => {
-                    r.text().then(b => this.apiStatus = b)
+                    r.text().then(result => this.apiResult = result)
                 })
                 .catch(err => this.apiStatus = 'FAIL')
         },
@@ -110,9 +116,14 @@ var app = new Vue({
         },
         addProp() {
             this.propSelected = null
+        },
+        delProp(index) {
+            this.propSelected = null
+            this.models[this.modelselected].properties.splice(index, 1)
         }
     },
     data: {
+        apiResult: null,
         alert: null,
         moduleName: '',
         apiStatus: '',

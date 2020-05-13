@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="p-1">
-                    <entity-card :entities="models" @selected-entity="selectModel" @create-entity="createModel" @update-entity="editModel" @delete-entity="deleteModel"></entity-card>
+                    <entity-card :module-name="moduleName" :entities="models" @selected-entity="selectModel" @create-entity="createModel" @update-entity="editModel" @delete-entity="deleteModel"></entity-card>
                 </div>
             </div>
 
@@ -33,6 +33,7 @@
                 <div class="p-1">
                     <list-property-card
                             @add-prop="addProp"
+                            @del-prop="delProp"
                             @select-prop="selectProp"
                             :properties="getModelProperties"
                             :entity-name="getModelName"
@@ -48,7 +49,7 @@
                 <div class="p-1">
                     <div class="card" v-if="modelselected !== null">
                         <div class="card-body">
-                            <h3>Add property to <span class="module">{{models[modelselected].name}}</span></h3>
+                            <h6 class="card-subtitle mb-2 text-muted ">Property <b>{{getPropSelected.name}}</b></h6>
                             <alert v-if="alert" :message="alert" @end="alert=null"></alert>
                             <form-property @new="propSelected=null" @apply="apply" :p="getPropSelected"></form-property>
                         </div>
@@ -71,6 +72,9 @@
 <script src="components/ListPropertyCard.js"></script>
 <script src="components/alert.js"></script>
 <script src="components/formModel.js"></script>
+<script src="components/InputText.js"></script>
+<script src="components/InputCheckbox.js"></script>
+<script src="components/InputSelect.js"></script>
 <script src="components/FormProperty.js"></script>
 <script src="components/Navbar.js"></script>
 

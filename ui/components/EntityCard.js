@@ -1,7 +1,8 @@
 Vue.component('EntityCard', {
         name: 'EntityCard',
         props: {
-            entities: Array
+            entities: Array,
+            moduleName: String
         },
         data() {
             return {
@@ -32,10 +33,10 @@ Vue.component('EntityCard', {
         template: `
 <div class="card">
     <div class="card-body">
-             <h5 class="card-title">Entities</h5>
+                <h6 class="card-subtitle mb-2 text-muted "> <b>{{moduleName}}</b> Entities</h6>
         <ul class="list-group">
             <li :class="{'active': index==selected}"
-                class="list-group-item"
+                class="list-group-item pt-1 pb-1"
                 v-for="(model,index) in entities"
                 :key="index"
                 @click="selectEntity(index)">
@@ -58,7 +59,7 @@ Vue.component('EntityCard', {
          <button class="btn btn-sm btn-outline-danger float-right" @click="deleteEntity(selected)">
          del
          </button>
-         <button class="btn btn-sm btn-outline-primary float-right" @click="editing=selected">
+         <button class="btn btn-sm btn-outline-primary mx-1 float-right" @click="editing=selected">
          edit
          </button>
         <button class="btn btn-sm btn-outline-success" @click="creating=true">

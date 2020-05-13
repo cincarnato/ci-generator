@@ -18,8 +18,7 @@ Vue.component('ModuleCard', {
     <div class="card">
   
                 <div class="card-body">
-                <h5 class="card-title">{{name}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Module</h6>
+                <h6 class="card-subtitle mb-2 text-muted ">Module <b>{{name}}</b></h6>
                 <template v-if="edit">
                     <form-name @update-name="updateName" :name="name" @close="edit = null"></form-name>
                 </template>
