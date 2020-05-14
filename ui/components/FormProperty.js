@@ -1,5 +1,5 @@
 
-Vue.component('formProperty', {
+Vue.component('FormProperty', {
     props:{
         p: {type:Object, default: () => {return {name:'',type:'', ref:'', label:'',icon:'',required:false,search: false, i18n:{en:'',es:'',pt:''} } } }
     },
@@ -81,55 +81,50 @@ Vue.component('formProperty', {
     template: `<div class="row">
 
     <div class="col-12 py-1">
-       <label class="px-1">Name:</label><input :class="{'error': errors.includes('name')}" type="text" v-model="form.name">
+        <input-text label="Name" name="name" v-model="form.name" :errors="errors"></input-text>
     </div>
-    
+      
+
     <div class="col-12 py-1">
-        <label class="px-1">Type:</label>
-        <select :class="{'error': errors.includes('name')}" type="text" v-model="form.type">
-            <option v-for="(v,i) in options" :value="v" :key="i">{{v}}</option>
-        </select>
+        <input-select :options="options" label="type" name="type" v-model="form.type" :errors="errors"></input-select>
     </div>
     
     <div class="col-12 py-1" v-if="form.type =='ObjectId'">
-        <label class="px-1">Ref: </label><input :class="{'error': errors.includes('ref')}"  type="text" v-model="form.ref">
+        <input-text  label="Ref" name="ref" v-model="form.ref" :errors="errors"></input-text>
     </div>
     
     <div class="col-12 py-1">
-       <label class="px-1">Label: </label><input type="text" v-model="form.label">
+        <input-text label="Label" name="label" v-model="form.label" :errors="errors"></input-text>
     </div>
     
     <div class="col-12 py-1">
-       <label class="px-1">Icon: </label><input type="text" v-model="form.icon">
+        <input-text label="Icon" name="icon" v-model="form.icon" :errors="errors"></input-text>
     </div>
     
     <div class="col-12 py-1">
-        <label class="px-1">Required: </label><input type="checkbox" v-model="form.required">
+        <input-checkbox label="Required" name="required" v-model="form.required" :errors="errors"></input-checkbox>
     </div>
     
     <div class="col-12 py-1" >
-        <label class="px-1">Use in search: </label><input type="checkbox" v-model="form.search">
+     <input-checkbox label="Search" name="search" v-model="form.search" :errors="errors"></input-checkbox>
+    </div>
+   
+    
+    <div class="col-12 py-1">
+     <input-text label="en" name="en" v-model="form.i18n.en" :errors="errors"></input-text>
     </div>
     
     <div class="col-12 py-1">
-        <h4>Translations</h4>
+    <input-text label="es" name="es" v-model="form.i18n.es" :errors="errors"></input-text>
     </div>
     
     <div class="col-12 py-1">
-       <label class="px-1">en: </label><input type="text" v-model="form.i18n.en">
-    </div>
-    
-    <div class="col-12 py-1">
-       <label class="px-1">es: </label><input type="text" v-model="form.i18n.es">
-    </div>
-    
-    <div class="col-12 py-1">
-       <label class="px-1">pt: </label><input type="text" v-model="form.i18n.pt">
+    <input-text label="pt" name="pt" v-model="form.i18n.pt" :errors="errors"></input-text>
     </div>
     
      <div class="col-12 py-1" >
-        <button @click="apply">Apply</button>
-         <button class="float-right" @click="$emit('new')">New</button>
+        <button class="btn btn-outline-success" @click="apply">Apply</button>
+        <button class="btn btn-primary float-right" @click="$emit('new')">New</button>
      </div>
 </div>`
 })

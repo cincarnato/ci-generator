@@ -10,18 +10,37 @@ var app = new Vue({
             } else {
                 return this.models[this.modelselected].properties[this.propSelected]
             }
+        },
+        getModelProperties() {
+            if (this.modelselected !== null) {
+                return this.models[this.modelselected].properties
+            }
+            return null
+        },
+        getModelName() {
+            if (this.modelselected !== null) {
+                return this.models[this.modelselected].name
+            }
+            return null
         }
     },
     created() {
         this.getApiStatus()
     },
     methods: {
+        updateModuleName(name) {
+            this.moduleName = name
+        },
         getSource() {
             let body = JSON.stringify({module: this.moduleName, models: this.models})
             return body
         },
-        loadSource() {
-            fetch('http://localhost:4060/load/'+this.moduleName)
+        loadDemoModule() {
+            this.moduleName = 'Demo'
+            this.loadModule()
+        },
+        loadModule() {
+            fetch('http://localhost:4060/load/' + this.moduleName)
                 .then(r => {
                     return r.json()
                 }).then(j => {
@@ -30,12 +49,31 @@ var app = new Vue({
             )
                 .catch(err => this.apiStatus = 'FAIL')
         },
-        saveSource() {
+        generate() {
+            fetch('http://localhost:4060/generate',
+                {method: 'POST', body: this.getSource(), headers: {'Content-type': 'application/json'}}
+            )
+                .then(r => {
+                    r.text().then(result => {
+                        this.apiResult = result
+                        this.titleDialog = "GENERATE"
+                        this.bodyDialog = 'GENERATE ok'
+                        this.showDialog = true
+                })
+                })
+                .catch(err => this.apiStatus = 'FAIL')
+        },
+        save() {
             fetch('http://localhost:4060/save',
                 {method: 'POST', body: this.getSource(), headers: {'Content-type': 'application/json'}}
             )
                 .then(r => {
-                    r.text().then(b => this.apiStatus = b)
+                    r.text().then(result => {
+                        this.apiResult = result
+                        this.titleDialog = "SAVE"
+                        this.bodyDialog = 'Save ok'
+                        this.showDialog = true
+                    })
                 })
                 .catch(err => this.apiStatus = 'FAIL')
         },
@@ -50,19 +88,25 @@ var app = new Vue({
             this.moduleName = name
             this.moduleEdit = false
         },
-        editModel(name) {
-            this.models[this.modeledit].name = name
-            this.modeledit = null
+        editModel(index, name) {
+            console.log('edit', index, name)
+            this.models[index].name = name
         },
-        addModel(model) {
-            let index = this.models.findIndex(m => m.name == model)
+        createModel(name) {
+            let index = this.models.findIndex(m => m.name == name)
             if (index === -1) {
-                this.models.push({name: model, properties: []})
+                this.models.push({name: name, properties: []})
             } else {
                 this.modelselected = index
+                alert('The model ' + name + ' already exists')
             }
             this.showNewModel = false
-
+        },
+        deleteModel(index) {
+            this.models.splice(index, 1)
+        },
+        selectModel(index) {
+            this.modelselected = index
         },
         apply(property) {
             console.log(property)
@@ -76,18 +120,31 @@ var app = new Vue({
                     this.models[this.modelselected].properties[index] = property
                 }
             }
+        },
+        selectProp(index) {
+            this.propSelected = index
+        },
+        addProp() {
+            this.propSelected = null
+        },
+        delProp(index) {
+            this.propSelected = null
+            this.models[this.modelselected].properties.splice(index, 1)
         }
     },
     data: {
+        apiResult: null,
         alert: null,
-        moduleName: 'Demo',
-        moduleEdit: false,
+        moduleName: '',
         apiStatus: '',
         modelselected: null,
         modeledit: null,
         propSelected: null,
         showNewModel: false,
-        models: []
+        models: [],
+        showDialog: false,
+        titleDialog: '',
+        bodyDialog: '',
     }
 })
 
