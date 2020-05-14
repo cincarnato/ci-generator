@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" href="assets/main.css"/>
 </head>
-<body>
+<body class="modal-open" >
 
 
-<div id="app">
+<div id="app" >
     <navbar @save="save" @generate="generate"></navbar>
     <div class="container-fluid">
         <modal @close="showDialog = false" :show="showDialog" :title="titleDialog" :body="bodyDialog" ></modal>
