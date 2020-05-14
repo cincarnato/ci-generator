@@ -63,7 +63,12 @@ var app = new Vue({
                 {method: 'POST', body: this.getSource(), headers: {'Content-type': 'application/json'}}
             )
                 .then(r => {
-                    r.text().then(result => this.apiResult = result)
+                    r.text().then(result => {
+                        this.apiResult = result
+                        this.titleDialog = "SAVE"
+                        this.bodyDialog = 'Save ok'
+                        this.showDialog = true
+                    })
                 })
                 .catch(err => this.apiStatus = 'FAIL')
         },
@@ -131,7 +136,10 @@ var app = new Vue({
         modeledit: null,
         propSelected: null,
         showNewModel: false,
-        models: []
+        models: [],
+        showDialog: false,
+        titleDialog: '',
+        bodyDialog: '',
     }
 })
 
