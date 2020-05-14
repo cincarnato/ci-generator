@@ -9,22 +9,28 @@ import {${findByImport(model)} create${model.name}, update${model.name}, delete$
 import {AuthenticationError, ForbiddenError} from "apollo-server-express";
 
 import {
+
+    ${model.name.toUpperCase()}_SHOW,
     ${model.name.toUpperCase()}_UPDATE,
     ${model.name.toUpperCase()}_CREATE,
     ${model.name.toUpperCase()}_DELETE
-} from "../../../security/permissions";
+} from "../../permissions/${model.name}";
 
 export default {
     Query: {
         ${model.name.toLowerCase()}s: (_, {}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
+            if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
             return fetch${model.name}s()
         },
         ${model.name.toLowerCase()}: (_, {id}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
+            if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
             return find${model.name}(id)
         },
         ${model.name.toLowerCase()}sPaginate: (_, {limit, pageNumber, search, orderBy, orderDesc}) => {
+            if (!user) throw new AuthenticationError("Unauthenticated")
+            if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
             return paginate${model.name}(limit, pageNumber, search, orderBy, orderDesc)
         },
         ${findBy(model)}

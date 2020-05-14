@@ -80,9 +80,9 @@ function getTitlesMessages(model, lang) {
         },
     }
 
-    return `  title: '${ titles[lang].title + (model.namei18n?model.namei18n[lang]:model.name) }',
+    return `   title: '${ titles[lang].title + (model.namei18n?model.namei18n[lang]:model.name) }',
             creating: '${titles[lang].creating + (model.namei18n?model.namei18n[lang]:model.name) }',
             editing: '${titles[lang].editing + (model.namei18n?model.namei18n[lang]:model.name) }',
-            deleting: '${titles[lang].deleting + (model.namei18n?model.namei18n[lang]:model.name) }''`
+            deleting: '${titles[lang].deleting + (model.namei18n?model.namei18n[lang]:model.name) }'`
 }
 

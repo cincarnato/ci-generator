@@ -3,6 +3,7 @@ const TypeContentGenerator = require("./generatorBack/TypeContentGenerator");
 const ServiceContentGenerator = require("./generatorBack/ServiceContentGenerator");
 const ResolverContentGenerator = require("./generatorBack/ResolverContentGenerator");
 const GraphIndexContentGenerator = require("./generatorBack/GraphIndexContentGenerator");
+const PermissionsGenerator = require("./generatorBack/PermissionsGenerator");
 const CreateDir = require("./CreateDir");
 const fs = require('fs');
 
@@ -24,12 +25,15 @@ const basepath = outputpath + source.module.toLowerCase()
 
 const modelpath = basepath + '/models/' //FINAL
 const servicePath = basepath + '/services/' //FINAL
+const permissionsPath = basepath + '/permissions/' //FINAL
 const graphqlpath = basepath + '/graphql'
 const typespath = graphqlpath + '/types/' //FINAL
 const resolverspath = graphqlpath + '/resolvers/' //FINAL
 
 //DIR: MODULE
 CreateDir(basepath)
+//DIR: permissions
+CreateDir(permissionsPath)
 //DIR: models
 CreateDir(modelpath)
 //DIR: Services
@@ -38,6 +42,17 @@ CreateDir(servicePath)
 CreateDir(typespath)
 //DIR: resolvers
 CreateDir(resolverspath)
+
+
+//PERMISSIONS
+source.models.forEach(model => {
+    let path = permissionsPath + model.name + '.js'
+    fs.writeFile(path, PermissionsGenerator(model),
+        (err) => {
+            if (err) return console.log(err);
+            console.log('Permissions File OK: ' + model.name);
+        })
+})
 
 //CREATE  MODEL FILES
 
