@@ -24,9 +24,9 @@ function generateTextField(field, modelName, moduleName) {
                                 :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 :placeholder="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 class="pa-3"
-                                ${field.required?':rules="[rules.required]"':''}
-                                :error="hasErrors('${field.name}')"
-                                :error-messages="getMessageErrors('${field.name}')"
+                                ${field.required?':rules="required"':''}
+                                :error="hasInputErrors('${field.name}')"
+                                :error-messages="getInputErrors('${field.name}')"
                                 required
                                  color="secondary"
                         ></v-text-field>
@@ -48,9 +48,9 @@ function generateComboField(field, modelName, moduleName) {
                                 v-model="form.${field.name}"
                                 :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 :loading="loading"
-                                :rules="[rules.required]"
-                                :error="hasErrors('${field.name}')"
-                                :error-messages="getMessageErrors('${field.name}')"
+                                ${field.required?':rules="required"':''}
+                                :error="hasInputErrors('${field.name}')"
+                                :error-messages="getInputErrors('${field.name}')"
                                 required
                                 color="secondary"
                                 item-color="secondary"
@@ -81,9 +81,9 @@ function generateDateField(field, modelName, moduleName) {
                                         readonly
                                         hide-details
                                         v-on="on"
-                                        :rules="[rules.required]"
-                                        :error="hasErrors('${field.name}')"
-                                        :error-messages="getMessageErrors('${field.name}')"
+                                        ${field.required?':rules="required"':''}
+                                        :error="hasInputErrors('${field.name}')"
+                                        :error-messages="getInputErrors('${field.name}')"
                                          color="secondary"
                                 ></v-text-field>
                             </template>

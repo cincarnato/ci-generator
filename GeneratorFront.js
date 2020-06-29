@@ -8,7 +8,7 @@ const GqlPaginateContentGenerator = require("./generatorFront/GqlPaginateContent
 
 const GqlFetchBySomethingContentGenerator = require("./generatorFront/GqlFetchBySomethingContentGenerator");
 
-const ComponentCreateContentGenerator = require("./generatorFront/ComponentCreateContentGenerator");
+const ComponentCreateContentGenerator = require("./generatorFront/CreateComponent");
 const ComponentUpdateContentGenerator = require("./generatorFront/ComponentUpdateContentGenerator");
 const ComponentDeleteContentGenerator = require("./generatorFront/ComponentDeleteContentGenerator");
 const ComponetDataTableContentGenerator = require("./generatorFront/ComponetDataTableContentGenerator");
