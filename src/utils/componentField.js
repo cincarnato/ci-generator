@@ -19,16 +19,13 @@ function generateTextField(field, modelName, moduleName) {
                         <v-text-field
                                 prepend-icon="${field.icon ? field.icon : 'label'}"
                                 name="${field.name}"
-                                type="text"
                                 v-model="form.${field.name}"
                                 :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 :placeholder="$t('${getI18nKey(moduleName,modelName,field.name)}')"
-                                class="pa-3"
-                                ${field.required?':rules="required"':''}
                                 :error="hasInputErrors('${field.name}')"
                                 :error-messages="getInputErrors('${field.name}')"
-                                required
-                                 color="secondary"
+                                color="secondary"
+                                ${field.required?':rules="required"':''}
                         ></v-text-field>
                     </v-col>
     `
@@ -41,19 +38,17 @@ function generateComboField(field, modelName, moduleName) {
                      <v-col cols="12" sm="6">
                         <v-select
                                 prepend-icon="${field.icon ? field.icon : 'label'}"
-                                class="pa-3"
                                 :items="${field.name.toLowerCase()}s"
                                 :item-text="'name'"
                                 :item-value="'id'"
                                 v-model="form.${field.name}"
                                 :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                 :loading="loading"
-                                ${field.required?':rules="required"':''}
                                 :error="hasInputErrors('${field.name}')"
                                 :error-messages="getInputErrors('${field.name}')"
-                                required
                                 color="secondary"
                                 item-color="secondary"
+                                ${field.required?':rules="required"':''}
                         ></v-select>
                     </v-col>
     `
@@ -74,17 +69,15 @@ function generateDateField(field, modelName, moduleName) {
                         >
                             <template v-slot:activator="{ on }">
                                 <v-text-field
-                                        class="pa-3"
                                         v-model="form.${field.name}"
                                         :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
                                         prepend-icon="${field.icon ? field.icon : 'event'}"
                                         readonly
-                                        hide-details
                                         v-on="on"
                                         ${field.required?':rules="required"':''}
                                         :error="hasInputErrors('${field.name}')"
                                         :error-messages="getInputErrors('${field.name}')"
-                                         color="secondary"
+                                        color="secondary"
                                 ></v-text-field>
                             </template>
                             <v-date-picker v-model="form.${field.name}" scrollable @input="modal =false">

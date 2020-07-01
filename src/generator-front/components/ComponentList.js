@@ -1,6 +1,6 @@
-const getI18nKey = require('../../../generatorUtils/getI18nKey')
+const getI18nKey = require('../../utils/getI18nKey')
 
-module.exports = function (model, moduleName) {
+module.exports = function ({model, moduleName}) {
     let content =
         `<template>
  <v-row row wrap>
@@ -23,6 +23,7 @@ module.exports = function (model, moduleName) {
                 :page.sync="pageNumber"
                 :sort-by.sync="orderBy"
                 :sort-desc.sync="orderDesc"
+                :footer-props="{ itemsPerPageOptions: [5, 10, 25, 50] }"
                 @update:page="fetch"
                 @update:sort-by="fetch"
                 @update:sort-desc="fetch"
@@ -54,14 +55,19 @@ module.exports = function (model, moduleName) {
     export default {
         name: "${model.name}List",
         components: {DeleteButton, EditButton, ShowButton, SearchInput},
+         props: {
+            items: Array,
+            totalItems: Number,
+            loading: Boolean
+        },
         methods:{
             fetch(){
                 this.$emit('fetch',{
-                    orderBy: this.getOrderBy,
-                    orderDesc: this.getOrderDesc,
                     pageNumber: this.pageNumber,
                     itemsPerPage: this.itemsPerPage,
-                    search: this.search
+                    search: this.search,
+                    orderBy: this.getOrderBy,
+                    orderDesc: this.getOrderDesc,
                 })
             }
         },

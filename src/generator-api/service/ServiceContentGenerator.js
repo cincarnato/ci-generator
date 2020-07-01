@@ -1,5 +1,5 @@
-const capitalize = require('../../generatorUtils/capitalize')
-const filterBackendProperties = require('../../generatorUtils/filterBackendProperties')
+const capitalize = require('../../utils/capitalize')
+const filterBackendProperties = require('../../utils/filterBackendProperties')
 
 module.exports = function (model) {
 
@@ -15,7 +15,7 @@ export const fetch${model.name}s = async function () {
     })
 }
 
-export const paginate${model.name} = function (limit, pageNumber = 1, search = null, orderBy = null, orderDesc = false) {
+export const paginate${model.name} = function ( pageNumber = 1, itemsPerPage = 5, search = null, orderBy = null, orderDesc = false) {
 
     function qs(search) {
         let qs = {}

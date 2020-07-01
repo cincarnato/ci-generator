@@ -1,9 +1,9 @@
-const filterBackendProperties = require('../../../generatorUtils/filterBackendProperties')
-const componentField = require('../../../generatorUtils/componentField')
-const {generateDataCombos, generateImportCombos, generateMethodsCombos, generateMountedCombos} = require('../../../generatorUtils/componentFieldCombos')
-const importMomentIfDateExist = require('../../../generatorUtils/importMomentIfDateExist')
+const filterBackendProperties = require('../../utils/filterBackendProperties')
+const componentField = require('../../utils/componentField')
+const {generateDataCombos, generateImportCombos, generateMethodsCombos, generateMountedCombos} = require('../../utils/componentFieldCombos')
+const importMomentIfDateExist = require('../../utils/importMomentIfDateExist')
 
-module.exports = function (model, moduleName) {
+module.exports = function ({model, moduleName}) {
     let content =
         `<template>
     <v-form ref="form" autocomplete="off" @submit.prevent="save" >
@@ -15,13 +15,10 @@ module.exports = function (model, moduleName) {
 
 <script>
 
-    //Mixins
     import {InputErrorsByProps, RequiredRule} from '@ci-common-module/frontend'
     
-    //Relations
     ${generateImportCombos(model.properties)}
     
-    //Handle Dates
     ${importMomentIfDateExist(model.properties)}
 
     export default {

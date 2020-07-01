@@ -1,10 +1,10 @@
-const ModelContentGenerator = require("./src/generator-api/ModelContentGenerator");
-const TypeContentGenerator = require("./src/generator-api/TypeContentGenerator");
-const ServiceContentGenerator = require("./src/generator-api/ServiceContentGenerator");
-const ResolverContentGenerator = require("./src/generator-api/ResolverContentGenerator");
-const GraphIndexContentGenerator = require("./src/generator-api/GraphIndexContentGenerator");
-const PermissionsGenerator = require("./src/generator-api/PermissionsGenerator");
-const CreateDir = require("./src/utils/createDir");
+const ModelContentGenerator = require("./models/ModelContentGenerator");
+const TypeContentGenerator = require("./graphql/TypeContentGenerator");
+const ServiceContentGenerator = require("./service/ServiceContentGenerator");
+const ResolverContentGenerator = require("./graphql/ResolverContentGenerator");
+const GraphIndexContentGenerator = require("./graphql/GraphIndexContentGenerator");
+const PermissionsGenerator = require("./permissions/PermissionsGenerator");
+const CreateDir = require("../utils/createDir");
 const fs = require('fs');
 
 const commander = require('commander');
@@ -14,7 +14,7 @@ commander
     .option('-f, --file <file>', 'Set the source file')
     .parse(process.argv);
 
-const sourceFile = (commander.file ? commander.file : './input/source.json');
+const sourceFile = (commander.file ? commander.file : '../../input/source.json');
 
 console.log("FILE:", sourceFile)
 const source = require(sourceFile)
@@ -100,7 +100,7 @@ source.models.forEach(model => {
 })
 
 //CREATE GRAPH INDEX
-let path = graphqlpath + '/api.js'
+let path = graphqlpath + '/index.js'
 fs.writeFile(path, GraphIndexContentGenerator(),
     (err) => {
         if (err) return console.log(err);

@@ -1,8 +1,8 @@
-const capitalize = require('../generatorUtils/capitalize')
-const getI18nKey = require('../generatorUtils/getI18nKey')
-const kebabCase = require('../generatorUtils/kebabCase')
+const capitalize = require('../../utils/capitalize')
+const getI18nKey = require('../../utils/getI18nKey')
+const kebabCase = require('../../utils/kebabCase')
 
-module.exports = function (model, moduleName) {
+module.exports = function ({model, moduleName}) {
     let content =
         `<template>
 <crud-layout title="group.title" subtitle="group.description">
@@ -27,6 +27,13 @@ module.exports = function (model, moduleName) {
                         v-on:itemCreated="onItemCreated" 
                         v-on:close="creating=false" 
         />
+        
+        <${kebabCase(model.name)}-update v-if="updating" 
+                        :open="updating"
+                        :item="itemToEdit" 
+                        v-on:itemUpdated="onItemUpdated" 
+                        v-on:close="updating=false" 
+        />
           
         <${kebabCase(model.name)}-show v-if="showing" 
                            :open="showing" 
@@ -41,25 +48,18 @@ module.exports = function (model, moduleName) {
                          v-on:close="deleting=false" 
         />
 
-        <${kebabCase(model.name)}-update v-if="updating" 
-                        :open="updating"
-                        :item="itemToEdit" 
-                        v-on:itemUpdated="onItemUpdated" 
-                        v-on:close="updating=false" 
-        />
-
         <snackbar :message="flash"/>
 
 </crud-layout>
 </template>
 
 <script>
-    import ${model.name}Provider from '../providers/${model.name}Provider'
+    import ${model.name}Provider from '../../providers/${model.name}Provider'
     
-    import ${model.name}Create from "./${model.name}Create";
-    import ${model.name}Update from "./${model.name}Update";
-    import ${model.name}Delete from "./${model.name}Delete";
-    import ${model.name}Show from "./${model.name}Show";
+    import ${model.name}Create from "../${model.name}Create";
+    import ${model.name}Update from "../${model.name}Update";
+    import ${model.name}Delete from "../${model.name}Delete";
+    import ${model.name}Show from "../${model.name}Show";
     
      import {CrudLayout, AddButton, Snackbar} from "@ci-common-module/frontend"
      
@@ -107,9 +107,21 @@ module.exports = function (model, moduleName) {
                 this.itemToDelete = item
             },
             //Fetch Items 
-            fetch() {
+            fetch(options = {
+                          pageNumber: 1,
+                          itemsPerPage: 5,
+                          search: '',
+                          orderBy: null,
+                          orderDesc: false
+                      }) {
                 this.loading = true
-                ${model.name}Provider.paginate${model.name}s(this.limit, this.pageNumber, this.filter.search, this.getOrderBy, this.getOrderDesc).then(r => {
+                ${model.name}Provider.paginate${model.name}s(
+                    options.pageNumber, 
+                    options.itemsPerPage,
+                    options.search,
+                    options.orderBy, 
+                    options.orderDesc
+                ).then(r => {
                     this.items = r.data.${model.name.toLowerCase()}sPaginate.items
                     this.totalItems = r.data.${model.name.toLowerCase()}sPaginate.totalItems
                     this.loading = false

@@ -1,6 +1,6 @@
-const capitalize = require('../../../../generatorUtils/capitalize')
+const capitalize = require('../../../utils/capitalize')
 
-module.exports = function (model, field) {
+module.exports = function ({model, field}) {
 let content =
 `query ${model.name.toLowerCase()}sBy${capitalize(field.name)}($${field.name}:String!){
     ${model.name.toLowerCase()}sBy${capitalize(field.name)}(${field.name}:$${field.name}){

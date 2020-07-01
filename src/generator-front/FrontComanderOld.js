@@ -11,12 +11,12 @@ const GqlFetchBySomethingContentGenerator = require("./providers/gql/GqlFetchByS
 const ComponentCreate = require("./components/ComponentCreate");
 const ComponentUpdate = require("./components/ComponentUpdate");
 const ComponentDelete = require("./components/ComponentDelete");
-const ComponetList = require("./components/ComponetList");
+const ComponetList = require("./components/ComponentList");
 const ComponetCrud = require("./generator-front/components/ComponetCrud");
 const ComponentForm = require("./components/ComponentForm");
 //ShowData
-const ComponetShowData = require("./components/ComponetShowData");
-const ComponetShow = require("./components/ComponetShow");
+const ComponetShowData = require("./components/ComponentShowData");
+const ComponetShow = require("./components/ComponentShow");
 
 //i18n
 const I18nMessagesGenerator = require("./i18n/I18nMessages");
@@ -243,7 +243,7 @@ source.models.forEach(model => {
 })
 
 
-//CREATE  GQL ID FILES
+//CREATE  GQL By Shomething
 
 source.models.forEach(model => {
 

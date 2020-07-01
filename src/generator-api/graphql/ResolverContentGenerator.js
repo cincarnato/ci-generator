@@ -1,4 +1,4 @@
-const capitalize = require('../../generatorUtils/capitalize')
+const capitalize = require('../../utils/capitalize')
 
 module.exports = function (model) {
 //TYPE DEFINITION
@@ -28,10 +28,10 @@ export default {
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
             return find${model.name}(id)
         },
-        ${model.name.toLowerCase()}sPaginate: (_, {limit, pageNumber, search, orderBy, orderDesc}) => {
+        ${model.name.toLowerCase()}sPaginate: (_, {pageNumber, itemsPerPage, search, orderBy, orderDesc}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
-            return paginate${model.name}(limit, pageNumber, search, orderBy, orderDesc)
+            return paginate${model.name}(pageNumber, itemsPerPage, search, orderBy, orderDesc)
         },
         ${findBy(model)}
     },

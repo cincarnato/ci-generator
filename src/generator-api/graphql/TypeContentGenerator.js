@@ -1,5 +1,5 @@
-const capitalize = require('../../generatorUtils/capitalize')
-const filterBackendProperties = require('../../generatorUtils/filterBackendProperties')
+const capitalize = require('../../utils/capitalize')
+const filterBackendProperties = require('../../utils/filterBackendProperties')
 
 module.exports = function (model) {
 //TYPE DEFINITION
@@ -18,7 +18,7 @@ type ${model.name}Paginated{
 
 type Query {
     ${model.name.toLowerCase()}s: [${model.name}]
-    ${model.name.toLowerCase()}sPaginate(limit: Int!, pageNumber: Int, search: String, orderBy: String, orderDesc: Boolean): ${model.name}Paginated  
+    ${model.name.toLowerCase()}sPaginate( pageNumber: Int, itemsPerPage: Int, search: String, orderBy: String, orderDesc: Boolean): ${model.name}Paginated  
     ${model.name.toLowerCase()}(id:ID!): ${model.name}
     ${findBy(model)}
     

@@ -1,6 +1,6 @@
-const kebabCase = require('../../../generatorUtils/kebabCase')
-const getI18nKey = require('../../../generatorUtils/getI18nKey')
-module.exports = function (model, moduleName) {
+const kebabCase = require('../../utils/kebabCase')
+const getI18nKey = require('../../utils/getI18nKey')
+module.exports = function ({model, moduleName}) {
     let content =
         `<template>
       <crud-delete :open="open"
@@ -12,10 +12,6 @@ module.exports = function (model, moduleName) {
 
         <v-card-text>
           <${kebabCase(model.name)}-show-data :item="item" />
-        </v-card-text>
-
-        <v-card-text>
-            <v-alert v-if="errorMessage" type="error" dense text>{{errorMessage}}</v-alert>
         </v-card-text>
 
         <v-card-text>

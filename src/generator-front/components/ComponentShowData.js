@@ -1,5 +1,5 @@
-const getI18nKey = require('../../../generatorUtils/getI18nKey')
-module.exports = function (model, moduleName) {
+const getI18nKey = require('../../utils/getI18nKey')
+module.exports = function ({model, moduleName}) {
     let columns = distribute(model.properties)
     let content =
         `<template>

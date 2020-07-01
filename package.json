@@ -11,8 +11,8 @@
   "devDependencies": {},
   "scripts": {
     "ui": "node ui-api/api.js & light-server -s ui -p 4050",
-    "generate-backend": "node GeneratorBack.js",
-    "generate-frontend": "node src/generator-front/FrontComander.js"
+    "generate-backend": "node src/generator-api/api-commander.js",
+    "generate-frontend": "node src/generator-front/front-commander.js"
   },
   "repository": {
     "type": "git",

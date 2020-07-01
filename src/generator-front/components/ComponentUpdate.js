@@ -1,10 +1,10 @@
-const kebabCase = require('../../../generatorUtils/kebabCase')
-const filterBackendProperties = require('../../../generatorUtils/filterBackendProperties')
-const {generateDataCombos, generateImportCombos, generateMethodsCombos} = require('../../../generatorUtils/componentFieldCombos')
-const importMomentIfDateExist = require('../../../generatorUtils/importMomentIfDateExist')
-const getI18nKey = require('../../../generatorUtils/getI18nKey')
+const kebabCase = require('../../utils/kebabCase')
+const filterBackendProperties = require('../../utils/filterBackendProperties')
+const {generateDataCombos, generateImportCombos, generateMethodsCombos} = require('../../utils/componentFieldCombos')
+const importMomentIfDateExist = require('../../utils/importMomentIfDateExist')
+const getI18nKey = require('../../utils/getI18nKey')
 
-module.exports = function (model,moduleName) {
+module.exports = function ({model,moduleName}) {
     let content =
         `<template>
         <crud-update :open="open"
@@ -19,19 +19,15 @@ module.exports = function (model,moduleName) {
 </template>
 
 <script>
-    //Provider
-    import ${model.name}Provider from "../providers/${model.name}Provider";
+
+    import ${model.name}Provider from "../../providers/${model.name}Provider";
     
-    //Common
     import {CrudUpdate, ClientError} from '@ci-common-module/frontend'
     
-    //Form
-    {model.name}Form from "../${model.name}Form";
+    import ${model.name}Form from "../${model.name}Form";
   
-    //Relations
     ${generateImportCombos(model.properties)}
     
-    //Handle Dates 
     ${importMomentIfDateExist(model.properties)}
 
     export default {

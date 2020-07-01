@@ -1,4 +1,4 @@
-const kebabCase = require('../../../generatorUtils/kebabCase')
+const kebabCase = require('../../utils/kebabCase')
 module.exports = function (model) {
     let content =
         `<template>

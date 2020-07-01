@@ -1,4 +1,4 @@
-const kebabCase = require('../../../generatorUtils/kebabCase')
+const kebabCase = require('../../utils/kebabCase')
 module.exports = function (model) {
     let content =
 `<template>
@@ -12,7 +12,7 @@ module.exports = function (model) {
 </template>
 
 <script>
-    import ${model.name}Crud from "../components/${model.name}Crud";
+    import ${model.name}Crud from "./${model.name}Crud";
     export default {
         name: "${model.name}",
         components: {${model.name}Crud}
