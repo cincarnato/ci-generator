@@ -25,10 +25,10 @@ module.exports = function ({model, moduleName}) {
 
 <script>
     //Provider  
-    import ${model.name}Provider from "../providers/${model.name}Provider";
+    import ${model.name}Provider from "../../../providers/${model.name}Provider";
     
     //Show Data
-    import ${model.name}ShowData from "./${model.name}ShowData";
+    import ${model.name}ShowData from "../${model.name}Show/${model.name}ShowData";
     
     //Common
     import {CrudDelete, ClientError} from '@ci-common-module/frontend'

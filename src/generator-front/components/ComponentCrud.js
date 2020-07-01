@@ -54,12 +54,13 @@ module.exports = function ({model, moduleName}) {
 </template>
 
 <script>
-    import ${model.name}Provider from '../../providers/${model.name}Provider'
+    import ${model.name}Provider from '../../../providers/${model.name}Provider'
     
     import ${model.name}Create from "../${model.name}Create";
     import ${model.name}Update from "../${model.name}Update";
     import ${model.name}Delete from "../${model.name}Delete";
     import ${model.name}Show from "../${model.name}Show";
+    import ${model.name}List from "../${model.name}List";
     
      import {CrudLayout, AddButton, Snackbar} from "@ci-common-module/frontend"
      
@@ -70,10 +71,11 @@ module.exports = function ({model, moduleName}) {
             ${model.name}Create, 
             ${model.name}Update, 
             ${model.name}Delete, 
-            ${model.name}Show
+            ${model.name}Show,
+            ${model.name}List
         },
         created() {
-            this.updatePage()
+            this.fetch()
         },
         methods: {
             //On

@@ -1,4 +1,4 @@
-const GeneratorManager = require('./FrontGeneratorManager')
+const FrontGeneratorManager = require('./FrontGeneratorManager')
 
 const commander = require('commander');
 commander
@@ -10,7 +10,7 @@ commander
 const sourceFile = (commander.file ? commander.file : '../../input/source.json');
 const source = require(sourceFile)
 
-let gm = new GeneratorManager(source)
+let gm = new FrontGeneratorManager(source)
 
 //console.log(gm.source)
 gm.createDirs()

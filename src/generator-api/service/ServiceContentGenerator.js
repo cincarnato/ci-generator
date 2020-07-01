@@ -41,7 +41,7 @@ export const paginate${model.name} = function ( pageNumber = 1, itemsPerPage = 5
     let query = {deleted: false, ...qs(search)}
     let populate = ${populateArray(model.properties)}
     let sort = getSort(orderBy, orderDesc)
-    let params = {page: pageNumber, limit: limit, populate, sort}
+    let params = {page: pageNumber, limit: itemsPerPage, populate, sort}
 
     return new Promise((resolve, reject) => {
         ${model.name}.paginate(query, params).then(result => {

@@ -20,7 +20,7 @@ module.exports = function ({model,moduleName}) {
 
 <script>
 
-    import ${model.name}Provider from "../../providers/${model.name}Provider";
+    import ${model.name}Provider from "../../../providers/${model.name}Provider";
     
     import {CrudUpdate, ClientError} from '@ci-common-module/frontend'
     
@@ -36,7 +36,7 @@ module.exports = function ({model,moduleName}) {
         components: { ${model.name}Form, CrudUpdate },
         
         props:{
-          open: {type: Boolean, default: true}
+          open: {type: Boolean, default: true},
           item: {type: Object, required: true}
         },
 

@@ -29,7 +29,7 @@ const GqlUpdate = require("./providers/gql/GqlUpdate")
 const GqlDelete = require("./providers/gql/GqlDelete")
 const GqlFetchBySomething = require("./providers/gql/GqlFetchBySomething")
 
-class GeneratorManager {
+class FrontGeneratorManager {
 
     constructor(source) {
         this.source = source
@@ -115,7 +115,7 @@ class GeneratorManager {
 
     generateGqlPaginate() {
         this.source.models.forEach(model => {
-            let name = model.name.toLowerCase() + 'Paginate'
+            let name = model.name.toLowerCase() + 'sPaginate'
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlPaginate, model, fileName)
@@ -275,4 +275,4 @@ class GeneratorManager {
 
 }
 
-module.exports = GeneratorManager;
+module.exports = FrontGeneratorManager;
