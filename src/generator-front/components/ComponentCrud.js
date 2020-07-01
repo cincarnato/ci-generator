@@ -5,7 +5,7 @@ const kebabCase = require('../../utils/kebabCase')
 module.exports = function ({model, moduleName}) {
     let content =
         `<template>
-<crud-layout title="group.title" subtitle="group.description">
+<crud-layout :title="title" subtitle="common.description">
 
         <template v-slot:list>
             <${kebabCase(model.name)}-list :items="items"
