@@ -4,7 +4,7 @@ const writeFile = require("../utils/writeFile");
 const writeIndex = require("../utils/writeIndex");
 const capitalize = require("../utils/capitalize");
 
-const OUTPUT_PATH = '../../output/front/'
+const OUTPUT_PATH = './output/front/'
 
 //Generators
 const I18nMessages = require("./i18n/I18nMessages");

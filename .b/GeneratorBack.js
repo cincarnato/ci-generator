@@ -76,7 +76,7 @@ source.models.forEach(model => {
 })
 
 //CREATE GRAPH INDEX
-let path = graphqlpath + '/api.js'
+let path = graphqlpath + '/main.js'
 fs.writeFile(path, GraphIndexContentGenerator(),
     (err) => {
         if (err) return console.log(err);
