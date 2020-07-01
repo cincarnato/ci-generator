@@ -1,4 +1,4 @@
-const capitalize = require('../generatorUtils/capitalize')
+const capitalize = require('../../../../generatorUtils/capitalize')
 
 module.exports = function (model, field) {
 let content =

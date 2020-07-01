@@ -1,7 +1,7 @@
-const filterBackendProperties = require('../generatorUtils/filterBackendProperties')
-const componentField = require('../generatorUtils/componentField')
-const {generateDataCombos, generateImportCombos, generateMethodsCombos, generateMountedCombos} = require('../generatorUtils/componentFieldCombos')
-const importMomentIfDateExist = require('../generatorUtils/importMomentIfDateExist')
+const filterBackendProperties = require('../../../generatorUtils/filterBackendProperties')
+const componentField = require('../../../generatorUtils/componentField')
+const {generateDataCombos, generateImportCombos, generateMethodsCombos, generateMountedCombos} = require('../../../generatorUtils/componentFieldCombos')
+const importMomentIfDateExist = require('../../../generatorUtils/importMomentIfDateExist')
 
 module.exports = function (model, moduleName) {
     let content =

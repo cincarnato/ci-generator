@@ -1,10 +1,10 @@
-const ModelContentGenerator = require("./generatorBack/ModelContentGenerator");
-const TypeContentGenerator = require("./generatorBack/TypeContentGenerator");
-const ServiceContentGenerator = require("./generatorBack/ServiceContentGenerator");
-const ResolverContentGenerator = require("./generatorBack/ResolverContentGenerator");
-const GraphIndexContentGenerator = require("./generatorBack/GraphIndexContentGenerator");
-const PermissionsGenerator = require("./generatorBack/PermissionsGenerator");
-const CreateDir = require("./CreateDir");
+const ModelContentGenerator = require("./src/generator-api/ModelContentGenerator");
+const TypeContentGenerator = require("./src/generator-api/TypeContentGenerator");
+const ServiceContentGenerator = require("./src/generator-api/ServiceContentGenerator");
+const ResolverContentGenerator = require("./src/generator-api/ResolverContentGenerator");
+const GraphIndexContentGenerator = require("./src/generator-api/GraphIndexContentGenerator");
+const PermissionsGenerator = require("./src/generator-api/PermissionsGenerator");
+const CreateDir = require("./src/utils/createDir");
 const fs = require('fs');
 
 const commander = require('commander');

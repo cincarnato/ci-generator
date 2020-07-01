@@ -1,8 +1,8 @@
-const kebabCase = require('../generatorUtils/kebabCase')
-const filterBackendProperties = require('../generatorUtils/filterBackendProperties')
-const { generateImportCombos, generateMethodsCombos} = require('../generatorUtils/componentFieldCombos')
-const importMomentIfDateExist = require('../generatorUtils/importMomentIfDateExist')
-const getI18nKey = require('./../generatorUtils/getI18nKey')
+const kebabCase = require('../../../generatorUtils/kebabCase')
+const filterBackendProperties = require('../../../generatorUtils/filterBackendProperties')
+const { generateImportCombos, generateMethodsCombos} = require('../../../generatorUtils/componentFieldCombos')
+const importMomentIfDateExist = require('../../../generatorUtils/importMomentIfDateExist')
+const getI18nKey = require('../../../generatorUtils/getI18nKey')
 
 module.exports = function (model,moduleName) {
     let content =
@@ -38,7 +38,7 @@ module.exports = function (model,moduleName) {
     export default {
         name: "${model.name}Create",
          
-        components: {GroupForm, CrudCreate},
+        components: { ${model.name}Form, CrudCreate },
         
         props:{
           open: {type: Boolean, default: true}
@@ -61,14 +61,14 @@ module.exports = function (model,moduleName) {
                 if (this.$refs.form.validate()) {
                     ${model.name}Provider.create${model.name}(this.form).then(r => {
                             if (r) {
-                                this.$emit('itemCreate',r.data.${model.name.toLowerCase()}Create)
+                                this.$emit('itemCreated',r.data.${model.name.toLowerCase()}Create)
                                 this.$emit('closeDialog')
                             }
                         }
                     ).catch(error => {
                          let clientError = new ClientError(error)
                          this.inputErrors = clientError.inputErrors
-                         this.errorMessage = clientError.showMessage
+                         this.errorMessage = clientError.i18nMessage
                     })
                 }
 

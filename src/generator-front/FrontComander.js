@@ -1,30 +1,30 @@
-const ProviderContentGenerator = require("./generatorFront/ProviderContentGenerator");
-const GqlFetchAllContentGenerator = require("./generatorFront/GqlFetchAllContentGenerator");
-const GqlFetchByIDContentGenerator = require("./generatorFront/GqlFetchByIDContentGenerator");
-const GqlCreateContentGenerator = require("./generatorFront/GqlCreateContentGenerator");
-const GqlUpdateContentGenerator = require("./generatorFront/GqlUpdateContentGenerator");
-const GqlDeleteContentGenerator = require("./generatorFront/GqlDeleteContentGenerator");
-const GqlPaginateContentGenerator = require("./generatorFront/GqlPaginateContentGenerator");
+const ProviderContentGenerator = require("./providers/Provider");
+const GqlFetchAllContentGenerator = require("./providers/gql/GqlFetchAll");
+const GqlFetchByIDContentGenerator = require("./providers/gql/GqlFetchByID");
+const GqlCreateContentGenerator = require("./providers/gql/GqlCreate");
+const GqlUpdateContentGenerator = require("./providers/gql/GqlUpdate");
+const GqlDeleteContentGenerator = require("./providers/gql/GqlDelete");
+const GqlPaginateContentGenerator = require("./providers/gql/GqlPaginate");
 
-const GqlFetchBySomethingContentGenerator = require("./generatorFront/GqlFetchBySomethingContentGenerator");
+const GqlFetchBySomethingContentGenerator = require("./providers/gql/GqlFetchBySomething");
 
-const ComponentCreateContentGenerator = require("./generatorFront/CreateComponent");
-const ComponentUpdateContentGenerator = require("./generatorFront/ComponentUpdateContentGenerator");
-const ComponentDeleteContentGenerator = require("./generatorFront/ComponentDeleteContentGenerator");
-const ComponetDataTableContentGenerator = require("./generatorFront/ComponetDataTableContentGenerator");
-
+const ComponentCreate = require("./components/ComponentCreate");
+const ComponentUpdate = require("./components/ComponentUpdate");
+const ComponentDelete = require("./components/ComponentDelete");
+const ComponetList = require("./components/ComponetList");
+const ComponetCrud = require("./generator-front/components/ComponetCrud");
+const ComponentForm = require("./components/ComponentForm");
 //ShowData
-const ComponetShowDataItemContentGenerator = require("./generatorFront/ComponetShowDataItemContentGenerator");
-const ComponetShowDataContentGenerator = require("./generatorFront/ComponetShowDataContentGenerator");
-const ComponetShowContentGenerator = require("./generatorFront/ComponetShowContentGenerator");
+const ComponetShowData = require("./components/ComponetShowData");
+const ComponetShow = require("./components/ComponetShow");
 
 //i18n
-const I18nMessagesGenerator = require("./generatorFront/I18nMessagesGenerator");
+const I18nMessagesGenerator = require("./i18n/I18nMessages");
 
-const PageCRUDContentGenerator = require("./generatorFront/PageCRUDContentGenerator");
+const PageCRUDContentGenerator = require("./pages/PageCrud");
 
 
-const CreateDir = require("./CreateDir");
+const CreateDir = require("../utils/createDir");
 const fs = require('fs');
 
 
@@ -156,7 +156,7 @@ source.models.forEach(model => {
 
 source.models.forEach(model => {
     let path = componentPath + model.name + 'Create.vue'
-    fs.writeFile(path, ComponentCreateContentGenerator(model,source.module),
+    fs.writeFile(path, ComponentCreate(model,source.module),
         (err) => {
             if (err) return console.log(err);
             console.log('Component Create File OK: ' + model.name);
@@ -168,7 +168,7 @@ source.models.forEach(model => {
 
 source.models.forEach(model => {
     let path = componentPath + model.name + 'Update.vue'
-    fs.writeFile(path, ComponentUpdateContentGenerator(model,source.module),
+    fs.writeFile(path, ComponentUpdate(model,source.module),
         (err) => {
             if (err) return console.log(err);
             console.log('Component Update File OK: ' + model.name);

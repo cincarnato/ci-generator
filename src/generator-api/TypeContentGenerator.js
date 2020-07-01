@@ -1,5 +1,5 @@
-const capitalize = require('../generatorUtils/capitalize')
-const filterBackendProperties = require('../generatorUtils/filterBackendProperties')
+const capitalize = require('../../generatorUtils/capitalize')
+const filterBackendProperties = require('../../generatorUtils/filterBackendProperties')
 
 module.exports = function (model) {
 //TYPE DEFINITION

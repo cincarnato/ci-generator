@@ -1,19 +1,14 @@
-const kebabCase = require('../generatorUtils/kebabCase')
-const getI18nKey = require('./../generatorUtils/getI18nKey')
+const kebabCase = require('../../../generatorUtils/kebabCase')
+const getI18nKey = require('../../../generatorUtils/getI18nKey')
 module.exports = function (model, moduleName) {
     let content =
         `<template>
-    <v-card>
-
-        <v-toolbar flat color="primary">
-            <v-toolbar-title class="onPrimary--text">{{title}}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn icon color="primary" class="onPrimary--text" @click="$emit('closeDialog')">
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-            </v-toolbar-items>
-        </v-toolbar>
+      <crud-delete :open="open"
+                 :loading="loading"
+                 :errorMessage="errorMessage"
+                 @delete="remove"
+                 @close="$emit('close')"
+    >
 
         <v-card-text>
           <${kebabCase(model.name)}-show-data :item="item" />
@@ -29,30 +24,29 @@ module.exports = function (model, moduleName) {
             </v-row>
         </v-card-text>
 
-
-        <v-card-actions>
-            <v-btn color="grey" tile outlined @click="$emit('closeDialog')">
-                Cerrar
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn color="secondary" class="onSecondary--text" @click="remove" :loading="loading">
-                Confirmar
-            </v-btn>
-        </v-card-actions>
-
-    </v-card>
+    </crud-delete>
 </template>
 
 <script>
+    //Provider  
+    import ${model.name}Provider from "../providers/${model.name}Provider";
+    
+    //Show Data
     import ${model.name}ShowData from "./${model.name}ShowData";
-     import ${model.name}Provider from "../providers/${model.name}Provider";
-     
+    
+    //Common
+    import {CrudDelete, ClientError} from '@ci-common-module/frontend'
+    
     export default {
         name: "${model.name}Delete",
-        components: {${model.name}ShowData},
+        
+        components: {${model.name}ShowData, CrudDelete},
+        
         props: {
-            item: Object
+          open: {type: Boolean, default: true},
+          item: {type: Object, required: true}
         },
+        
         data() {
             return {
                 modal: false,
@@ -66,14 +60,15 @@ module.exports = function (model, moduleName) {
             remove() {
                 ${model.name}Provider.delete${model.name}(this.item.id).then(result => {
                             if (result.data.${model.name.toLowerCase()}Delete.deleteSuccess) {
-                                this.$emit('itemDelete',result.data.${model.name.toLowerCase()}Delete)
-                                this.$emit('closeDialog')
+                                this.$emit('itemDeleted',result.data.${model.name.toLowerCase()}Delete)
+                                this.$emit('close')
                             }else{
                                 this.errorMessage = 'Error on Delete'
                             }
                         }
-                    ).catch(err =>{
-                    this.errorMessage = err.message
+                    ).catch(error =>{
+                        let clientError = new ClientError(error)
+                        this.errorMessage = clientError.showMessage
                 })
             },
         },

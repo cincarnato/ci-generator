@@ -12,7 +12,7 @@
   "scripts": {
     "ui": "node ui-api/api.js & light-server -s ui -p 4050",
     "generate-backend": "node GeneratorBack.js",
-    "generate-frontend": "node GeneratorFront.js"
+    "generate-frontend": "node src/generator-front/FrontComander.js"
   },
   "repository": {
     "type": "git",

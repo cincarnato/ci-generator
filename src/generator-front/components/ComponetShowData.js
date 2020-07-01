@@ -1,5 +1,4 @@
-const getI18nKey = require('../generatorUtils/getI18nKey')
-const kebabCase = require('../generatorUtils/kebabCase')
+const getI18nKey = require('../../../generatorUtils/getI18nKey')
 module.exports = function (model, moduleName) {
     let columns = distribute(model.properties)
     let content =
@@ -26,13 +25,13 @@ module.exports = function (model, moduleName) {
     </v-row>
 </template>
 <script>
-    import ${model.name}ShowItem from "./${model.name}ShowDataItem"
-
+    import {ShowField} from '@ci-common-module/frontend'
+    
     export default {
         name: '${model.name}ShowData',
-        components: {${model.name}ShowItem},
+        components: {ShowField},
         props: {
-            item: {}
+            item: {type: Object, required: true}
         }
     }
 </script>
@@ -61,6 +60,6 @@ function distribute(properties) {
 function getItems(model, column, moduleName) {
 
     return column.map(field => {
-        return ` <${kebabCase(model.name)}-show-item :item="item.${field.name}" :label="$t('${getI18nKey(moduleName,model.name, field.name)}')" icon="${field.icon}"/>`
+        return ` <show-field :value="item.${field.name}" :label="$t('${getI18nKey(moduleName,model.name, field.name)}')" icon="${field.icon}"/>`
     }).join('\n                ')
 }

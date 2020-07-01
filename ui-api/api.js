@@ -56,7 +56,7 @@ app.post("/generate",(req,res)=>{
 
             try{
                 generatorBack = execSync("node GeneratorBack.js -f "+ fileName).toString()
-                generatorFront = execSync("node GeneratorFront.js -f "+ fileName).toString()
+                generatorFront = execSync("node FrontComander.js -f "+ fileName).toString()
             }catch (e) {
                error = e
             }
