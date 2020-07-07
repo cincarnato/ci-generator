@@ -1,7 +1,10 @@
+const pluralize = require('../../../utils/pluralize')
+const capitalize = require('../../../utils/capitalize')
+
 module.exports = function (model) {
 let content =
-`query ${model.name.toLowerCase()}s{
-    ${model.name.toLowerCase()}s{
+`query ${pluralize(model.name.toLowerCase())}Fetch{
+    ${pluralize(model.name.toLowerCase())}Fetch{
         id
         ${retorno(model.properties)}
     }

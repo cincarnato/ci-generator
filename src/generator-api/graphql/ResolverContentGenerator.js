@@ -1,10 +1,11 @@
 const capitalize = require('../../utils/capitalize')
+const pluralize = require('../../utils/pluralize')
 
 module.exports = function (model) {
 //TYPE DEFINITION
     let content =
         `
-import {${findByImport(model)} create${model.name}, update${model.name}, delete${model.name},  find${model.name}, fetch${model.name}s, paginate${model.name}} from '../../services/${model.name}Service'
+import {${findByImport(model)} create${model.name}, update${model.name}, delete${model.name},  find${model.name}, fetch${pluralize(model.name.toLowerCase())}, paginate${model.name}} from '../../services/${model.name}Service'
 
 import {AuthenticationError, ForbiddenError} from "apollo-server-express";
 
@@ -18,20 +19,20 @@ import {
 
 export default {
     Query: {
-        ${model.name.toLowerCase()}s: (_, {}, {user,rbac}) => {
+        ${model.name.toLowerCase()}Find: (_, {id}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
-            return fetch${model.name}s()
+            return find${capitalize(model.name)}(id)
         },
-        ${model.name.toLowerCase()}: (_, {id}, {user,rbac}) => {
+        ${pluralize(model.name.toLowerCase())}Fetch: (_, {}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
-            return find${model.name}(id)
+            return fetch${pluralize(capitalize(model.name))}()
         },
-        ${model.name.toLowerCase()}sPaginate: (_, {pageNumber, itemsPerPage, search, orderBy, orderDesc}) => {
+        ${pluralize(model.name.toLowerCase())}Paginate: (_, {pageNumber, itemsPerPage, search, orderBy, orderDesc}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
-            return paginate${model.name}(pageNumber, itemsPerPage, search, orderBy, orderDesc)
+            return paginate${pluralize(capitalize(model.name))}(pageNumber, itemsPerPage, search, orderBy, orderDesc)
         },
         ${findBy(model)}
     },
@@ -39,17 +40,17 @@ export default {
         ${model.name.toLowerCase()}Create: (_, {input}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_CREATE)) throw new ForbiddenError("Not Authorized")
-            return create${model.name}(user, input)
+            return create${capitalize(model.name)}(user, input)
         },
           ${model.name.toLowerCase()}Update: (_, {id, input}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_UPDATE)) throw new ForbiddenError("Not Authorized")
-            return update${model.name}(user, id, input)
+            return update${capitalize(model.name)}(user, id, input)
         },
          ${model.name.toLowerCase()}Delete: (_, {id}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_DELETE)) throw new ForbiddenError("Not Authorized")
-            return delete${model.name}(id)
+            return delete${capitalize(model.name)}(id)
         },
     }
 
@@ -92,9 +93,9 @@ function findBy(model){
 
 function findByMethod(model, field){
     let content =
-`${model.name.toLowerCase()}sBy${capitalize(field.name)}: (_, {${field.name}}, {user,rbac}) => {
+`${pluralize(model.name.toLowerCase())}By${capitalize(field.name)}: (_, {${field.name}}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
-            return find${model.name}sBy${capitalize(field.name)}(${field.name})
+            return find${pluralize(capitalize(model.name))}By${capitalize(field.name)}(${field.name})
         },
 `
     return content

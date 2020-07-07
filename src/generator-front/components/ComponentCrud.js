@@ -8,10 +8,8 @@ module.exports = function ({model, moduleName}) {
 <crud-layout :title="title" subtitle="common.description">
 
         <template v-slot:list>
-            <${kebabCase(model.name)}-list :items="items"
-                       :totalItems="totalItems"
-                       :loading="loading"
-                       :headers="headers"
+            <${kebabCase(model.name)}-list 
+                       ref="list"
                        @fetch="fetch"
                        @update="update"
                        @delete="remove"
@@ -54,7 +52,6 @@ module.exports = function ({model, moduleName}) {
 </template>
 
 <script>
-    import ${model.name}Provider from '../../../providers/${model.name}Provider'
     
     import ${model.name}Create from "../${model.name}Create";
     import ${model.name}Update from "../${model.name}Update";
@@ -74,23 +71,32 @@ module.exports = function ({model, moduleName}) {
             ${model.name}Show,
             ${model.name}List
         },
-        created() {
-            this.fetch()
+        data() {
+            return {
+                title: this.$t('${getI18nKey(moduleName,model.name,'title')}'),
+                flash: null,
+                creating: false,
+                updating: false,
+                deleting: false,
+                showing: false,
+                itemToEdit: null,
+                itemToDelete: null,
+                itemToShow: null,
+            }
         },
         methods: {
             //On
             onItemCreated(item) {
-                this.items.push(item)
-                this.totalItems++
+                this.$refs.list.fetch()
+                this.flash= "common.created"
             },
             onItemUpdated(item) {
-                let index = this.items.findIndex(i => i.id == item.id)
-                this.$set(this.items, index, item)
+                this.$refs.list.fetch()
+                this.flash= "common.updated"
             },
             onItemDeleted(item) {
-                let index = this.items.findIndex(i => i.id == item.id)
-                this.items.splice(index, 1)
-                this.totalItems--
+                this.$refs.list.fetch()
+                this.flash= "common.deleted"
             },
             //Open
             create() {
@@ -107,70 +113,14 @@ module.exports = function ({model, moduleName}) {
             remove(item) {
                 this.deleting = true
                 this.itemToDelete = item
-            },
-            //Fetch Items 
-            fetch(options = {
-                          pageNumber: 1,
-                          itemsPerPage: 5,
-                          search: '',
-                          orderBy: null,
-                          orderDesc: false
-                      }) {
-                this.loading = true
-                ${model.name}Provider.paginate${model.name}s(
-                    options.pageNumber, 
-                    options.itemsPerPage,
-                    options.search,
-                    options.orderBy, 
-                    options.orderDesc
-                ).then(r => {
-                    this.items = r.data.${model.name.toLowerCase()}sPaginate.items
-                    this.totalItems = r.data.${model.name.toLowerCase()}sPaginate.totalItems
-                    this.loading = false
-                })
-            }
-        },
-        data() {
-            return {
-                title: this.$t('${getI18nKey(moduleName,model.name,'title')}'),
-                flash: null,
-                creating: false,
-                updating: false,
-                deleting: false,
-                showing: false,
-                loading: false,
-                itemToEdit: null,
-                itemToDelete: null,
-                itemToShow: null,
-                filter: {
-                    search: '',
-                },
-                items: [],
-                headers: [
-                    ${headers(model.properties, model.name, moduleName)},
-                    {text: this.$t('common.actions'), value: 'action', sortable: false},
-                ],
-                totalItems: 0,
-                limit: 5,
-                pageNumber: 1,
-                orderBy: null,
-                orderDesc: false
             }
         }
+        
     }
 </script>
 
 
 `
 
-    return content
-}
-
-
-function headers(properties, modelName, moduleName) {
-
-    let content = properties.map(field => {
-        return `{text: this.$t('${getI18nKey(moduleName,modelName,field.name)}'), value: '${field.name}'}`
-    }).join(',\n                    ')
     return content
 }

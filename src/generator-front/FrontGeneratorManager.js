@@ -3,6 +3,7 @@ const createDir = require("../utils/createDir");
 const writeFile = require("../utils/writeFile");
 const writeIndex = require("../utils/writeIndex");
 const capitalize = require("../utils/capitalize");
+const pluralize = require("../utils/pluralize");
 
 const OUTPUT_PATH = './output/front/'
 
@@ -97,7 +98,7 @@ class FrontGeneratorManager {
 
     generateGqlAll() {
         this.source.models.forEach(model => {
-            let name = model.name.toLowerCase() + 's'
+            let name = pluralize(model.name.toLowerCase())
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlFetchAll, model, fileName)
@@ -115,7 +116,7 @@ class FrontGeneratorManager {
 
     generateGqlPaginate() {
         this.source.models.forEach(model => {
-            let name = model.name.toLowerCase() + 'sPaginate'
+            let name = pluralize(model.name.toLowerCase()) + 'Paginate'
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlPaginate, model, fileName)

@@ -1,4 +1,5 @@
 const getI18nKey = require('../../utils/getI18nKey')
+const pluralize = require('../../utils/pluralize')
 
 module.exports = function ({model, moduleName}) {
     let content =
@@ -18,15 +19,16 @@ module.exports = function ({model, moduleName}) {
                 :search="search"
                 :single-expand="false"
                 :server-items-length="totalItems"
-                :items-per-page="itemsPerPage"
                 :loading="loading"
                 :page.sync="pageNumber"
+                :items-per-page.sync="itemsPerPage"
                 :sort-by.sync="orderBy"
                 :sort-desc.sync="orderDesc"
                 :footer-props="{ itemsPerPageOptions: [5, 10, 25, 50] }"
                 @update:page="fetch"
                 @update:sort-by="fetch"
                 @update:sort-desc="fetch"
+                @update:items-per-page="fetch"
         >
 
            <template slot="no-data">
@@ -55,32 +57,11 @@ module.exports = function ({model, moduleName}) {
     export default {
         name: "${model.name}List",
         components: {DeleteButton, EditButton, ShowButton, SearchInput},
-         props: {
-            items: Array,
-            totalItems: Number,
-            loading: Boolean
-        },
-        methods:{
-            fetch(){
-                this.$emit('fetch',{
-                    pageNumber: this.pageNumber,
-                    itemsPerPage: this.itemsPerPage,
-                    search: this.search,
-                    orderBy: this.getOrderBy,
-                    orderDesc: this.getOrderDesc,
-                })
-            }
-        },
-        computed: {
-          getOrderBy(){
-              return  (Array.isArray(this.orderBy)) ? this.orderBy[0]: this.orderBy
-          },
-          getOrderDesc(){
-              return  (Array.isArray(this.orderDesc)) ? this.orderDesc[0]: this.orderDesc
-          } 
-        },
         data() {
             return {
+                items: [],
+                totalItems: null,
+                loading: false,0
                 orderBy: null,
                 orderDesc: false,
                 itemsPerPage: 5,
@@ -93,7 +74,36 @@ module.exports = function ({model, moduleName}) {
                     {text: this.$t('common.actions'), value: 'action', sortable: false},
                 ],
             }
+        },
+        created() {
+            this.fetch()
+        },
+        methods:{
+                        //Fetch Items 
+            fetch() {
+                this.loading = true
+                ${model.name}Provider.paginate${pluralize(capitalize(model.name))}(
+                    this.pageNumber, 
+                    this.itemsPerPage,
+                    this.search,
+                    this.getOrderBy, 
+                    this.getOrderDesc
+                ).then(r => {
+                    this.items = r.data.${pluralize(model.name.toLowerCase())}Paginate.items
+                    this.totalItems = r.data.${pluralize(model.name.toLowerCase())}Paginate.totalItems
+                    this.loading = false
+                })
+            }
+        },
+        computed: {
+          getOrderBy(){
+              return  (Array.isArray(this.orderBy)) ? this.orderBy[0]: this.orderBy
+          },
+          getOrderDesc(){
+              return  (Array.isArray(this.orderDesc)) ? this.orderDesc[0]: this.orderDesc
+          } 
         }
+        
     }
 </script>
 

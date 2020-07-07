@@ -1,4 +1,5 @@
 const capitalize = require('../../utils/capitalize')
+const pluralize = require('../../utils/pluralize')
 const filterBackendProperties = require('../../utils/filterBackendProperties')
 
 module.exports = function (model) {
@@ -17,9 +18,9 @@ type ${model.name}Paginated{
 }
 
 type Query {
-    ${model.name.toLowerCase()}s: [${model.name}]
-    ${model.name.toLowerCase()}sPaginate( pageNumber: Int, itemsPerPage: Int, search: String, orderBy: String, orderDesc: Boolean): ${model.name}Paginated  
-    ${model.name.toLowerCase()}(id:ID!): ${model.name}
+    ${model.name.toLowerCase()}Find(id:ID!): ${model.name}
+    ${pluralize(model.name.toLowerCase())}Fetch: [${model.name}]
+    ${pluralize(model.name.toLowerCase())}Paginate( pageNumber: Int, itemsPerPage: Int, search: String, orderBy: String, orderDesc: Boolean): ${model.name}Paginated  
     ${findBy(model)}
     
 }
@@ -53,7 +54,7 @@ function findBy(model){
 }
 
 function findByMethod(model, field){
-    let content = `${model.name.toLowerCase()}sBy${capitalize(field.name)}(${field.name}:String!):[${model.name}]`
+    let content = `${pluralize(model.name.toLowerCase())}By${capitalize(field.name)}(${field.name}:String!):[${model.name}]`
     return content
 }
 

@@ -1,7 +1,7 @@
 module.exports = function (model) {
 let content =
-`query ${model.name.toLowerCase()}sPaginate( $pageNumber: Int, $itemsPerPage:Int, $search: String, $orderBy: String, $orderDesc: Boolean){
-    ${model.name.toLowerCase()}sPaginate( pageNumber: $pageNumber, itemsPerPage: $itemsPerPage, search: $search, orderBy: $orderBy, orderDesc: $orderDesc){
+`query ${pluralize(model.name.toLowerCase())}Paginate( $pageNumber: Int, $itemsPerPage:Int, $search: String, $orderBy: String, $orderDesc: Boolean){
+    ${pluralize(model.name.toLowerCase())}Paginate( pageNumber: $pageNumber, itemsPerPage: $itemsPerPage, search: $search, orderBy: $orderBy, orderDesc: $orderDesc){
         totalItems
         page
         items{

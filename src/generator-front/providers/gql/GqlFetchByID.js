@@ -1,7 +1,7 @@
 module.exports = function (model) {
 let content =
-`query ${model.name.toLowerCase()}($id:ID!){
-    ${model.name.toLowerCase()}(id:$id){
+`query ${model.name.toLowerCase()}Find($id:ID!){
+    ${model.name.toLowerCase()}Find(id:$id){
         id
         ${retorno(model.properties)}
     }

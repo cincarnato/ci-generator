@@ -1,4 +1,5 @@
 const capitalize = require('../../utils/capitalize')
+const pluralize = require('../../utils/pluralize')
 const filterBackendProperties = require('../../utils/filterBackendProperties')
 
 module.exports = function (model) {
@@ -7,7 +8,15 @@ module.exports = function (model) {
 `import ${model.name} from './../models/${model.name}Model'
 import {UserInputError} from 'apollo-server-express'
 
-export const fetch${model.name}s = async function () {
+export const find${capitalize(model.name)} = async function (id) {
+    return new Promise((resolve, reject) => {
+        ${model.name}.findOne({_id: id}).${populate(model.properties)}exec((err, res) => (
+            err ? reject(err) : resolve(res)
+        ));
+    })
+}
+
+export const fetch${pluralize(capitalize(model.name))} = async function () {
     return new Promise((resolve, reject) => {
         ${model.name}.find({}).isDeleted(false).${populate(model.properties)}exec((err, res) => (
             err ? reject(err) : resolve(res)
@@ -15,7 +24,7 @@ export const fetch${model.name}s = async function () {
     })
 }
 
-export const paginate${model.name} = function ( pageNumber = 1, itemsPerPage = 5, search = null, orderBy = null, orderDesc = false) {
+export const paginate${pluralize(capitalize(model.name))} = function ( pageNumber = 1, itemsPerPage = 5, search = null, orderBy = null, orderDesc = false) {
 
     function qs(search) {
         let qs = {}
@@ -51,17 +60,11 @@ export const paginate${model.name} = function ( pageNumber = 1, itemsPerPage = 5
     })
 }
 
-export const find${model.name} = async function (id) {
-    return new Promise((resolve, reject) => {
-        ${model.name}.findOne({_id: id}).${populate(model.properties)}exec((err, res) => (
-            err ? reject(err) : resolve(res)
-        ));
-    })
-}
+
 
 ${findBy(model)}
 
-export const create${model.name} = async function (user, {${paramsFields(model.properties)}}) {
+export const create${capitalize(model.name)} = async function (user, {${paramsFields(model.properties)}}) {
     
     const doc = new ${model.name}({
         ${docFields(model.properties)}
@@ -82,7 +85,7 @@ export const create${model.name} = async function (user, {${paramsFields(model.p
     })
 }
 
-export const update${model.name} = async function (user, id, {${paramsFields(model.properties)}}) {
+export const update${capitalize(model.name)} = async function (user, id, {${paramsFields(model.properties)}}) {
     return new Promise((resolve, rejects) => {
         ${model.name}.findOneAndUpdate({_id: id},
         {${docFields(model.properties, true)}}, 
@@ -101,7 +104,7 @@ export const update${model.name} = async function (user, id, {${paramsFields(mod
     })
 }
 
-export const delete${model.name} = function (id) {
+export const delete${capitalize(model.name)} = function (id) {
     return new Promise((resolve, rejects) => {
         find${model.name}(id).then((doc) => {
             doc.softdelete(function (err) {
@@ -129,7 +132,7 @@ function findBy(model){
 function findByMethod(model, field){
     let content =
 `
-export const find${model.name}sBy${capitalize(field.name)} = async function (${field.name}) {
+export const find${pluralize(capitalize(model.name))}By${capitalize(field.name)} = async function (${field.name}) {
     return new Promise((resolve, reject) => {
         ${model.name}.find({${field.name}: ${field.name}}).${populate(model.properties)}exec((err, res) => (
             err ? reject(err) : resolve(res)
