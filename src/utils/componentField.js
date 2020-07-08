@@ -1,4 +1,5 @@
 const getI18nKey = require('./getI18nKey')
+const kebabCase = require('./kebabCase')
 
 module.exports = function componentField(field, modelName, moduleName) {
     switch (field.type) {
@@ -20,12 +21,12 @@ function generateTextField(field, modelName, moduleName) {
                                 prepend-icon="${field.icon ? field.icon : 'label'}"
                                 name="${field.name}"
                                 v-model="form.${field.name}"
-                                :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
-                                :placeholder="$t('${getI18nKey(moduleName,modelName,field.name)}')"
+                                :label="$t('${getI18nKey(moduleName, modelName, field.name)}')"
+                                :placeholder="$t('${getI18nKey(moduleName, modelName, field.name)}')"
                                 :error="hasInputErrors('${field.name}')"
                                 :error-messages="getInputErrors('${field.name}')"
                                 color="secondary"
-                                ${field.required?':rules="required"':''}
+                                ${field.required ? ':rules="required"' : ''}
                         ></v-text-field>
                     </v-col>
     `
@@ -35,23 +36,10 @@ function generateTextField(field, modelName, moduleName) {
 
 function generateComboField(field, modelName, moduleName) {
     let content = `
-                     <v-col cols="12" sm="6">
-                        <v-select
-                                prepend-icon="${field.icon ? field.icon : 'label'}"
-                                :items="${field.name.toLowerCase()}s"
-                                :item-text="'name'"
-                                :item-value="'id'"
-                                v-model="form.${field.name}"
-                                :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
-                                :loading="loading"
-                                :error="hasInputErrors('${field.name}')"
-                                :error-messages="getInputErrors('${field.name}')"
-                                color="secondary"
-                                item-color="secondary"
-                                ${field.required?':rules="required"':''}
-                        ></v-select>
-                    </v-col>
-    `
+                   <v-col cols="12" sm="6">
+                        <${kebabCase(field.ref)}-combobox v-model="form.${field.name}" :input-errors="inputErrors" />
+                   </v-col>    
+`
     return content
 }
 
@@ -70,11 +58,11 @@ function generateDateField(field, modelName, moduleName) {
                             <template v-slot:activator="{ on }">
                                 <v-text-field
                                         v-model="form.${field.name}"
-                                        :label="$t('${getI18nKey(moduleName,modelName,field.name)}')"
+                                        :label="$t('${getI18nKey(moduleName, modelName, field.name)}')"
                                         prepend-icon="${field.icon ? field.icon : 'event'}"
                                         readonly
                                         v-on="on"
-                                        ${field.required?':rules="required"':''}
+                                        ${field.required ? ':rules="required"' : ''}
                                         :error="hasInputErrors('${field.name}')"
                                         :error-messages="getInputErrors('${field.name}')"
                                         color="secondary"

@@ -1,4 +1,28 @@
 const capitalize = require('./capitalize')
+const descapitalize = require('./descapitalize')
+const pluralize = require('./pluralize')
+
+module.exports.generateComboField = function (field, modelName, moduleName) {
+    let content = `
+                     <v-col cols="12" sm="6">
+                        <v-select
+                                prepend-icon="${field.icon ? field.icon : 'label'}"
+                                :items="${field.name.toLowerCase()}s"
+                                :item-text="'name'"
+                                :item-value="'id'"
+                                v-model="form.${field.name}"
+                                :label="$t('${getI18nKey(moduleName, modelName, field.name)}')"
+                                :loading="loading"
+                                :error="hasInputErrors('${field.name}')"
+                                :error-messages="getInputErrors('${field.name}')"
+                                color="secondary"
+                                item-color="secondary"
+                                ${field.required ? ':rules="required"' : ''}
+                        ></v-select>
+                    </v-col>
+    `
+    return content
+}
 
 module.exports.generateDataCombos = function generateDataCombos(properties) {
 
@@ -15,8 +39,21 @@ module.exports.generateImportCombos = function generateImportCombos(properties) 
     let propFiltered = filterObjectIdProperties(properties);
 
     return propFiltered.map(field => {
-        return `import ${capitalize(field.name)}Provider from "../../../providers/${capitalize(field.ref)}Provider";`
+        return `import ${capitalize(field.ref)}Combobox from "./${capitalize(field.ref)}Combobox";`
     }).join('\n')
+}
+
+module.exports.generateImportComponentCombos = function generateImportCombos(properties) {
+
+    let propFiltered = filterObjectIdProperties(properties);
+
+    let combos = propFiltered.map(field => {
+        return `${capitalize(field.ref)}Combobox`
+    }).join(',\n')
+    if(combos.length > 0){
+        return "components: {" + combos + "},"
+    }
+    return ''
 }
 
 module.exports.generateMountedCombos = function generateMountedCombos(properties) {
@@ -24,7 +61,7 @@ module.exports.generateMountedCombos = function generateMountedCombos(properties
     let propFiltered = filterObjectIdProperties(properties);
 
     return propFiltered.map(field => {
-        return `this.fetch${capitalize(field.name)}s()`
+        return `this.fetch${capitalize(field.ref)}s()`
     }).join('\n')
 }
 
@@ -37,13 +74,13 @@ module.exports.generateMethodsCombos = function generateMethodsCombos(properties
     }).join(',\n')
 }
 
-function generateMethodCombo(field){
+function generateMethodCombo(field) {
     let content =
         `
             fetch${capitalize(field.name)}s(){
                 this.loading= true
-                ${capitalize(field.name)}Provider.${field.name.toLowerCase()}s().then(r => {
-                    this.${field.name.toLowerCase()}s = r.data.${field.name.toLowerCase()}s
+                ${capitalize(field.ref)}Provider.${descapitalize(field.ref)}Fetch().then(r => {
+                    this.${descapitalize(pluralize(field.ref))} = r.data.${descapitalize(field.ref)}Fetch
                     this.loading = false
                 })
             }

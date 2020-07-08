@@ -21,6 +21,7 @@ const ComponentUpdate = require("./components/ComponentUpdate");
 const ComponentDelete = require("./components/ComponentDelete");
 const ComponentShowData = require("./components/ComponentShowData");
 const ComponentShow = require("./components/ComponentShow");
+const ComponentCombo = require("./components/ComponentCombo");
 
 //GQL
 const GqlFetchAll = require("./providers/gql/GqlFetchAll")
@@ -162,7 +163,6 @@ class FrontGeneratorManager {
                 }
             })
         })
-
     }
 
     PAGE_MANAGEMENT_PATH(model){
@@ -189,6 +189,21 @@ class FrontGeneratorManager {
             let filePath = dirPath + fileName
             writeFile(filePath, ComponentForm, {model: model, moduleName: this.source.module}, 'Form')
             writeIndex(dirPath, name)
+        })
+    }
+
+    generateFormCombos() {
+        this.source.models.forEach(model => {
+            model.properties.forEach(field => {
+                if (field.type == 'ObjectId') {
+                    let dirPath = this.PAGE_MANAGEMENT_PATH(model) + model.name + 'Form/'
+                    createDir(dirPath)
+                    let name = capitalize(field.ref) + 'Combobox'
+                    let fileName = name + '.vue'
+                    let filePath = dirPath + fileName
+                    writeFile(filePath, ComponentCombo, {field: field, model: model, moduleName: this.source.module }, fileName)
+                }
+            })
         })
     }
 

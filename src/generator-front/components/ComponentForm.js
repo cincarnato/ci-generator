@@ -1,6 +1,6 @@
 const filterBackendProperties = require('../../utils/filterBackendProperties')
 const componentField = require('../../utils/componentField')
-const {generateDataCombos, generateImportCombos, generateMethodsCombos, generateMountedCombos} = require('../../utils/componentFieldCombos')
+const {generateImportCombos, generateImportComponentCombos} = require('../../utils/componentFieldCombos')
 const importMomentIfDateExist = require('../../utils/importMomentIfDateExist')
 
 module.exports = function ({model, moduleName}) {
@@ -24,19 +24,12 @@ module.exports = function ({model, moduleName}) {
     export default {
         name: "${model.name}Form",
         mixins: [InputErrorsByProps, RequiredRule],
+        ${generateImportComponentCombos(model.properties)}
         props:{
             value: {
                 type: Object,
                 required: true
             },
-        },
-        data() {
-            return {
-                ${generateDataCombos(model.properties)}
-            }
-        },
-        mounted() {
-         ${generateMountedCombos(model.properties)}
         },
         computed: {
            form: {
@@ -55,8 +48,7 @@ module.exports = function ({model, moduleName}) {
         methods: {
             validate(){
               return this.$refs.form.validate()
-            },
-            ${generateMethodsCombos(model.properties)}
+            }
         }
     }
 </script>
