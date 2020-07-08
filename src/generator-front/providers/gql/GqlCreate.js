@@ -1,7 +1,9 @@
+const descapitalize = require('../../../utils/descapitalize')
+
 module.exports = function (model) {
 let content =
-`mutation ${model.name.toLowerCase()}Create(${variables(model.properties)}){
-    ${model.name.toLowerCase()}Create(input: {${input(model.properties)} }){
+`mutation ${descapitalize(model.name)}Create(${variables(model.properties)}){
+    ${descapitalize(model.name)}Create(input: {${input(model.properties)} }){
         id
         ${retorno(model.properties)}
     }

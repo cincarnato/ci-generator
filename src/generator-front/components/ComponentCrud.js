@@ -1,16 +1,14 @@
-const capitalize = require('../../utils/capitalize')
 const getI18nKey = require('../../utils/getI18nKey')
 const kebabCase = require('../../utils/kebabCase')
 
 module.exports = function ({model, moduleName}) {
     let content =
         `<template>
-<crud-layout :title="title" subtitle="common.description">
+<crud-layout :title="title" :subtitle="subtitle">
 
         <template v-slot:list>
             <${kebabCase(model.name)}-list 
                        ref="list"
-                       @fetch="fetch"
                        @update="update"
                        @delete="remove"
                        @show="show"
@@ -73,7 +71,8 @@ module.exports = function ({model, moduleName}) {
         },
         data() {
             return {
-                title: this.$t('${getI18nKey(moduleName,model.name,'title')}'),
+                title: '${getI18nKey(moduleName,model.name,'title')}',
+                subtitle: '${getI18nKey(moduleName,model.name,'subtitle')}',
                 flash: null,
                 creating: false,
                 updating: false,
@@ -86,15 +85,15 @@ module.exports = function ({model, moduleName}) {
         },
         methods: {
             //On
-            onItemCreated(item) {
+            onItemCreated() {
                 this.$refs.list.fetch()
                 this.flash= "common.created"
             },
-            onItemUpdated(item) {
+            onItemUpdated() {
                 this.$refs.list.fetch()
                 this.flash= "common.updated"
             },
-            onItemDeleted(item) {
+            onItemDeleted() {
                 this.$refs.list.fetch()
                 this.flash= "common.deleted"
             },

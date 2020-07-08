@@ -1,6 +1,7 @@
 const kebabCase = require('../../utils/kebabCase')
+const descapitalize = require('../../utils/descapitalize')
 const filterBackendProperties = require('../../utils/filterBackendProperties')
-const {generateDataCombos, generateImportCombos, generateMethodsCombos} = require('../../utils/componentFieldCombos')
+const {generateDataCombos} = require('../../utils/componentFieldCombos')
 const importMomentIfDateExist = require('../../utils/importMomentIfDateExist')
 const getI18nKey = require('../../utils/getI18nKey')
 
@@ -26,8 +27,6 @@ module.exports = function ({model,moduleName}) {
     
     import ${model.name}Form from "../${model.name}Form";
   
-    ${generateImportCombos(model.properties)}
-    
     ${importMomentIfDateExist(model.properties)}
 
     export default {
@@ -42,23 +41,23 @@ module.exports = function ({model,moduleName}) {
 
         data() {
             return {
-                title: this.$t('${getI18nKey(moduleName,model.name,'editing')}'),
+                title: '${getI18nKey(moduleName,model.name,'editing')}',
                 errorMessage: '',
                 inputErrors: {},
                 loading: false,
                 form: {
                      id: this.item.id,
                     ${generateFormObjectFields(model.properties)}
-                },
-                ${generateDataCombos(model.properties)}
+                }
             }
         },
         methods: {
             update() {
                 if (this.$refs.form.validate()) {
+                    this.loading = true
                     ${model.name}Provider.update${model.name}(this.form).then(r => {
                             if (r) {
-                                this.$emit('itemUpdated',r.data.${model.name.toLowerCase()}Update)
+                                this.$emit('itemUpdated',r.data.${descapitalize(model.name)}Update)
                                 this.$emit('close')
                             }
                         }
@@ -66,11 +65,10 @@ module.exports = function ({model,moduleName}) {
                          let clientError = new ClientError(error)
                          this.inputErrors = clientError.inputErrors
                          this.errorMessage = clientError.i18nMessage
-                    })
+                    }).finally(() => this.loading = false)
                 }
 
-            },
-            ${generateMethodsCombos(model.properties)}
+            }
         },
     }
 </script>

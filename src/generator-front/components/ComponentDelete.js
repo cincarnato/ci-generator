@@ -1,10 +1,13 @@
 const kebabCase = require('../../utils/kebabCase')
+const descapitalize = require('../../utils/descapitalize')
 const getI18nKey = require('../../utils/getI18nKey')
+
 module.exports = function ({model, moduleName}) {
     let content =
         `<template>
       <crud-delete :open="open"
                  :loading="loading"
+                 :title="title"
                  :errorMessage="errorMessage"
                  @delete="remove"
                  @close="$emit('close')"
@@ -46,7 +49,7 @@ module.exports = function ({model, moduleName}) {
         data() {
             return {
                 modal: false,
-                title: this.$t('${getI18nKey(moduleName,model.name,'deleting')}'),
+                title: '${getI18nKey(moduleName,model.name,'deleting')}',
                 areYouSure: this.$t('common.areYouSureDeleteRecord'),
                 errorMessage: '',
                 loading: false,
@@ -54,9 +57,10 @@ module.exports = function ({model, moduleName}) {
         },
         methods: {
             remove() {
+                this.loading = true
                 ${model.name}Provider.delete${model.name}(this.item.id).then(result => {
-                            if (result.data.${model.name.toLowerCase()}Delete.deleteSuccess) {
-                                this.$emit('itemDeleted',result.data.${model.name.toLowerCase()}Delete)
+                            if (result.data.${descapitalize(model.name)}Delete.success) {
+                                this.$emit('itemDeleted',result.data.${descapitalize(model.name)}Delete)
                                 this.$emit('close')
                             }else{
                                 this.errorMessage = 'Error on Delete'
@@ -65,7 +69,7 @@ module.exports = function ({model, moduleName}) {
                     ).catch(error =>{
                         let clientError = new ClientError(error)
                         this.errorMessage = clientError.showMessage
-                })
+                }).finally(() => this.loading = false)
             },
         },
     }

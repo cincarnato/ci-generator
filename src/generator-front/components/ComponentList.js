@@ -1,5 +1,7 @@
 const getI18nKey = require('../../utils/getI18nKey')
 const pluralize = require('../../utils/pluralize')
+const capitalize = require('../../utils/capitalize')
+const descapitalize = require('../../utils/descapitalize')
 
 module.exports = function ({model, moduleName}) {
     let content =
@@ -7,7 +9,7 @@ module.exports = function ({model, moduleName}) {
  <v-row row wrap>
 
     <v-col cols="12" sm="6" md="4" offset-md="8" offset-sm="6">
-        <search-input  @search="fetch" v-model="search" />
+        <search-input  @search="performSearch" v-model="search" />
     </v-col>
 
     <v-col cols="12">
@@ -51,7 +53,8 @@ module.exports = function ({model, moduleName}) {
 </template>
 
 <script>
-    
+   import ${model.name}Provider from "../../../providers/${model.name}Provider";
+   
    import {DeleteButton, EditButton, ShowButton, SearchInput} from "@ci-common-module/frontend"
     
     export default {
@@ -61,7 +64,7 @@ module.exports = function ({model, moduleName}) {
             return {
                 items: [],
                 totalItems: null,
-                loading: false,0
+                loading: false,
                 orderBy: null,
                 orderDesc: false,
                 itemsPerPage: 5,
@@ -79,7 +82,10 @@ module.exports = function ({model, moduleName}) {
             this.fetch()
         },
         methods:{
-                        //Fetch Items 
+            performSearch(){
+                this.pageNumber = 1
+                this.fetch()
+            },
             fetch() {
                 this.loading = true
                 ${model.name}Provider.paginate${pluralize(capitalize(model.name))}(
@@ -89,10 +95,11 @@ module.exports = function ({model, moduleName}) {
                     this.getOrderBy, 
                     this.getOrderDesc
                 ).then(r => {
-                    this.items = r.data.${pluralize(model.name.toLowerCase())}Paginate.items
-                    this.totalItems = r.data.${pluralize(model.name.toLowerCase())}Paginate.totalItems
-                    this.loading = false
-                })
+                    this.items = r.data.${descapitalize(model.name)}Paginate.items
+                    this.totalItems = r.data.${descapitalize(model.name)}Paginate.totalItems
+                }).catch(err => {
+                    console.error(err)
+                }).finally(() => this.loading = false)
             }
         },
         computed: {

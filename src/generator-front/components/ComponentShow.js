@@ -1,5 +1,7 @@
 const kebabCase = require('../../utils/kebabCase')
-module.exports = function (model) {
+const getI18nKey = require('../../utils/getI18nKey')
+
+module.exports = function ({model,moduleName}) {
     let content =
         `<template>
     <crud-show :title="title" :open="open"  @close="$emit('close')">
@@ -24,7 +26,7 @@ module.exports = function (model) {
         },
         data() {
             return {
-                title: "${model.name}.showTitle",
+                title: '${getI18nKey(moduleName,model.name,'showing')}',
             }
         },
     }

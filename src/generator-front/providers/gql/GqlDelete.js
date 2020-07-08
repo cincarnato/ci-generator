@@ -1,9 +1,11 @@
+const descapitalize = require('../../../utils/descapitalize')
+
 module.exports = function (model) {
 let content =
-`mutation ${model.name.toLowerCase()}Delete($id: ID!){
-    ${model.name.toLowerCase()}Delete(id: $id){
+`mutation ${descapitalize(model.name)}Delete($id: ID!){
+    ${descapitalize(model.name)}Delete(id: $id){
         id
-        deleteSuccess
+        success
     }
 }
 

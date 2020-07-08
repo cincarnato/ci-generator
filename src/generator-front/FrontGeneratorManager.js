@@ -3,6 +3,7 @@ const createDir = require("../utils/createDir");
 const writeFile = require("../utils/writeFile");
 const writeIndex = require("../utils/writeIndex");
 const capitalize = require("../utils/capitalize");
+const descapitalize = require("../utils/descapitalize");
 const pluralize = require("../utils/pluralize");
 
 const OUTPUT_PATH = './output/front/'
@@ -98,7 +99,7 @@ class FrontGeneratorManager {
 
     generateGqlAll() {
         this.source.models.forEach(model => {
-            let name = pluralize(model.name.toLowerCase())
+            let name = descapitalize(model.name) + 'Fetch'
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlFetchAll, model, fileName)
@@ -107,7 +108,7 @@ class FrontGeneratorManager {
 
     generateGqlById() {
         this.source.models.forEach(model => {
-            let name = model.name.toLowerCase()
+            let name = descapitalize(model.name) + 'Find'
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlFetchByID, model, fileName)
@@ -116,7 +117,7 @@ class FrontGeneratorManager {
 
     generateGqlPaginate() {
         this.source.models.forEach(model => {
-            let name = pluralize(model.name.toLowerCase()) + 'Paginate'
+            let name = descapitalize(model.name) + 'Paginate'
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlPaginate, model, fileName)
@@ -125,7 +126,7 @@ class FrontGeneratorManager {
 
     generateGqlCreate() {
         this.source.models.forEach(model => {
-            let name = model.name.toLowerCase() + 'Create'
+            let name = descapitalize(model.name) + 'Create'
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlCreate, model, fileName)
@@ -134,7 +135,7 @@ class FrontGeneratorManager {
 
     generateGqlUpdate() {
         this.source.models.forEach(model => {
-            let name = model.name.toLowerCase() + 'Update'
+            let name = descapitalize(model.name) + 'Update'
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlUpdate, model, fileName)
@@ -143,7 +144,7 @@ class FrontGeneratorManager {
 
     generateGqlDelete() {
         this.source.models.forEach(model => {
-            let name = model.name.toLowerCase() + 'Delete'
+            let name = descapitalize(model.name) + 'Delete'
             let fileName = name + '.graphql'
             let filePath = this.GQL_PATH() + fileName
             writeFile(filePath, GqlDelete, model, fileName)
@@ -154,7 +155,7 @@ class FrontGeneratorManager {
         this.source.models.forEach(model => {
             model.properties.forEach(field => {
                 if (field.findby) {
-                    let name = model.name.toLowerCase() + 'sBy' + capitalize(field.name) + '.graphql'
+                    let name = descapitalize(model.name) + 'By' + capitalize(field.name) + '.graphql'
                     let fileName = name + '.graphql'
                     let filePath = this.GQL_PATH() + fileName
                     writeFile(filePath, GqlFetchBySomething, {model,field}, fileName)
@@ -245,7 +246,7 @@ class FrontGeneratorManager {
             let name = model.name + 'Show'
             let fileName = name + '.vue'
             let filePath = dirPath + fileName
-            writeFile(filePath, ComponentShow, model, 'Show')
+            writeFile(filePath, ComponentShow, {model: model, moduleName: this.source.module}, 'Show')
             writeIndex(dirPath, name)
         })
     }

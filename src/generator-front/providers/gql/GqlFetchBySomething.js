@@ -1,10 +1,10 @@
 const capitalize = require('../../../utils/capitalize')
-const pluralize = require('../../../utils/pluralize')
+const descapitalize = require('../../../utils/descapitalize')
 
 module.exports = function ({model, field}) {
 let content =
-`query ${pluralize(model.name.toLowerCase())}By${capitalize(field.name)}($${field.name}:String!){
-    ${pluralize(model.name.toLowerCase())}By${capitalize(field.name)}(${field.name}:$${field.name}){
+`query ${descapitalize(model.name)}By${capitalize(field.name)}($${field.name}:String!){
+    ${descapitalize(model.name)}By${capitalize(field.name)}(${field.name}:$${field.name}){
         id
         ${retorno(model.properties)}
     }

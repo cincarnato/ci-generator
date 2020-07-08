@@ -1,7 +1,9 @@
+const descapitalize = require('../../../utils/descapitalize')
+
 module.exports = function (model) {
 let content =
-`query ${model.name.toLowerCase()}Find($id:ID!){
-    ${model.name.toLowerCase()}Find(id:$id){
+`query ${descapitalize(model.name)}Find($id:ID!){
+    ${descapitalize(model.name)}Find(id:$id){
         id
         ${retorno(model.properties)}
     }

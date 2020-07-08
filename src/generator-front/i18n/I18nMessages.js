@@ -1,18 +1,20 @@
+const descapitalize = require('../../utils/descapitalize')
+
 module.exports = function (source) {
     let content = `
 const messages = {
     en: {
-       ${source.module}: {
+       ${descapitalize(source.module)}: {
           ${getModelMessages(source.models, 'en')}
        }
     },
     es: {
-       ${source.module}: {
+       ${descapitalize(source.module)}: {
           ${getModelMessages(source.models, 'es')}
        }
     },
     pt: {
-       ${source.module}: {
+       ${descapitalize(source.module)}: {
           ${getModelMessages(source.models, 'pt')}
        }
     }
@@ -26,7 +28,7 @@ export default messages
 
 function getModelMessages(models, lang) {
     return models.map(model => {
-        return `${model.name}: { 
+        return `${descapitalize(model.name)}: { 
           ${getTitlesMessages(model, lang)},
           ${getPropertiesMessages(model.properties, lang)},
           ${geti18nMessages(model, lang)}
@@ -58,31 +60,36 @@ function getTitlesMessages(model, lang) {
 
     const titles = {
         en: {
-            title: '',
-            creating: 'Creating ',
-            editing: 'Editing ',
-            deleting: 'Deleting ',
-            areYouSure: 'Are you sure you want to blur this record?'
+            title: model.name + ' management',
+            subtitle: 'View, search, create, edit and delete ' + model.name,
+            creating: 'Creating ' + model.name,
+            editing: 'Editing ' + model.name,
+            deleting: 'Deleting ' + model.name,
+            showing: 'Showing ' + model.name,
         },
         es: {
-            title: '',
-            creating: 'Creando ',
-            editing: 'Modificando ',
-            deleting: 'Eliminando ',
-            areYouSure: '¿Esta seguro que desea borrar este registro?'
+            title: 'Administración de ' + model.name,
+            subtitle: 'Ver, buscar, crear, editar, y borrar ' + model.name,
+            creating: 'Creando '+ model.name,
+            editing: 'Modificando '+ model.name,
+            deleting: 'Eliminando '+ model.name,
+            showing: 'Detalles de '+ model.name,
         },
         pt: {
-            title: '',
-            creating: 'Criando ',
-            editing: 'Edição ',
-            deleting: 'Apagando ',
-            areYouSure: 'Tem certeza de que deseja excluir este registro?'
+            title: 'Administração de ' + model.name,
+            subtitle: 'Ver, buscar, criar, editar e usar ' + model.name,
+            creating: 'Criando '+ model.name,
+            editing: 'Edição '+ model.name,
+            deleting: 'Apagando '+ model.name,
+            showing: 'Detalhes do '+ model.name,
         },
     }
 
-    return `   title: '${ titles[lang].title + (model.namei18n?model.namei18n[lang]:model.name) }',
-            creating: '${titles[lang].creating + (model.namei18n?model.namei18n[lang]:model.name) }',
-            editing: '${titles[lang].editing + (model.namei18n?model.namei18n[lang]:model.name) }',
-            deleting: '${titles[lang].deleting + (model.namei18n?model.namei18n[lang]:model.name) }'`
+    return `   title: '${ titles[lang].title}',
+            subtitle: '${ titles[lang].subtitle}',
+            creating: '${titles[lang].creating }',
+            editing: '${titles[lang].editing}',
+            deleting: '${titles[lang].deleting}',
+            showing: '${titles[lang].showing}'`
 }
 

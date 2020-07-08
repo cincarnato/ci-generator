@@ -1,5 +1,5 @@
 const capitalize = require('../../utils/capitalize')
-const pluralize = require('../../utils/pluralize')
+const descapitalize = require('../../utils/descapitalize')
 const filterBackendProperties = require('../../utils/filterBackendProperties')
 
 module.exports = function (model) {
@@ -18,9 +18,9 @@ type ${model.name}Paginated{
 }
 
 type Query {
-    ${model.name.toLowerCase()}Find(id:ID!): ${model.name}
-    ${pluralize(model.name.toLowerCase())}Fetch: [${model.name}]
-    ${pluralize(model.name.toLowerCase())}Paginate( pageNumber: Int, itemsPerPage: Int, search: String, orderBy: String, orderDesc: Boolean): ${model.name}Paginated  
+    ${descapitalize(model.name)}Find(id:ID!): ${model.name}
+    ${descapitalize(model.name)}Fetch: [${model.name}]
+    ${descapitalize(model.name)}Paginate( pageNumber: Int, itemsPerPage: Int, search: String, orderBy: String, orderDesc: Boolean): ${model.name}Paginated  
     ${findBy(model)}
     
 }
@@ -31,14 +31,14 @@ input ${model.name}Input{
 
 type ${model.name}Delete{
     id: ID!
-    deleteSuccess: Boolean!
+    success: Boolean!
 }
 
 
 type Mutation {
-    ${model.name.toLowerCase()}Create(input: ${model.name}Input): ${model.name}
-    ${model.name.toLowerCase()}Update(id: ID!, input: ${model.name}Input): ${model.name}
-    ${model.name.toLowerCase()}Delete(id: ID!): ${model.name}Delete!
+    ${descapitalize(model.name)}Create(input: ${model.name}Input): ${model.name}
+    ${descapitalize(model.name)}Update(id: ID!, input: ${model.name}Input): ${model.name}
+    ${descapitalize(model.name)}Delete(id: ID!): ${model.name}Delete!
 }
 `
 
@@ -54,7 +54,7 @@ function findBy(model){
 }
 
 function findByMethod(model, field){
-    let content = `${pluralize(model.name.toLowerCase())}By${capitalize(field.name)}(${field.name}:String!):[${model.name}]`
+    let content = `${descapitalize(model.name)}By${capitalize(field.name)}(${field.name}:String!):[${model.name}]`
     return content
 }
 

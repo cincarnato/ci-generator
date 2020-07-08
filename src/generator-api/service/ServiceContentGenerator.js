@@ -108,7 +108,7 @@ export const delete${capitalize(model.name)} = function (id) {
     return new Promise((resolve, rejects) => {
         find${model.name}(id).then((doc) => {
             doc.softdelete(function (err) {
-                err ? rejects(err) : resolve({id: id, deleteSuccess: true})
+                err ? rejects(err) : resolve({id: id, success: true})
             });
         })
     })

@@ -1,6 +1,6 @@
 const kebabCase = require('../../utils/kebabCase')
+const descapitalize = require('../../utils/descapitalize')
 const filterBackendProperties = require('../../utils/filterBackendProperties')
-const { generateImportCombos, generateMethodsCombos} = require('../../utils/componentFieldCombos')
 const importMomentIfDateExist = require('../../utils/importMomentIfDateExist')
 const getI18nKey = require('../../utils/getI18nKey')
 
@@ -26,7 +26,6 @@ module.exports = function ({model,moduleName}) {
     
     import ${model.name}Form from "../${model.name}Form";
     
-    ${generateImportCombos(model.properties)}
     
     ${importMomentIfDateExist(model.properties)}
 
@@ -41,7 +40,7 @@ module.exports = function ({model,moduleName}) {
         
         data() {
             return {
-                title: this.$t('${getI18nKey(moduleName,model.name,'creating')}'),
+                title: '${getI18nKey(moduleName,model.name,'creating')}',
                 errorMessage: '',
                 inputErrors: {},
                 loading: false,
@@ -54,9 +53,10 @@ module.exports = function ({model,moduleName}) {
         methods: {
             create() {
                 if (this.$refs.form.validate()) {
+                    this.loading = true
                     ${model.name}Provider.create${model.name}(this.form).then(r => {
                             if (r) {
-                                this.$emit('itemCreated',r.data.${model.name.toLowerCase()}Create)
+                                this.$emit('itemCreated',r.data.${descapitalize(model.name)}Create)
                                 this.$emit('close')
                             }
                         }
@@ -64,11 +64,10 @@ module.exports = function ({model,moduleName}) {
                          let clientError = new ClientError(error)
                          this.inputErrors = clientError.inputErrors
                          this.errorMessage = clientError.i18nMessage
-                    })
+                    }).finally(() => this.loading = false)
                 }
 
-            },
-            ${generateMethodsCombos(model.properties)}
+            }
 
         },
     }

@@ -1,11 +1,12 @@
 const capitalize = require('../../utils/capitalize')
+const descapitalize = require('../../utils/descapitalize')
 const pluralize = require('../../utils/pluralize')
 
 module.exports = function (model) {
 //TYPE DEFINITION
     let content =
         `
-import {${findByImport(model)} create${model.name}, update${model.name}, delete${model.name},  find${model.name}, fetch${pluralize(model.name.toLowerCase())}, paginate${model.name}} from '../../services/${model.name}Service'
+import {${findByImport(model)} create${model.name}, update${model.name}, delete${model.name},  find${capitalize(model.name)}, fetch${pluralize(capitalize(model.name))}, paginate${pluralize(capitalize(model.name))}} from '../../services/${model.name}Service'
 
 import {AuthenticationError, ForbiddenError} from "apollo-server-express";
 
@@ -19,17 +20,17 @@ import {
 
 export default {
     Query: {
-        ${model.name.toLowerCase()}Find: (_, {id}, {user,rbac}) => {
+        ${descapitalize(model.name)}Find: (_, {id}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
             return find${capitalize(model.name)}(id)
         },
-        ${pluralize(model.name.toLowerCase())}Fetch: (_, {}, {user,rbac}) => {
+        ${descapitalize(model.name)}Fetch: (_, {}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
             return fetch${pluralize(capitalize(model.name))}()
         },
-        ${pluralize(model.name.toLowerCase())}Paginate: (_, {pageNumber, itemsPerPage, search, orderBy, orderDesc}) => {
+        ${descapitalize(model.name)}Paginate: (_, {pageNumber, itemsPerPage, search, orderBy, orderDesc}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_SHOW)) throw new ForbiddenError("Not Authorized")
             return paginate${pluralize(capitalize(model.name))}(pageNumber, itemsPerPage, search, orderBy, orderDesc)
@@ -37,17 +38,17 @@ export default {
         ${findBy(model)}
     },
     Mutation: {
-        ${model.name.toLowerCase()}Create: (_, {input}, {user,rbac}) => {
+        ${descapitalize(model.name)}Create: (_, {input}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_CREATE)) throw new ForbiddenError("Not Authorized")
             return create${capitalize(model.name)}(user, input)
         },
-          ${model.name.toLowerCase()}Update: (_, {id, input}, {user,rbac}) => {
+        ${descapitalize(model.name)}Update: (_, {id, input}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_UPDATE)) throw new ForbiddenError("Not Authorized")
             return update${capitalize(model.name)}(user, id, input)
         },
-         ${model.name.toLowerCase()}Delete: (_, {id}, {user,rbac}) => {
+        ${descapitalize(model.name)}Delete: (_, {id}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             if(!rbac.isAllowed(user.id, ${model.name.toUpperCase()}_DELETE)) throw new ForbiddenError("Not Authorized")
             return delete${capitalize(model.name)}(id)
@@ -93,7 +94,7 @@ function findBy(model){
 
 function findByMethod(model, field){
     let content =
-`${pluralize(model.name.toLowerCase())}By${capitalize(field.name)}: (_, {${field.name}}, {user,rbac}) => {
+`${descapitalize(model.name)}By${capitalize(field.name)}: (_, {${field.name}}, {user,rbac}) => {
             if (!user) throw new AuthenticationError("Unauthenticated")
             return find${pluralize(capitalize(model.name))}By${capitalize(field.name)}(${field.name})
         },

@@ -15,7 +15,7 @@ module.exports.generateImportCombos = function generateImportCombos(properties) 
     let propFiltered = filterObjectIdProperties(properties);
 
     return propFiltered.map(field => {
-        return `import ${capitalize(field.name)}Provider from "../providers/${capitalize(field.name)}Provider";`
+        return `import ${capitalize(field.name)}Provider from "../../../providers/${capitalize(field.ref)}Provider";`
     }).join('\n')
 }
 
