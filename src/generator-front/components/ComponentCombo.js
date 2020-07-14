@@ -32,7 +32,7 @@ module.exports = function ({field, model, moduleName}) {
     
 
     export default {
-        name: "${model.name}Form",
+        name: "${capitalize(field.name)}Combobox",
         mixins: [InputErrorsByProps, RequiredRule],
         props:{
             value: {

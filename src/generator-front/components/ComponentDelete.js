@@ -1,5 +1,6 @@
 const kebabCase = require('../../utils/kebabCase')
 const descapitalize = require('../../utils/descapitalize')
+const capitalize = require('../../utils/capitalize')
 const getI18nKey = require('../../utils/getI18nKey')
 
 module.exports = function ({model, moduleName}) {
@@ -58,7 +59,7 @@ module.exports = function ({model, moduleName}) {
         methods: {
             remove() {
                 this.loading = true
-                ${model.name}Provider.delete${model.name}(this.item.id).then(result => {
+                ${model.name}Provider.delete${capitalize(model.name)}(this.item.id).then(result => {
                             if (result.data.${descapitalize(model.name)}Delete.success) {
                                 this.$emit('itemDeleted',result.data.${descapitalize(model.name)}Delete)
                                 this.$emit('close')

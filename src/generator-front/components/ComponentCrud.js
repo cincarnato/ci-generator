@@ -44,7 +44,7 @@ module.exports = function ({model, moduleName}) {
                          v-on:close="deleting=false" 
         />
 
-        <snackbar :message="flash"/>
+        <snackbar v-model="flash"/>
 
 </crud-layout>
 </template>

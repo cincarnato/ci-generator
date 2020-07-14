@@ -64,7 +64,7 @@ export const paginate${pluralize(capitalize(model.name))} = function ( pageNumbe
 
 ${findBy(model)}
 
-export const create${capitalize(model.name)} = async function (user, {${paramsFields(model.properties)}}) {
+export const create${capitalize(model.name)} = async function (authUser, {${paramsFields(model.properties)}}) {
     
     const doc = new ${model.name}({
         ${docFields(model.properties)}
@@ -85,7 +85,7 @@ export const create${capitalize(model.name)} = async function (user, {${paramsFi
     })
 }
 
-export const update${capitalize(model.name)} = async function (user, id, {${paramsFields(model.properties)}}) {
+export const update${capitalize(model.name)} = async function (authUser, id, {${paramsFields(model.properties)}}) {
     return new Promise((resolve, rejects) => {
         ${model.name}.findOneAndUpdate({_id: id},
         {${docFields(model.properties, true)}}, 
@@ -210,9 +210,9 @@ function docFields(properties, update = false){
     return properties.map(field => {
         switch(field.name) {
             case 'createdBy':
-                return `createdBy: user.id`
+                return `createdBy: authUser.id`
             case 'updatedBy':
-                return `updatedBy: user.id`
+                return `updatedBy: authUser.id`
             default:
                 return field.name
         }
