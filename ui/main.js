@@ -74,14 +74,11 @@ app.post("/generate", (req, res) => {
         })
 })
 
-app.use('/web', express.static('ui/web', {index: "index.html"}));
+app.use('/', express.static('ui/web', {index: "index.html"}));
 
-app.get('*', function (request, response) {
-    response.sendFile(path.resolve(__dirname, 'web/index.html'));
-});
 
 
 const port = 4060
 app.listen(port, () => {
-    console.log("UI-API Start. Port: " + port)
+    console.log("UI-API Start. Port: http://localhost:" + port)
 })

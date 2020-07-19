@@ -30,7 +30,9 @@ function getModelMessages(models, lang) {
     return models.map(model => {
         return `${descapitalize(model.name)}: { 
           ${getTitlesMessages(model, lang)},
-          ${getPropertiesMessages(model.properties, lang)},
+          labels: {
+          ${getPropertiesMessages(model.properties, lang)}
+          },
           ${geti18nMessages(model, lang)}
           }`
     }).join(",\n")

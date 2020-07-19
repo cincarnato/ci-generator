@@ -1,0 +1,506 @@
+{
+  "module": "learn",
+  "models": [
+    {
+      "name": "Vocabulary",
+      "properties": [
+        {
+          "name": "en",
+          "type": "String",
+          "ref": "",
+          "label": "English",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "English",
+            "es": "Ingles",
+            "pt": "Inglês"
+          }
+        },
+        {
+          "name": "es",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "Spanish",
+            "es": "Español",
+            "pt": "Espanhol"
+          }
+        },
+        {
+          "name": "pt",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "Portuguese",
+            "es": "Portugués",
+            "pt": "Português"
+          }
+        },
+        {
+          "name": "category",
+          "type": "ObjectId",
+          "ref": "Category",
+          "label": "",
+          "icon": "category",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "Category",
+            "es": "Categoria",
+            "pt": "Categoria"
+          }
+        },
+        {
+          "name": "image",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "insert_photo",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Image",
+            "es": "Imagen",
+            "pt": "Imagem"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "properties": [
+        {
+          "name": "en",
+          "type": "String",
+          "ref": "",
+          "label": "English",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "English",
+            "es": "Ingles",
+            "pt": "Inglês"
+          }
+        },
+        {
+          "name": "es",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "Spanish",
+            "es": "Español",
+            "pt": "Espanhol"
+          }
+        },
+        {
+          "name": "pt",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "Portuguese",
+            "es": "Portugués",
+            "pt": "Português"
+          }
+        },
+        {
+          "name": "image",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "insert_photo",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Image",
+            "es": "Imagen",
+            "pt": "Imagem"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Activity",
+      "properties": [
+        {
+          "name": "en",
+          "type": "String",
+          "ref": "",
+          "label": "English",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "English",
+            "es": "Ingles",
+            "pt": "Inglês"
+          }
+        },
+        {
+          "name": "es",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "Spanish",
+            "es": "Español",
+            "pt": "Espanhol"
+          }
+        },
+        {
+          "name": "pt",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "translate",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "Portuguese",
+            "es": "Portugués",
+            "pt": "Português"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "properties": [
+        {
+          "name": "user",
+          "type": "ObjectId",
+          "ref": "User",
+          "label": "",
+          "icon": "account_circle",
+          "required": true,
+          "search": true,
+          "i18n": {
+            "en": "User",
+            "es": "Usuario",
+            "pt": "Usuário"
+          }
+        },
+        {
+          "name": "level",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "stars",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "level",
+            "es": "Nivel",
+            "pt": "Nível"
+          }
+        },
+        {
+          "name": "score",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "leaderboard",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Score",
+            "es": "Puntuación",
+            "pt": "Ponto"
+          }
+        },
+        {
+          "name": "coins",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "monetization_on",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Coins",
+            "es": "Monedas",
+            "pt": "moedas"
+          }
+        },
+        {
+          "name": "bronze",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "emoji_events",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Bronze",
+            "es": "Bronce",
+            "pt": "Bronze"
+          }
+        },
+        {
+          "name": "silver",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "emoji_events",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Silver",
+            "es": "Plata",
+            "pt": "Prata"
+          }
+        },
+        {
+          "name": "gold",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "emoji_events",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Gold",
+            "es": "Oro",
+            "pt": "Oro"
+          }
+        },
+        {
+          "name": "diamond",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "emoji_events",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Diamond",
+            "es": "Diamante",
+            "pt": "Diamante"
+          }
+        },
+        {
+          "name": "hits",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "track_changes",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Hits",
+            "es": "Aciertos",
+            "pt": "Acertos"
+          }
+        },
+        {
+          "name": "mistakes",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "assignment_late",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Errors",
+            "es": "Errores",
+            "pt": "Erros"
+          }
+        },
+        {
+          "name": "accuracy",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "timeline",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Accuracy",
+            "es": "Precisión",
+            "pt": "Precisão"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Record",
+      "properties": [
+        {
+          "name": "user",
+          "type": "ObjectId",
+          "ref": "User",
+          "label": "",
+          "icon": "account_circle",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "User",
+            "es": "Usuario",
+            "pt": "Usuário"
+          }
+        },
+        {
+          "name": "activity",
+          "type": "ObjectId",
+          "ref": "Activity",
+          "label": "",
+          "icon": "local_activity",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Activity",
+            "es": "Actividad",
+            "pt": "Exercício"
+          }
+        },
+        {
+          "name": "category",
+          "type": "ObjectId",
+          "ref": "Category",
+          "label": "",
+          "icon": "category",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Category",
+            "es": "Categoria",
+            "pt": "Categoria"
+          }
+        },
+        {
+          "name": "startDate",
+          "type": "Date",
+          "ref": "",
+          "label": "",
+          "icon": "event",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Start date",
+            "es": "Fecha inicio",
+            "pt": "Data início"
+          }
+        },
+        {
+          "name": "endDate",
+          "type": "Date",
+          "ref": "",
+          "label": "",
+          "icon": "event",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "End date",
+            "es": "Fecha fin",
+            "pt": "Data final"
+          }
+        },
+        {
+          "name": "score",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "leaderboard",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Score",
+            "es": "Puntuación",
+            "pt": "Ponto"
+          }
+        },
+        {
+          "name": "hits",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "track_changes",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Hits",
+            "es": "Aciertos",
+            "pt": "Acertos"
+          }
+        },
+        {
+          "name": "mistakes",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "assignment_late",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Errors",
+            "es": "Errores",
+            "pt": "Erros"
+          }
+        },
+        {
+          "name": "accuracy",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "timeline",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Accuracy",
+            "es": "Precisión",
+            "pt": "Precisão"
+          }
+        },
+        {
+          "name": "multiplier",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "insights",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Multiplier",
+            "es": "Multiplicador",
+            "pt": "Multiplicador"
+          }
+        },
+        {
+          "name": "bestStreak",
+          "type": "Int",
+          "ref": "",
+          "label": "",
+          "icon": "dynamic_feed",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Best streak",
+            "es": "Mejor racha",
+            "pt": "Melhor raia"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "module": "media",
+  "models": [
+    {
+      "name": "File",
+      "properties": [
+        {
+          "name": "filename",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "description",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "Filename",
+            "es": "Nombre del archivo",
+            "pt": "Nome do arquivo"
+          }
+        },
+        {
+          "name": "extension",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "extension",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "Extension",
+            "es": "Extensión",
+            "pt": "Extensão"
+          }
+        },
+        {
+          "name": "relativePath",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "folder_open",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "Relative path",
+            "es": "Ruta relativa",
+            "pt": "Caminho relativo"
+          }
+        },
+        {
+          "name": "absolutePath",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "folder",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "Absolute path",
+            "es": "Ruta absoluta",
+            "pt": "Caminho absoluto"
+          }
+        },
+        {
+          "name": "size",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "photo_size_select_actual",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "Size",
+            "es": "Tamaño",
+            "pt": "Tamanho"
+          }
+        },
+        {
+          "name": "url",
+          "type": "String",
+          "ref": "",
+          "label": "",
+          "icon": "link",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "URL",
+            "es": "URL",
+            "pt": "URL"
+          }
+        },
+        {
+          "name": "createdAt",
+          "type": "Date",
+          "ref": "",
+          "label": "",
+          "icon": "event",
+          "required": true,
+          "search": false,
+          "i18n": {
+            "en": "Creation date",
+            "es": "Fecha de creación",
+            "pt": "Data de criação"
+          }
+        },
+        {
+          "name": "createdBy",
+          "type": "ObjectId",
+          "ref": "User",
+          "label": "",
+          "icon": "account_circle",
+          "required": false,
+          "search": false,
+          "i18n": {
+            "en": "Created by",
+            "es": "Creado por",
+            "pt": "criado pela"
+          }
+        }
+      ]
+    }
+  ]
+}
