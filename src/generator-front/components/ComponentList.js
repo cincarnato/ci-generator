@@ -124,7 +124,7 @@ module.exports = function ({model, moduleName}) {
 function headers(properties, modelName, moduleName) {
 
     let content = properties.map(field => {
-        return `{text: this.$t('${getI18nKey(moduleName,modelName,field.name)}'), value: '${field.name}'}`
+        return `{text: this.$t('${getI18nKey(moduleName,modelName,field.name, true)}'), value: '${field.name}'}`
     }).join(',\n                    ')
     return content
 }

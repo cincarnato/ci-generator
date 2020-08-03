@@ -21,8 +21,8 @@ function generateTextField(field, modelName, moduleName) {
                                 prepend-icon="${field.icon ? field.icon : 'label'}"
                                 name="${field.name}"
                                 v-model="form.${field.name}"
-                                :label="$t('${getI18nKey(moduleName, modelName, field.name)}')"
-                                :placeholder="$t('${getI18nKey(moduleName, modelName, field.name)}')"
+                                :label="$t('${getI18nKey(moduleName, modelName, field.name, true)}')"
+                                :placeholder="$t('${getI18nKey(moduleName, modelName, field.name, true)}')"
                                 :error="hasInputErrors('${field.name}')"
                                 :error-messages="getInputErrors('${field.name}')"
                                 color="secondary"
@@ -58,7 +58,7 @@ function generateDateField(field, modelName, moduleName) {
                             <template v-slot:activator="{ on }">
                                 <v-text-field
                                         v-model="form.${field.name}"
-                                        :label="$t('${getI18nKey(moduleName, modelName, field.name)}')"
+                                        :label="$t('${getI18nKey(moduleName, modelName, field.name, true)}')"
                                         prepend-icon="${field.icon ? field.icon : 'event'}"
                                         readonly
                                         v-on="on"
