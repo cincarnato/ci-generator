@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "commander": "^5.1.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "light-server": "^2.6.4"
   },
   "devDependencies": {},
